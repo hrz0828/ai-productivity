@@ -1,0 +1,11 @@
+---
+const clientId = import.meta.env.PUBLIC_ADSENSE_CLIENT_ID;
+---
+
+{clientId && (
+  <script
+    async
+    src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`}
+    crossorigin="anonymous"
+  ></script>
+)}

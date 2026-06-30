@@ -1,0 +1,6 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedCollection } from '../../utils/content';
+const entries = await getPublishedCollection('skills');
+---
+<ListingLayout title="AI Skill 库" description="可复用的 AI 能力模块，包含输入规范、执行步骤、输出格式和组合方式。" collection="skills" entries={entries} />

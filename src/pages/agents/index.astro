@@ -1,0 +1,6 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedCollection } from '../../utils/content';
+const entries = await getPublishedCollection('agents');
+---
+<ListingLayout title="AI Agent 库" description="面向产品、研究、设计、代码和运营场景的 AI Agent 配置与使用案例。" collection="agents" entries={entries} />

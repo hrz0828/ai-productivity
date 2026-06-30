@@ -1,0 +1,6 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedCollection } from '../../utils/content';
+const entries = await getPublishedCollection('tools');
+---
+<ListingLayout title="AI Tool 教程" description="Claude、Claude Code、Cursor、Cloudflare、GitHub 等 AI 工具和自动化工具教程。" collection="tools" entries={entries} />

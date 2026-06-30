@@ -1,0 +1,6 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedCollection } from '../../utils/content';
+const entries = await getPublishedCollection('workflows');
+---
+<ListingLayout title="AI Workflow 案例" description="从输入到输出的完整 AI 工作流，帮助你系统化解决文档、PPT、代码、研究和运营任务。" collection="workflows" entries={entries} />

@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import CategoryPill from '../components/CategoryPill.astro';
+import SearchEntry from '../components/SearchEntry.astro';
+import { NAV_ITEMS, SITE } from '../config';
+import { getAllPublishedEntries } from '../utils/content';
+
+const entries = await getAllPublishedEntries();
+const featured = entries.filter((entry) => entry.data.featured).slice(0, 6);
+const latest = entries.slice(0, 6);
+const workflows = entries.filter((entry) => entry.collection === 'workflows').slice(0, 3);
+const prompts = entries.filter((entry) => entry.collection === 'prompts').slice(0, 3);
+const tools = entries.filter((entry) => entry.collection === 'tools').slice(0, 3);
+const categoryCounts = entries.reduce((acc, entry) => {
+  acc.set(entry.data.category, (acc.get(entry.data.category) ?? 0) + 1);
+  return acc;
+}, new Map<string, number>());
+const topCategories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14);
+const stats = [
+  { label: '原创内容', value: `${entries.length}+` },
+  { label: '内容栏目', value: `${NAV_ITEMS.length}` },
+  { label: '核心主题', value: `${categoryCounts.size}+` },
+];
+---
+
+<BaseLayout title={SITE.title} description={SITE.description} canonical="/">
+  <section class="relative overflow-hidden bg-white">
+    <div class="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-sky-50 to-transparent"></div>
+    <div class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-sky-700">AI Productivity Playbook</p>
+          <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">用 Prompt、Agent 和 Workflow 重构日常工作</h1>
+          <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">探索 AI Prompt、Skill、Agent、Tool 与 Workflow，提升文档、PPT、设计、代码和办公自动化效率。</p>
+          <div class="mt-8"><SearchEntry /></div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/workflows/" class="rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-700">查看工作流</a>
+            <a href="/guides/prompt-skill-agent-workflow/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">理解核心概念</a>
+          </div>
+        </div>
+        <div class="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-2xl">
+          <div class="text-sm font-medium text-sky-200">本站适合解决</div>
+          <div class="mt-5 space-y-4">
+            {['写周报、日报、会议纪要和 PRD', '从主题快速生成 PPT 大纲', '用 AI 辅助代码审查和开发', '设计可复用 Skill、Agent 和 Workflow'].map((item) => (
+              <div class="rounded-2xl bg-white/10 p-4 text-sm leading-6 text-slate-100">{item}</div>
+            ))}
+          </div>
+          <div class="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-6">
+            {stats.map((stat) => (
+              <div>
+                <div class="text-2xl font-bold text-white">{stat.value}</div>
+                <div class="mt-1 text-xs text-slate-300">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+      {NAV_ITEMS.map((item) => (
+        <a href={item.href} class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
+          <div class="font-semibold text-slate-950">{item.label}</div>
+          <div class="mt-2 text-sm leading-6 text-slate-500">进入栏目，查看对应模板和案例</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Featured" title="精选内容" description="优先阅读这些可复用的 AI 工作方法，快速理解本站内容结构。" />
+    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {(featured.length ? featured : latest).map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Categories" title="热门主题" description="按工作场景发现内容，适合从具体任务开始浏览。" href="/categories/" />
+    <div class="mt-6 flex flex-wrap gap-3">
+      {topCategories.map(([category, count]) => <CategoryPill label={category} count={count} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Workflows" title="完整 AI 工作流" description="从输入到输出的多步骤方案，更适合处理复杂任务。" href="/workflows/" />
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      {workflows.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <SectionHeader eyebrow="Prompts" title="可复制 Prompt" description="适合单次任务和快速试用。" href="/prompts/" />
+        <div class="mt-6 space-y-4">
+          {prompts.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+        </div>
+      </div>
+      <div>
+        <SectionHeader eyebrow="Tools" title="工具教程" description="把 AI 能力接入真实工具链。" href="/tools/" />
+        <div class="mt-6 space-y-4">
+          {tools.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Latest" title="最新文章" description="持续更新 AI 生产力教程、模板和案例。" />
+    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {latest.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm md:p-10">
+      <div class="grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-center">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">About</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-950">不是泛泛聊 AI，而是沉淀可复用工作方法</h2>
+        </div>
+        <p class="text-base leading-8 text-slate-600">ai-productivity 关注真实工作场景：文档、PPT、设计、代码、研究和自动化。每篇内容都尽量给出可复制模板、执行步骤和适用边界，帮助你把 AI 从聊天工具变成生产力系统。</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,13 @@
+---
+interface Props {
+  label: string;
+  count?: number;
+  href?: string;
+}
+const { label, count, href = `/categories/${encodeURIComponent(label)}/` } = Astro.props;
+---
+
+<a href={href} class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-sky-200 hover:text-sky-700 hover:shadow">
+  <span>{label}</span>
+  {typeof count === 'number' && <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500">{count}</span>}
+</a>

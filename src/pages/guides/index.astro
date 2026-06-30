@@ -1,0 +1,6 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedCollection } from '../../utils/content';
+const entries = await getPublishedCollection('guides');
+---
+<ListingLayout title="AI 深度指南" description="理解 Prompt、Skill、Agent、Workflow 和 AI 生产力系统的长期指南。" collection="guides" entries={entries} />

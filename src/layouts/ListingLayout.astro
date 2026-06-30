@@ -1,0 +1,65 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import CategoryPill from '../components/CategoryPill.astro';
+import SearchEntry from '../components/SearchEntry.astro';
+import type { CollectionName, AnyContentEntry } from '../utils/content';
+
+interface Props {
+  title: string;
+  description: string;
+  collection: CollectionName;
+  entries: AnyContentEntry[];
+}
+const { title, description, collection, entries } = Astro.props;
+const categories = [...new Set(entries.map((entry) => entry.data.category))].sort();
+const featured = entries.filter((entry) => entry.data.featured);
+const normalEntries = entries.filter((entry) => !entry.data.featured);
+---
+
+<BaseLayout title={title} description={description} canonical={`/${collection}/`}>
+  <section class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">{collection}</p>
+          <h1 class="mt-3 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{title}</h1>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{description}</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            {categories.map((category) => <CategoryPill label={category} count={entries.filter((entry) => entry.data.category === category).length} />)}
+          </div>
+        </div>
+        <SearchEntry compact />
+      </div>
+    </div>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="mb-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Featured</p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">推荐阅读</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {featured.map((entry) => <ArticleCard entry={entry} collection={collection} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-6 flex items-end justify-between">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">All articles</p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">全部内容</h2>
+      </div>
+      <div class="text-sm text-slate-500">共 {entries.length} 篇</div>
+    </div>
+    {entries.length > 0 ? (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {(normalEntries.length ? normalEntries : entries).map((entry) => <ArticleCard entry={entry} collection={collection} />)}
+      </div>
+    ) : (
+      <div class="rounded-3xl border border-slate-200 bg-white p-8 text-slate-600">内容正在准备中。</div>
+    )}
+  </section>
+</BaseLayout>

@@ -1,0 +1,6 @@
+---
+import ListingLayout from '../../layouts/ListingLayout.astro';
+import { getPublishedCollection } from '../../utils/content';
+const entries = await getPublishedCollection('prompts');
+---
+<ListingLayout title="AI Prompt 库" description="可直接复制使用的 AI 提示词模板，覆盖文档、PPT、设计、代码和办公效率场景。" collection="prompts" entries={entries} />

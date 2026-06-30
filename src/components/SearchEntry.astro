@@ -1,0 +1,18 @@
+---
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<a href="/search/" class:list={[
+  'group flex items-center gap-3 rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:border-sky-200 hover:shadow-lg',
+  compact ? 'px-4 py-3' : 'px-5 py-4 sm:max-w-xl',
+]}>
+  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500 group-hover:bg-sky-50 group-hover:text-sky-700">⌕</span>
+  <span class="min-w-0 flex-1">
+    <span class="block text-sm font-semibold text-slate-950">搜索 Prompt、Workflow、Tool</span>
+    <span class="block truncate text-sm text-slate-500">输入关键词查找 AI 生产力内容</span>
+  </span>
+  <span class="hidden rounded-lg border border-slate-200 px-2 py-1 text-xs text-slate-400 sm:inline">/</span>
+</a>

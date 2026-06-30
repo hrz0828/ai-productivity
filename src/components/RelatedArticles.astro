@@ -1,0 +1,19 @@
+---
+import ArticleCard from './ArticleCard.astro';
+import type { CollectionName, AnyContentEntry } from '../utils/content';
+
+interface Props {
+  entries: AnyContentEntry[];
+  collection: CollectionName;
+}
+const { entries, collection } = Astro.props;
+---
+
+{entries.length > 0 && (
+  <section class="mt-12">
+    <h2 class="text-2xl font-semibold text-slate-950">相关文章</h2>
+    <div class="mt-6 grid gap-5 md:grid-cols-3">
+      {entries.map((entry) => <ArticleCard entry={entry} collection={collection} />)}
+    </div>
+  </section>
+)}
