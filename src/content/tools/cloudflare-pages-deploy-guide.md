@@ -46,3 +46,34 @@ Node version: 20 或 22
 ### 域名需要 www 吗？
 
 建议选择一个主域名，例如 `https://sts2hub.com`，再把 `www` 跳转到主域名。
+
+## 使用案例：部署 ai-productivity 到 Cloudflare Pages
+
+### 场景
+
+你已经完成 Astro 内容站，希望通过 GitHub 自动部署到 `sts2hub.com`。
+
+### 配置示例
+
+```text
+Build command: npm run build
+Build output directory: dist
+Node.js version: 22
+Production branch: main
+```
+
+### 验证清单
+
+部署后访问以下路径：
+
+- `/`
+- `/sitemap-index.xml`
+- `/robots.txt`
+- `/ads.txt`
+- `/rss.xml`
+- `/privacy-policy/`
+
+### 常见问题
+
+如果 Cloudflare 构建失败，先在本地运行 `npm run build`。如果本地成功，再检查 Cloudflare 的 Node 版本和环境变量。
+

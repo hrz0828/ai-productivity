@@ -23,6 +23,35 @@ const stats = [
   { label: '内容栏目', value: `${NAV_ITEMS.length}` },
   { label: '核心主题', value: `${categoryCounts.size}+` },
 ];
+const learningPaths = [
+  {
+    title: '从 Prompt 入门',
+    description: '适合第一次系统使用 AI 提升办公效率的读者。',
+    links: [
+      { label: 'Prompt、Skill、Agent、Workflow 有什么区别？', href: '/guides/prompt-skill-agent-workflow/' },
+      { label: '如何写出高质量 Prompt', href: '/guides/high-quality-prompt-guide/' },
+      { label: 'AI 写周报 Prompt', href: '/prompts/ai-weekly-report-prompt/' },
+    ],
+  },
+  {
+    title: '搭建内容工作流',
+    description: '适合需要持续写文章、做 SEO 和沉淀模板的人。',
+    links: [
+      { label: 'AI SEO 文章写作工作流', href: '/workflows/seo-article-with-ai/' },
+      { label: 'SEO Brief 生成 Skill', href: '/skills/seo-brief-skill/' },
+      { label: 'AI SEO 编辑 Agent', href: '/agents/ai-seo-editor-agent/' },
+    ],
+  },
+  {
+    title: 'AI 辅助开发',
+    description: '适合用 Claude Code、Cursor 和 AI Code Review 提升开发效率。',
+    links: [
+      { label: 'AI 编程助手使用指南', href: '/guides/ai-coding-assistant-guide/' },
+      { label: 'Claude Code 入门', href: '/tools/claude-code-guide/' },
+      { label: '用 AI 做代码审查', href: '/workflows/code-review-with-ai/' },
+    ],
+  },
+];
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description} canonical="/">
@@ -36,7 +65,7 @@ const stats = [
           <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">探索 AI Prompt、Skill、Agent、Tool 与 Workflow，提升文档、PPT、设计、代码和办公自动化效率。</p>
           <div class="mt-8"><SearchEntry /></div>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/workflows/" class="rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-700">查看工作流</a>
+            <a href="/workflows/" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">查看工作流</a>
             <a href="/guides/prompt-skill-agent-workflow/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">理解核心概念</a>
           </div>
         </div>
@@ -82,6 +111,26 @@ const stats = [
     <SectionHeader eyebrow="Categories" title="热门主题" description="按工作场景发现内容，适合从具体任务开始浏览。" href="/categories/" />
     <div class="mt-6 flex flex-wrap gap-3">
       {topCategories.map(([category, count]) => <CategoryPill label={category} count={count} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Start here" title="推荐阅读路径" description="如果不知道从哪里开始，可以按下面三条路径逐步阅读和实践。" />
+    <div class="mt-8 grid gap-6 lg:grid-cols-3">
+      {learningPaths.map((path) => (
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-slate-950">{path.title}</h3>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{path.description}</p>
+          <ol class="mt-5 space-y-3">
+            {path.links.map((link, index) => (
+              <li class="flex gap-3 text-sm leading-6">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sky-50 text-xs font-semibold text-sky-700">{index + 1}</span>
+                <a class="font-medium text-slate-700 hover:text-sky-700" href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
     </div>
   </section>
 

@@ -41,3 +41,24 @@ ogImage: "/images/og/default.png"
 ## Step 4：复核和同步
 
 所有负责人和截止日期都需要人工确认。AI 不应凭空指定责任人。
+
+## 使用案例：上线准备会议行动项
+
+### 场景
+
+团队讨论内容站上线前事项，包括部署、域名、Search Console、AdSense 和文章质量检查。
+
+### 示例输出
+
+行动项表格可以包含：
+
+| 事项 | 负责人 | 截止时间 | 依赖 |
+|---|---|---|---|
+| 绑定 Cloudflare Pages 域名 | 待确认 | 待确认 | DNS 权限 |
+| 提交 sitemap | 待确认 | 上线后 | Search Console |
+| 检查 ads.txt | 待确认 | AdSense 前 | publisher id |
+
+### 使用建议
+
+AI 可以整理行动项，但不要替团队指定负责人。负责人和时间需要会后确认。
+
