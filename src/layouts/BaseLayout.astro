@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
 import AdsenseScript from '../components/AdsenseScript.astro';
+import Analytics from '../components/Analytics.astro';
 
 interface Props {
   title?: string;
@@ -12,6 +13,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  robots?: string;
 }
 ---
 
@@ -23,6 +25,7 @@ interface Props {
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href="/favicon.svg" />
     <SEO {...Astro.props} />
+    <Analytics />
     <AdsenseScript />
   </head>
   <body class="min-h-screen antialiased">

@@ -15,6 +15,16 @@ export const NAV_ITEMS = [
   { label: 'Tools', href: '/tools/' },
   { label: 'Workflows', href: '/workflows/' },
   { label: 'Guides', href: '/guides/' },
+  { label: 'Topics', href: '/topics/ai-writing/' },
+];
+
+export const TOPIC_ITEMS = [
+  { label: 'AI 写作', href: '/topics/ai-writing/' },
+  { label: 'AI 编程', href: '/topics/ai-coding/' },
+  { label: 'AI 内容站', href: '/topics/ai-content-site/' },
+  { label: 'AI PPT', href: '/topics/ai-ppt/' },
+  { label: 'AI 自动化', href: '/topics/ai-automation/' },
+  { label: 'AI Agent', href: '/topics/ai-agent/' },
 ];
 
 export const COLLECTION_LABELS = {

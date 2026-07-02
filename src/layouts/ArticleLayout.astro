@@ -6,6 +6,7 @@ import TagList from '../components/TagList.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import AdsenseBlock from '../components/AdsenseBlock.astro';
+import CopyCode from '../components/CopyCode.astro';
 import { COLLECTION_LABELS } from '../config';
 import { articleJsonLd, breadcrumbJsonLd, formatDate } from '../utils/seo';
 import { getReadingTime } from '../utils/readingTime';
@@ -19,9 +20,11 @@ interface Props {
   headings: Array<{ depth: number; slug: string; text: string }>;
   body: string;
   related?: AnyContentEntry[];
+  previous?: AnyContentEntry;
+  next?: AnyContentEntry;
 }
 
-const { entry, collection, headings, body, related = [] } = Astro.props;
+const { entry, collection, headings, body, related = [], previous, next } = Astro.props;
 const title = entry.data.seoTitle ?? entry.data.title;
 const description = entry.data.seoDescription ?? entry.data.description;
 const canonical = `/${collection}/${entry.id}/`;
@@ -45,23 +48,24 @@ const jsonLd = [
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} image={entry.data.ogImage} type="article" jsonLd={jsonLd}>
-  <article class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:px-8">
+  <article class="mx-auto grid max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:px-8">
     <div class="min-w-0">
       <Breadcrumb items={breadcrumbs} />
-      <header class="mt-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+      <header class="mt-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:mt-8 sm:p-8">
         <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500">
           <span class="rounded-full bg-sky-50 px-3 py-1 font-medium text-sky-700">{entry.data.category}</span>
-          <time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate)}</time>
+          <time datetime={entry.data.pubDate.toISOString()}>发布：{formatDate(entry.data.pubDate)}</time>
+          {entry.data.updatedDate && <time datetime={entry.data.updatedDate.toISOString()}>更新：{formatDate(entry.data.updatedDate)}</time>}
           <span>{getReadingTime(body)}</span>
         </div>
-        <h1 class="mt-5 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{entry.data.title}</h1>
+        <h1 class="mt-5 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">{entry.data.title}</h1>
         <p class="mt-5 text-lg leading-8 text-slate-600">{entry.data.description}</p>
         <div class="mt-6"><TagList tags={entry.data.tags} /></div>
       </header>
 
       <AdsenseBlock />
 
-      <div class="prose prose-slate mt-8 max-w-none rounded-3xl border border-slate-200 bg-white p-8 prose-a:text-sky-700 prose-pre:bg-slate-950">
+      <div class="prose prose-slate mt-8 max-w-none rounded-3xl border border-slate-200 bg-white p-6 prose-a:text-sky-700 prose-pre:bg-slate-950 sm:p-8">
         <slot />
         <hr />
         <h2>延伸阅读</h2>
@@ -72,7 +76,31 @@ const jsonLd = [
         </ul>
       </div>
 
+      <nav class="mt-8 grid gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-sm shadow-sm sm:grid-cols-2" aria-label="Article navigation">
+        <div>
+          {previous ? (
+            <a class="block rounded-2xl bg-slate-50 p-4 transition hover:bg-sky-50" href={`/${collection}/${previous.id}/`}>
+              <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">上一篇</span>
+              <span class="mt-1 block font-semibold leading-6 text-slate-800">← {previous.data.title}</span>
+            </a>
+          ) : (
+            <a class="block rounded-2xl bg-slate-50 p-4 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-700" href={`/${collection}/`}>← 返回 {COLLECTION_LABELS[collection]}</a>
+          )}
+        </div>
+        <div>
+          {next ? (
+            <a class="block rounded-2xl bg-slate-50 p-4 text-right transition hover:bg-sky-50" href={`/${collection}/${next.id}/`}>
+              <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">下一篇</span>
+              <span class="mt-1 block font-semibold leading-6 text-slate-800">{next.data.title} →</span>
+            </a>
+          ) : (
+            <a class="block rounded-2xl bg-slate-50 p-4 text-right font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-700" href="/resources/">查看资源模板 →</a>
+          )}
+        </div>
+      </nav>
+
       <RelatedArticles entries={related} collection={collection} />
+      <CopyCode />
     </div>
 
     <div class="hidden lg:block">

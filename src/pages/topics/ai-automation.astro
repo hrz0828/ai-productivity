@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['自动化', 'n8n', 'Workflow', 'SOP', '内容日历', '会议'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+---
+
+<BaseLayout title="AI 自动化专题：n8n、SOP、会议纪要和内容流程" description="汇总 AI 自动化相关内容，包括 n8n、SOP、会议行动项、内容日历和跨工具工作流。" canonical="/topics/ai-automation/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 自动化专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">AI 自动化适合处理高频、规则清晰、风险可控的重复任务。先标准化输入和输出，再考虑接入 n8n、表单、邮件或数据库。</p>
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-xl font-semibold text-slate-950">流程标准化</h2><p class="mt-3 text-sm leading-6 text-slate-600">先把重复任务变成 SOP 和检查清单。</p></div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-xl font-semibold text-slate-950">工具连接</h2><p class="mt-3 text-sm leading-6 text-slate-600">用 n8n 等工具连接表单、邮件、文档和 AI 模型。</p></div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-xl font-semibold text-slate-950">人工确认</h2><p class="mt-3 text-sm leading-6 text-slate-600">涉及公开发布、删除、付款等动作必须保留人工确认。</p></div>
+    </div>
+    <section class="mt-14">
+      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

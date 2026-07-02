@@ -4,7 +4,7 @@ import ArticleCard from '../components/ArticleCard.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CategoryPill from '../components/CategoryPill.astro';
 import SearchEntry from '../components/SearchEntry.astro';
-import { NAV_ITEMS, SITE } from '../config';
+import { NAV_ITEMS, SITE, TOPIC_ITEMS } from '../config';
 import { getAllPublishedEntries } from '../utils/content';
 
 const entries = await getAllPublishedEntries();
@@ -13,6 +13,9 @@ const latest = entries.slice(0, 6);
 const workflows = entries.filter((entry) => entry.collection === 'workflows').slice(0, 3);
 const prompts = entries.filter((entry) => entry.collection === 'prompts').slice(0, 3);
 const tools = entries.filter((entry) => entry.collection === 'tools').slice(0, 3);
+const newestPrompts = entries.filter((entry) => entry.collection === 'prompts').slice(0, 4);
+const newestWorkflows = entries.filter((entry) => entry.collection === 'workflows').slice(0, 4);
+const newestTools = entries.filter((entry) => entry.collection === 'tools').slice(0, 4);
 const categoryCounts = entries.reduce((acc, entry) => {
   acc.set(entry.data.category, (acc.get(entry.data.category) ?? 0) + 1);
   return acc;
@@ -115,6 +118,18 @@ const learningPaths = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Topics" title="专题入口" description="按长期主题系统阅读，适合围绕一个方向连续学习和实践。" />
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {TOPIC_ITEMS.map((topic) => (
+        <a href={topic.href} class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
+          <div class="font-semibold text-slate-950">{topic.label}</div>
+          <div class="mt-2 text-sm leading-6 text-slate-500">查看专题内容 →</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
     <SectionHeader eyebrow="Start here" title="推荐阅读路径" description="如果不知道从哪里开始，可以按下面三条路径逐步阅读和实践。" />
     <div class="mt-8 grid gap-6 lg:grid-cols-3">
       {learningPaths.map((path) => (
@@ -162,6 +177,30 @@ const learningPaths = [
     <SectionHeader eyebrow="Latest" title="最新文章" description="持续更新 AI 生产力教程、模板和案例。" />
     <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {latest.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Explore" title="按内容类型继续探索" description="新内容增加后，可以按 Prompt、Workflow、Tool 三条线继续深入。" />
+    <div class="mt-8 grid gap-6 lg:grid-cols-3">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 class="text-xl font-semibold text-slate-950">最新 Prompt</h3>
+        <div class="mt-5 space-y-3">
+          {newestPrompts.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={`/${entry.collection}/${entry.id}/`}>{entry.data.title}</a>)}
+        </div>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 class="text-xl font-semibold text-slate-950">最新 Workflow</h3>
+        <div class="mt-5 space-y-3">
+          {newestWorkflows.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={`/${entry.collection}/${entry.id}/`}>{entry.data.title}</a>)}
+        </div>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 class="text-xl font-semibold text-slate-950">最新 Tool</h3>
+        <div class="mt-5 space-y-3">
+          {newestTools.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={`/${entry.collection}/${entry.id}/`}>{entry.data.title}</a>)}
+        </div>
+      </div>
     </div>
   </section>
 

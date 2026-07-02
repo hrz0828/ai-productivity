@@ -71,6 +71,23 @@ Copy `.env.example` to `.env` for local development if needed.
 cp .env.example .env
 ```
 
+### Analytics
+
+Optional analytics environment variables:
+
+```text
+PUBLIC_GA_ID=G-XXXXXXXXXX
+PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN=your-cloudflare-token
+```
+
+Google Analytics and Cloudflare Web Analytics are loaded by:
+
+```text
+src/components/Analytics.astro
+```
+
+Only set one or both variables in Cloudflare Pages if you want tracking enabled.
+
 ### Google AdSense
 
 `ads.txt` is already configured in:
@@ -98,6 +115,21 @@ src/components/AdsenseScript.astro
 ```
 
 Ad blocks are only rendered when both `PUBLIC_ADSENSE_CLIENT_ID` and an ad slot are provided to `AdsenseBlock.astro`. This avoids showing placeholder ads before approval.
+
+## Continuous integration
+
+GitHub Actions workflow:
+
+```text
+.github/workflows/ci.yml
+```
+
+It runs on pushes and pull requests to `main`:
+
+```text
+npm ci
+npm run build
+```
 
 ## Important URLs after deploy
 

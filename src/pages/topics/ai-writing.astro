@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['写作', '文档', '邮件', '日报', '周报', '会议纪要', 'PRD', 'SEO', '简历'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+---
+
+<BaseLayout title="AI 写作专题：文档、邮件、周报、PRD 与 SEO 内容" description="围绕 AI 写作的专题页，汇总文档写作、邮件、日报周报、会议纪要、PRD、SEO 文章和简历优化内容。" canonical="/topics/ai-writing/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 写作专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">从日常办公文档到内容站文章，AI 写作的关键不是让模型替你编造，而是把已有信息整理成结构清晰、可检查、可复用的文本。</p>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">办公写作</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">日报、周报、会议纪要、邮件和项目复盘，适合从固定模板开始。</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">产品文档</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">PRD、需求分析、SOP 和流程文档，需要明确输入、边界和验收标准。</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">内容创作</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">SEO 文章、公众号、小红书和内容日历，适合结合搜索意图和真实案例。</p>
+      </div>
+    </div>
+
+    <section class="mt-14">
+      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

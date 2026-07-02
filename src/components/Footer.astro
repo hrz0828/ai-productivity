@@ -1,9 +1,9 @@
 ---
-import { NAV_ITEMS, SITE } from '../config';
+import { NAV_ITEMS, SITE, TOPIC_ITEMS } from '../config';
 ---
 
 <footer class="border-t border-slate-200 bg-white">
-  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[2fr_1fr_1fr] lg:px-8">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[2fr_1fr_1fr_1fr] lg:px-8">
     <div>
       <div class="text-lg font-semibold text-slate-950">{SITE.name}</div>
       <p class="mt-3 max-w-xl text-sm leading-6 text-slate-600">{SITE.description}</p>
@@ -12,6 +12,12 @@ import { NAV_ITEMS, SITE } from '../config';
       <div class="font-semibold text-slate-950">内容</div>
       <ul class="mt-3 space-y-2 text-sm text-slate-600">
         {NAV_ITEMS.map((item) => <li><a class="hover:text-sky-700" href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <div class="font-semibold text-slate-950">专题</div>
+      <ul class="mt-3 space-y-2 text-sm text-slate-600">
+        {TOPIC_ITEMS.map((item) => <li><a class="hover:text-sky-700" href={item.href}>{item.label}</a></li>)}
       </ul>
     </div>
     <div>

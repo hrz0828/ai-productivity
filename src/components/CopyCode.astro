@@ -1,0 +1,29 @@
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.prose pre').forEach((pre) => {
+      if (pre.querySelector('[data-copy-code]')) return;
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = '复制';
+      button.setAttribute('data-copy-code', 'true');
+      button.className = 'absolute right-3 top-3 rounded-lg bg-white/10 px-2.5 py-1 text-xs font-medium text-white transition hover:bg-white/20';
+
+      pre.style.position = 'relative';
+      pre.appendChild(button);
+
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code');
+        const text = code?.innerText ?? '';
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = '已复制';
+          window.setTimeout(() => { button.textContent = '复制'; }, 1500);
+        } catch (error) {
+          button.textContent = '复制失败';
+          window.setTimeout(() => { button.textContent = '复制'; }, 1500);
+        }
+      });
+    });
+  });
+</script>
