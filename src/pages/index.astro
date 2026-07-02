@@ -93,13 +93,9 @@ const learningPaths = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
-      {NAV_ITEMS.map((item) => (
-        <a href={item.href} class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
-          <div class="font-semibold text-slate-950">{item.label}</div>
-          <div class="mt-2 text-sm leading-6 text-slate-500">进入栏目，查看对应模板和案例</div>
-        </a>
-      ))}
+    <SectionHeader eyebrow="Core Topics" title="热门主题" description="这些主题是本站的核心价值入口，按真实工作场景快速找到可复用方法。" href="/categories/" />
+    <div class="mt-6 flex flex-wrap gap-3">
+      {topCategories.map(([category, count]) => <CategoryPill label={category} count={count} />)}
     </div>
   </section>
 
@@ -107,13 +103,6 @@ const learningPaths = [
     <SectionHeader eyebrow="Featured" title="精选内容" description="优先阅读这些可复用的 AI 工作方法，快速理解本站内容结构。" />
     <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {(featured.length ? featured : latest).map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <SectionHeader eyebrow="Categories" title="热门主题" description="按工作场景发现内容，适合从具体任务开始浏览。" href="/categories/" />
-    <div class="mt-6 flex flex-wrap gap-3">
-      {topCategories.map(([category, count]) => <CategoryPill label={category} count={count} />)}
     </div>
   </section>
 
