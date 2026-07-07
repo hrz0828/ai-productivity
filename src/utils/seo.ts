@@ -54,3 +54,29 @@ export function breadcrumbJsonLd(items: Array<{ label: string; href: string }>) 
     })),
   };
 }
+
+export function organizationJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+    logo: absoluteUrl('/favicon.svg'),
+  };
+}
+
+export function websiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.url,
+    description: SITE.description,
+    inLanguage: SITE.locale,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${SITE.url}/search/?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}

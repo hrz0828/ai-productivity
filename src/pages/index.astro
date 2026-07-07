@@ -6,6 +6,7 @@ import CategoryPill from '../components/CategoryPill.astro';
 import SearchEntry from '../components/SearchEntry.astro';
 import { NAV_ITEMS, SITE, TOPIC_ITEMS } from '../config';
 import { getAllPublishedEntries } from '../utils/content';
+import { organizationJsonLd, websiteJsonLd } from '../utils/seo';
 
 const entries = await getAllPublishedEntries();
 const featured = entries.filter((entry) => entry.data.featured).slice(0, 6);
@@ -21,6 +22,7 @@ const categoryCounts = entries.reduce((acc, entry) => {
   return acc;
 }, new Map<string, number>());
 const topCategories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14);
+const jsonLd = [websiteJsonLd(), organizationJsonLd()];
 const stats = [
   { label: '原创内容', value: `${entries.length}+` },
   { label: '内容栏目', value: `${NAV_ITEMS.length}` },
@@ -57,7 +59,7 @@ const learningPaths = [
 ];
 ---
 
-<BaseLayout title={SITE.title} description={SITE.description} canonical="/">
+<BaseLayout title={SITE.title} description={SITE.description} canonical="/" jsonLd={jsonLd}>
   <section class="relative overflow-hidden bg-white">
     <div class="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-sky-50 to-transparent"></div>
     <div class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">

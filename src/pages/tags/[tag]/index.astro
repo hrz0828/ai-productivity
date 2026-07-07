@@ -1,24 +1,55 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
+import SearchEntry from '../../../components/SearchEntry.astro';
 import { getAllPublishedEntries } from '../../../utils/content';
 
 export async function getStaticPaths() {
   const entries = await getAllPublishedEntries();
   const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))];
-  return tags.map((tag) => ({ params: { tag }, props: { tag } }));
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      entries: entries.filter((entry) => entry.data.tags.includes(tag)),
+    },
+  }));
 }
 
-const { tag } = Astro.props;
-const entries = (await getAllPublishedEntries()).filter((entry) => entry.data.tags.includes(tag));
+const { tag, entries } = Astro.props;
+const title = `#${tag} 标签文章 - ai-productivity`;
+const description = `浏览 ai-productivity 中 #${tag} 标签下的 AI Prompt、Skill、Agent、Tool、Workflow 和 Guide。`;
+const canonical = `/tags/${encodeURIComponent(tag)}/`;
 ---
 
-<BaseLayout title={`#${tag} - 标签 - ai-productivity`} description={`浏览 ai-productivity 中 #${tag} 标签下的 AI 生产力文章。`} canonical={`/tags/${encodeURIComponent(tag)}/`} robots="noindex,follow">
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Tag</p>
-    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">#{tag}</h1>
-    <p class="mt-5 text-lg text-slate-600">共 {entries.length} 篇内容。</p>
-    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <section class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+      <div class="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Tag</p>
+          <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">#{tag}</h1>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">共收录 {entries.length} 篇内容，帮助你按关键词快速定位 AI 生产力方法、模板与实战案例。</p>
+          <div class="mt-6 flex flex-wrap gap-3 text-sm">
+            <a class="font-medium text-sky-700 hover:text-sky-900" href="/tags/">← 返回全部标签</a>
+            <a class="font-medium text-sky-700 hover:text-sky-900" href="/search/">搜索更多内容 →</a>
+          </div>
+        </div>
+        <SearchEntry compact />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Articles</p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">#{tag} 相关内容</h2>
+      </div>
+      <div class="text-sm text-slate-500">共 {entries.length} 篇</div>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {entries.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
     </div>
   </section>
