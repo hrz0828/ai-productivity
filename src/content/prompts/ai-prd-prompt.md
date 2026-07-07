@@ -48,6 +48,8 @@ ogImage: "/images/og/default.png"
 
 建议先输入业务目标和用户场景，再让 AI 生成 PRD。如果只输入功能名称，AI 容易生成过于泛化的内容。
 
+如果需求还不清楚，先不要直接写 PRD。可以先使用 [用 AI 做需求分析的完整工作流](/workflows/demand-analysis-with-ai/) 判断需求是否真实、是否值得做，再进入 PRD 写作。也可以从 [AI 产品经理专题](/topics/ai-product-manager/) 按推荐顺序阅读。
+
 ## 使用案例：为内容站增加搜索功能
 
 ### 场景

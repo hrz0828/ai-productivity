@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['知识管理', '知识库', '资料整理', '资料总结', 'Notion', 'Obsidian', '研究总结', '个人知识库'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+const paths = [
+  {
+    title: '先选工具',
+    description: '用 Obsidian 或 Notion AI 建立资料入口，避免资料散落在聊天记录和浏览器收藏夹里。',
+    links: [
+      { label: 'Obsidian AI 知识管理教程', href: '/tools/obsidian-ai-guide/' },
+      { label: 'Notion AI 知识管理教程', href: '/tools/notion-ai-knowledge-management-guide/' },
+    ],
+  },
+  {
+    title: '再定结构',
+    description: '把资料库、笔记库、选题库和行动库分开，让 AI 负责摘要、标签和转化。',
+    links: [
+      { label: 'Notion AI 工作流教程', href: '/tools/notion-ai-workflow-guide/' },
+      { label: '用 AI 搭建个人知识库', href: '/workflows/personal-knowledge-base-with-ai/' },
+      { label: 'Obsidian + AI 资料总结工作流', href: '/workflows/obsidian-ai-summary-workflow/' },
+    ],
+  },
+  {
+    title: '最后复用',
+    description: '把沉淀的资料转成研究结论、内容选题、报告和行动项。',
+    links: [
+      { label: '研究总结 Skill', href: '/skills/research-summary-skill/' },
+      { label: 'AI 写调研报告 Prompt', href: '/prompts/ai-research-report-prompt/' },
+    ],
+  },
+];
+const readingOrder = [
+  { label: '先读：Notion AI 知识管理教程', href: '/tools/notion-ai-knowledge-management-guide/', note: '理解资料库、笔记库、选题库和行动库怎么拆分。' },
+  { label: '对比：Obsidian AI 知识管理教程', href: '/tools/obsidian-ai-guide/', note: '适合偏本地笔记、双链和长期个人知识沉淀。' },
+  { label: '实践：用 AI 搭建个人知识库', href: '/workflows/personal-knowledge-base-with-ai/', note: '把工具、字段、摘要和复盘串成完整工作流。' },
+  { label: '整理：Obsidian + AI 资料总结工作流', href: '/workflows/obsidian-ai-summary-workflow/', note: '把收藏资料转成摘要、标签、双链和后续输出。' },
+  { label: '复用：研究总结 Skill', href: '/skills/research-summary-skill/', note: '把资料转成观点、报告、选题和行动项。' },
+];
+---
+
+<BaseLayout title="AI 知识管理专题：Notion、Obsidian、资料整理和个人知识库" description="汇总 AI 知识管理相关内容，包括 Notion AI、Obsidian、资料总结、个人知识库和研究资料复用工作流。" canonical="/topics/ai-knowledge-management/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 知识管理专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">AI 知识管理不是把所有资料都丢给模型总结，而是建立稳定的收集、摘要、分类、复用和复盘流程。重点是让资料能回溯、能连接、能转化为行动。</p>
+
+    <section class="mt-10 rounded-[2rem] border border-sky-100 bg-sky-50/60 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">推荐阅读顺序</h2>
+      <p class="mt-3 text-sm leading-6 text-slate-600">如果你还没有稳定的知识库，建议先学结构，再选工具，最后学习如何把资料复用为输出。</p>
+      <ol class="mt-6 grid gap-4 md:grid-cols-2">
+        {readingOrder.map((item, index) => (
+          <li class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+            <div class="text-sm font-semibold text-sky-700">Step {index + 1}</div>
+            <a href={item.href} class="mt-2 block font-semibold text-slate-950 hover:text-sky-700">{item.label}</a>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.note}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {paths.map((path) => (
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-semibold text-slate-950">{path.title}</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{path.description}</p>
+          <div class="mt-5 space-y-2">
+            {path.links.map((link) => <a class="block text-sm font-medium text-sky-700 hover:text-sky-900" href={link.href}>{link.label} →</a>)}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <section class="mt-14">
+      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

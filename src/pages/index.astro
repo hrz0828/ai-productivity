@@ -9,8 +9,11 @@ import { getAllPublishedEntries } from '../utils/content';
 import { organizationJsonLd, websiteJsonLd } from '../utils/seo';
 
 const entries = await getAllPublishedEntries();
+const getEntryKey = (entry: (typeof entries)[number]) => `${entry.collection}/${entry.id}`;
+const getEntryHref = (entry: (typeof entries)[number]) => `/${entry.collection}/${entry.id}/`;
+const excludeEntries = (source: typeof entries, used: Set<string>, limit: number) => source.filter((entry) => !used.has(getEntryKey(entry))).slice(0, limit);
+
 const featured = entries.filter((entry) => entry.data.featured).slice(0, 6);
-const latest = entries.slice(0, 6);
 const workflows = entries.filter((entry) => entry.collection === 'workflows').slice(0, 3);
 const prompts = entries.filter((entry) => entry.collection === 'prompts').slice(0, 3);
 const tools = entries.filter((entry) => entry.collection === 'tools').slice(0, 3);
@@ -21,12 +24,116 @@ const categoryCounts = entries.reduce((acc, entry) => {
   acc.set(entry.data.category, (acc.get(entry.data.category) ?? 0) + 1);
   return acc;
 }, new Map<string, number>());
-const topCategories = [...categoryCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14);
+const topCategories = [...categoryCounts.entries()].filter(([, count]) => count >= 2).sort((a, b) => b[1] - a[1]).slice(0, 12);
 const jsonLd = [websiteJsonLd(), organizationJsonLd()];
 const stats = [
   { label: '原创内容', value: `${entries.length}+` },
   { label: '内容栏目', value: `${NAV_ITEMS.length}` },
-  { label: '核心主题', value: `${categoryCounts.size}+` },
+  { label: '成熟主题', value: `${topCategories.length}+` },
+];
+const scenarioCards = [
+  {
+    title: '写周报 / 日报',
+    audience: '职场写作、团队同步',
+    output: '结构化工作汇报',
+    href: '/prompts/ai-weekly-report-prompt/',
+    secondaryHref: '/prompts/ai-daily-report-prompt/',
+  },
+  {
+    title: '写 PRD / 需求文档',
+    audience: '产品经理、项目负责人',
+    output: '需求文档与执行路径',
+    href: '/workflows/write-prd-with-ai/',
+    secondaryHref: '/prompts/ai-prd-prompt/',
+  },
+  {
+    title: '快速生成 PPT 大纲',
+    audience: '汇报、培训、方案展示',
+    output: '可展开的演示结构',
+    href: '/workflows/create-ppt-with-ai/',
+    secondaryHref: '/prompts/ai-ppt-outline-prompt/',
+  },
+  {
+    title: '整理会议纪要',
+    audience: '项目协作、管理同步',
+    output: '纪要、结论和行动项',
+    href: '/workflows/meeting-to-action-items/',
+    secondaryHref: '/prompts/ai-meeting-minutes-prompt/',
+  },
+  {
+    title: '做竞品分析',
+    audience: '产品、运营、市场研究',
+    output: '竞品维度和分析报告',
+    href: '/workflows/competitive-analysis-with-ai/',
+    secondaryHref: '/prompts/ai-competitor-analysis-prompt/',
+  },
+  {
+    title: '用 AI 做代码审查',
+    audience: '开发者、技术负责人',
+    output: '风险清单和修改建议',
+    href: '/workflows/code-review-with-ai/',
+    secondaryHref: '/prompts/ai-code-review-prompt/',
+  },
+];
+const conceptCards = [
+  {
+    name: 'Prompt',
+    title: '提示词 / 给 AI 的任务指令',
+    description: '适合马上完成一次具体任务，例如写周报、生成大纲或改写邮件。',
+    href: '/prompts/',
+  },
+  {
+    name: 'Skill',
+    title: '技能模块 / 可复用的 AI 能力',
+    description: '适合反复完成同类任务，把输入、步骤、输出格式沉淀下来。',
+    href: '/skills/',
+  },
+  {
+    name: 'Agent',
+    title: '智能体 / 带目标和角色的 AI 助手',
+    description: '适合持续处理一类问题，例如产品经理 Agent、SEO 编辑 Agent。',
+    href: '/agents/',
+  },
+  {
+    name: 'Workflow',
+    title: '工作流 / 多步骤任务流程',
+    description: '适合复杂任务，把 Prompt、工具、人工检查点组合成完整路径。',
+    href: '/workflows/',
+  },
+];
+const casePaths = [
+  {
+    title: '我要做一份竞品分析',
+    steps: [
+      { label: '用 Prompt 明确分析维度', href: '/prompts/ai-competitor-analysis-prompt/' },
+      { label: '用 Workflow 输出完整报告', href: '/workflows/competitive-analysis-with-ai/' },
+      { label: '用 PPT 大纲沉淀汇报结构', href: '/prompts/ai-ppt-outline-prompt/' },
+    ],
+  },
+  {
+    title: '我要从零分析并写一份 PRD',
+    steps: [
+      { label: '先判断需求是否值得做', href: '/workflows/demand-analysis-with-ai/' },
+      { label: '再生成 PRD 初稿', href: '/prompts/ai-prd-prompt/' },
+      { label: '交给产品经理 Agent 复核', href: '/agents/ai-product-manager-agent/' },
+    ],
+  },
+  {
+    title: '我要搭建个人知识库',
+    steps: [
+      { label: '选择 Notion 或 Obsidian 工具链', href: '/topics/ai-knowledge-management/' },
+      { label: '搭建知识库工作流', href: '/workflows/personal-knowledge-base-with-ai/' },
+      { label: '用研究总结 Skill 处理资料', href: '/skills/research-summary-skill/' },
+    ],
+  },
+  {
+    title: '我要制定学习计划',
+    steps: [
+      { label: '先用工作流拆解学习目标', href: '/workflows/create-learning-plan-with-ai/' },
+      { label: '用学习教练 Agent 跟踪复盘', href: '/agents/ai-learning-coach-agent/' },
+      { label: '用个人助理 Agent 安排任务', href: '/agents/ai-personal-assistant-agent/' },
+    ],
+  },
 ];
 const learningPaths = [
   {
@@ -57,13 +164,32 @@ const learningPaths = [
     ],
   },
 ];
+const usedInFocusedModules = new Set([...tools, ...workflows].map(getEntryKey));
+const latest = excludeEntries(entries, usedInFocusedModules, 6);
+const topicDetails = TOPIC_ITEMS.map((topic) => ({
+  ...topic,
+  description: ({
+    'AI 写作': '周报、邮件、PRD、SEO 文章和内容创作模板。',
+    'AI 产品经理': '从需求分析到 PRD，再到产品经理 Agent 复核。',
+    'AI 编程': 'Claude Code、Cursor、代码审查和部署自动化。',
+    'AI 知识管理': 'Notion、Obsidian、资料总结和个人知识库。',
+    'AI 设计评审': 'Figma、设计 Brief、页面评审和用户体验检查。',
+    'AI PPT': 'PPT 大纲、演示结构、页面文案和设计评审。',
+    'AI 会议效率': '会议纪要、行动项、会后跟进和会议 Agent。',
+    'AI 自动化': 'n8n、工作流自动化和重复任务处理。',
+    'AI Agent': '智能体角色、系统提示词、边界和工作流程。',
+    'AI 内容站': '内容站 SEO、部署、Search Console 和 AdSense。',
+  } as Record<string, string>)[topic.label] ?? '围绕该主题系统阅读和实践。',
+}));
+const coreTopicItems = topicDetails.slice(0, 6);
+const moreTopicItems = topicDetails.slice(6);
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description} canonical="/" jsonLd={jsonLd}>
   <section class="relative overflow-hidden bg-white">
     <div class="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-sky-50 to-transparent"></div>
     <div class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-      <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+      <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <p class="text-sm font-semibold uppercase tracking-[0.25em] text-sky-700">AI Productivity Playbook</p>
           <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">用 Prompt、Agent 和 Workflow 重构日常工作</h1>
@@ -75,10 +201,18 @@ const learningPaths = [
           </div>
         </div>
         <div class="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-2xl">
-          <div class="text-sm font-medium text-sky-200">本站适合解决</div>
-          <div class="mt-5 space-y-4">
-            {['写周报、日报、会议纪要和 PRD', '从主题快速生成 PPT 大纲', '用 AI 辅助代码审查和开发', '设计可复用 Skill、Agent 和 Workflow'].map((item) => (
-              <div class="rounded-2xl bg-white/10 p-4 text-sm leading-6 text-slate-100">{item}</div>
+          <div class="flex items-center justify-between gap-4">
+            <div class="text-sm font-medium text-sky-200">本站适合解决</div>
+            <a href="/resources/" class="text-xs font-medium text-slate-300 hover:text-white">查看资源合集 →</a>
+          </div>
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            {scenarioCards.map((item) => (
+              <a href={item.href} class="rounded-2xl bg-white/10 p-4 text-sm leading-6 text-slate-100 transition hover:bg-white/15">
+                <div class="font-semibold text-white">{item.title}</div>
+                <div class="mt-2 text-xs text-slate-300">适合：{item.audience}</div>
+                <div class="mt-1 text-xs text-sky-100">产出：{item.output}</div>
+                <div class="mt-3 text-xs font-medium text-sky-200">进入解决方案 →</div>
+              </a>
             ))}
           </div>
           <div class="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-6">
@@ -95,9 +229,41 @@ const learningPaths = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <SectionHeader eyebrow="Core Topics" title="热门主题" description="这些主题是本站的核心价值入口，按真实工作场景快速找到可复用方法。" href="/categories/" />
+    <SectionHeader eyebrow="Start here" title="不知道从哪里开始？先按任务复杂度选择" description="如果只是马上完成一件事，先用 Prompt；如果任务经常重复，沉淀成 Skill；如果需要持续判断，设计 Agent；如果跨多个步骤和工具，就使用 Workflow。" href="/guides/prompt-skill-agent-workflow/" />
+    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {conceptCards.map((concept) => (
+        <a href={concept.href} class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
+          <div class="text-sm font-semibold uppercase tracking-[0.16em] text-sky-700">{concept.name}</div>
+          <h2 class="mt-3 text-lg font-semibold leading-snug text-slate-950">{concept.title}</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{concept.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Core Topics" title="热门主题" description="只展示已有多篇内容支撑的成熟主题，避免进入后只有单篇内容。" href="/categories/" />
     <div class="mt-6 flex flex-wrap gap-3">
       {topCategories.map(([category, count]) => <CategoryPill label={category} count={count} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Use Cases" title="典型案例路径" description="从一个真实问题出发，按 Prompt、Skill、Agent、Workflow 的组合路径完成任务。" />
+    <div class="mt-8 grid gap-6 lg:grid-cols-3">
+      {casePaths.map((path) => (
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 class="text-xl font-semibold text-slate-950">{path.title}</h2>
+          <ol class="mt-5 space-y-4">
+            {path.steps.map((step, index) => (
+              <li class="flex gap-3 text-sm leading-6">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sky-50 text-xs font-semibold text-sky-700">{index + 1}</span>
+                <a href={step.href} class="font-medium text-slate-700 hover:text-sky-700">{step.label}</a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -109,15 +275,27 @@ const learningPaths = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <SectionHeader eyebrow="Topics" title="专题入口" description="按长期主题系统阅读，适合围绕一个方向连续学习和实践。" />
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {TOPIC_ITEMS.map((topic) => (
-        <a href={topic.href} class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
-          <div class="font-semibold text-slate-950">{topic.label}</div>
-          <div class="mt-2 text-sm leading-6 text-slate-500">查看专题内容 →</div>
+    <SectionHeader eyebrow="Topics" title="专题入口" description="优先展示已经形成内容簇的核心专题，适合围绕一个方向连续学习和实践。" />
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {coreTopicItems.map((topic) => (
+        <a href={topic.href} class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
+          <div class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">Core topic</div>
+          <div class="mt-3 text-xl font-semibold text-slate-950">{topic.label}</div>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{topic.description}</p>
+          <div class="mt-5 text-sm font-medium text-sky-700">查看专题内容 →</div>
         </a>
       ))}
     </div>
+    {moreTopicItems.length > 0 && (
+      <div class="mt-6 rounded-3xl border border-slate-200 bg-slate-50 p-5">
+        <div class="text-sm font-semibold text-slate-950">更多专题</div>
+        <div class="mt-3 flex flex-wrap gap-3">
+          {moreTopicItems.map((topic) => (
+            <a href={topic.href} class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-sky-200 hover:text-sky-700">{topic.label}</a>
+          ))}
+        </div>
+      </div>
+    )}
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -141,7 +319,7 @@ const learningPaths = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <SectionHeader eyebrow="Workflows" title="完整 AI 工作流" description="从输入到输出的多步骤方案，更适合处理复杂任务。" href="/workflows/" />
+    <SectionHeader eyebrow="Workflows" title="实战工作流精选" description="从输入到输出的多步骤方案，更适合处理 PRD、竞品分析、代码审查等复杂任务。" href="/workflows/" />
     <div class="mt-8 grid gap-6 md:grid-cols-3">
       {workflows.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
     </div>
@@ -156,7 +334,7 @@ const learningPaths = [
         </div>
       </div>
       <div>
-        <SectionHeader eyebrow="Tools" title="工具教程" description="把 AI 能力接入真实工具链。" href="/tools/" />
+        <SectionHeader eyebrow="Tools" title="工具教程精选" description="把 AI 能力接入 Claude Code、Cursor、Gemini、Figma、Obsidian 等真实工具链。" href="/tools/" />
         <div class="mt-6 space-y-4">
           {tools.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
         </div>
@@ -165,7 +343,7 @@ const learningPaths = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <SectionHeader eyebrow="Latest" title="最新文章" description="持续更新 AI 生产力教程、模板和案例。" />
+    <SectionHeader eyebrow="Latest" title="最新文章" description="排除上方工具教程和工作流精选后，展示更多不同类型的新内容。" />
     <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {latest.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
     </div>
@@ -177,19 +355,19 @@ const learningPaths = [
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h3 class="text-xl font-semibold text-slate-950">最新 Prompt</h3>
         <div class="mt-5 space-y-3">
-          {newestPrompts.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={`/${entry.collection}/${entry.id}/`}>{entry.data.title}</a>)}
+          {newestPrompts.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={getEntryHref(entry)}>{entry.data.title}</a>)}
         </div>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h3 class="text-xl font-semibold text-slate-950">最新 Workflow</h3>
         <div class="mt-5 space-y-3">
-          {newestWorkflows.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={`/${entry.collection}/${entry.id}/`}>{entry.data.title}</a>)}
+          {newestWorkflows.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={getEntryHref(entry)}>{entry.data.title}</a>)}
         </div>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h3 class="text-xl font-semibold text-slate-950">最新 Tool</h3>
         <div class="mt-5 space-y-3">
-          {newestTools.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={`/${entry.collection}/${entry.id}/`}>{entry.data.title}</a>)}
+          {newestTools.map((entry) => <a class="block text-sm font-medium leading-6 text-slate-700 hover:text-sky-700" href={getEntryHref(entry)}>{entry.data.title}</a>)}
         </div>
       </div>
     </div>

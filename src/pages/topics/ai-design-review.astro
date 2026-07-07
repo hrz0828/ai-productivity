@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['设计', '设计评审', 'Figma', 'AI 设计', '用户体验', '落地页', 'CTA'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+const reviewPath = [
+  { title: '生成设计 Brief', description: '先明确页面目标、用户路径、核心模块和 CTA。', href: '/tools/figma-ai-guide/' },
+  { title: '执行结构化评审', description: '从目标、层级、文案、状态和可访问性角度检查页面。', href: '/skills/design-review-skill/' },
+  { title: '沉淀完整工作流', description: '把评审结果转成可复用的设计评审流程。', href: '/workflows/design-review-with-ai/' },
+];
+const readingOrder = [
+  { label: '先读：Figma AI 设计辅助教程', href: '/tools/figma-ai-guide/', note: '理解设计 Brief、页面结构和 Figma 场景。' },
+  { label: '再用：设计评审 Skill', href: '/skills/design-review-skill/', note: '把主观反馈变成可执行的检查项和修改建议。' },
+  { label: '深入：用 AI 做设计评审工作流', href: '/workflows/design-review-with-ai/', note: '把评审流程沉淀为团队可复用方法。' },
+  { label: '扩展：落地页文案工作流', href: '/workflows/landing-page-copy-workflow/', note: '补充页面文案、CTA 和转化表达。' },
+];
+---
+
+<BaseLayout title="AI 设计评审专题：Figma、设计 Brief、页面评审和用户体验" description="汇总 AI 设计评审相关内容，包括 Figma AI、设计 Brief、设计评审 Skill、设计工作流和用户体验检查。" canonical="/topics/ai-design-review/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 设计评审专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">AI 设计评审的价值不是替代设计师判断美感，而是把页面目标、信息层级、CTA、文案、状态和可用性问题结构化，让评审更具体、更可执行。</p>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {reviewPath.map((item, index) => (
+        <a href={item.href} class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
+          <div class="flex h-8 w-8 items-center justify-center rounded-full bg-sky-50 text-sm font-semibold text-sky-700">{index + 1}</div>
+          <h2 class="mt-4 text-xl font-semibold text-slate-950">{item.title}</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
+        </a>
+      ))}
+    </div>
+
+    <section class="mt-10 rounded-[2rem] border border-sky-100 bg-sky-50/60 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">推荐阅读顺序</h2>
+      <p class="mt-3 text-sm leading-6 text-slate-600">如果你不是设计师，也可以按 Brief、评审 Skill、完整工作流的顺序逐步上手。</p>
+      <ol class="mt-6 grid gap-4 md:grid-cols-2">
+        {readingOrder.map((item, index) => (
+          <li class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+            <div class="text-sm font-semibold text-sky-700">Step {index + 1}</div>
+            <a href={item.href} class="mt-2 block font-semibold text-slate-950 hover:text-sky-700">{item.label}</a>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.note}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="mt-14 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">评审时优先看什么</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {['页面目标是否清晰', '主 CTA 是否突出', '信息层级是否合理', '空状态和错误状态是否覆盖'].map((item) => (
+          <div class="rounded-2xl bg-slate-50 p-4 text-sm font-medium leading-6 text-slate-700">{item}</div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-14">
+      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

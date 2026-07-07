@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['会议', '会议纪要', '行动项', '团队协作'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+const readingOrder = [
+  { label: '先用 Prompt 整理纪要', href: '/prompts/ai-meeting-minutes-prompt/', note: '适合单次会议，快速得到结构化纪要。' },
+  { label: '沉淀 Skill', href: '/skills/meeting-minutes-skill/', note: '适合团队反复整理同类会议记录。' },
+  { label: '使用完整 Workflow', href: '/workflows/meeting-to-action-items/', note: '从转写到行动项，再到会后同步。' },
+  { label: '配置会议纪要 Agent', href: '/agents/ai-meeting-minutes-agent/', note: '适合长期承担会议整理和跟进的助手角色。' },
+];
+---
+
+<BaseLayout title="AI 会议效率专题：会议纪要、行动项和会后跟进" description="汇总 AI 会议效率相关内容，包括会议纪要 Prompt、会议纪要 Skill、行动项工作流和会议纪要 Agent。" canonical="/topics/ai-meeting-efficiency/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 会议效率专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">AI 会议效率的重点不是生成一份漂亮纪要，而是把讨论转成结论、行动项、负责人、截止时间和待确认问题，让会议结束后真的能推进。</p>
+
+    <section class="mt-10 rounded-[2rem] border border-sky-100 bg-sky-50/60 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">推荐阅读顺序</h2>
+      <p class="mt-3 text-sm leading-6 text-slate-600">如果你想系统优化会议效率，可以从单次 Prompt 开始，再逐步升级为 Skill、Workflow 和 Agent。</p>
+      <ol class="mt-6 grid gap-4 md:grid-cols-2">
+        {readingOrder.map((item, index) => (
+          <li class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+            <div class="text-sm font-semibold text-sky-700">Step {index + 1}</div>
+            <a href={item.href} class="mt-2 block font-semibold text-slate-950 hover:text-sky-700">{item.label}</a>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.note}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">会前</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">明确会议目标、议题和需要决策的问题，让 AI 知道纪要应该关注什么。</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">会中</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">保留关键上下文、讨论分歧和明确结论，避免只留下零散口头语。</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">会后</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">将会议内容转成行动项表格，并由参会人确认负责人和截止时间。</p>
+      </div>
+    </div>
+
+    <section class="mt-14">
+      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

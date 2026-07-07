@@ -15,6 +15,57 @@ const { title, description, collection, entries } = Astro.props;
 const categories = [...new Set(entries.map((entry) => entry.data.category))].sort();
 const featured = entries.filter((entry) => entry.data.featured);
 const normalEntries = entries.filter((entry) => !entry.data.featured);
+const collectionGuides: Record<CollectionName, { subtitle: string; startHere: { label: string; href: string; note: string }[] }> = {
+  prompts: {
+    subtitle: 'Prompt 是可直接复制使用的 AI 指令模板，适合快速完成一次具体任务。',
+    startHere: [
+      { label: '如何写出高质量 Prompt', href: '/guides/high-quality-prompt-guide/', note: '先理解结构、约束和迭代方法' },
+      { label: 'AI 写周报 Prompt', href: '/prompts/ai-weekly-report-prompt/', note: '从低门槛办公场景开始试用' },
+      { label: 'AI PRD Prompt', href: '/prompts/ai-prd-prompt/', note: '适合产品和项目文档' },
+    ],
+  },
+  skills: {
+    subtitle: 'Skill 是可复用的 AI 能力模块，适合把反复出现的任务沉淀成固定输入、步骤和输出。',
+    startHere: [
+      { label: '会议纪要整理 Skill', href: '/skills/meeting-minutes-skill/', note: '学习如何定义输入和输出' },
+      { label: 'SEO Brief 生成 Skill', href: '/skills/seo-brief-skill/', note: '适合内容生产流程' },
+      { label: '代码审查 Skill', href: '/skills/code-review-skill/', note: '适合技术团队复用' },
+    ],
+  },
+  agents: {
+    subtitle: 'Agent 是带角色、目标和工作方式的 AI 助手配置，适合持续处理某一类问题。',
+    startHere: [
+      { label: 'AI 产品经理 Agent', href: '/agents/ai-product-manager-agent/', note: '理解角色型助手怎么工作' },
+      { label: 'AI 研究助理 Agent', href: '/agents/ai-research-assistant-agent/', note: '适合资料收集和分析' },
+      { label: '如何设计 AI Agent', href: '/guides/design-ai-agent-guide/', note: '系统学习设计方法' },
+    ],
+  },
+  tools: {
+    subtitle: 'Tool 是 AI 工具、开发工具和自动化工具教程，帮助你把 AI 接入真实工作链路。',
+    startHere: [
+      { label: 'Claude Code 入门', href: '/tools/claude-code-guide/', note: '适合开发者上手' },
+      { label: 'Cursor AI 编程指南', href: '/tools/cursor-ai-coding-guide/', note: '适合日常编码提效' },
+      { label: 'Obsidian + AI 知识管理', href: '/tools/obsidian-ai-guide/', note: '适合个人知识库' },
+    ],
+  },
+  workflows: {
+    subtitle: 'Workflow 是从输入到产出的完整 AI 工作流程，适合需要多步骤、多工具和人工复核的复杂任务。',
+    startHere: [
+      { label: '用 AI 做需求分析', href: '/workflows/demand-analysis-with-ai/', note: '先判断需求是否值得做' },
+      { label: '用 AI 做竞品分析', href: '/workflows/competitive-analysis-with-ai/', note: '研究分析完整流程' },
+      { label: '用 AI 做代码审查', href: '/workflows/code-review-with-ai/', note: '研发协作完整流程' },
+    ],
+  },
+  guides: {
+    subtitle: 'Guide 是方法论、工具选型和系统搭建指南，适合先建立认知框架再选择具体模板。',
+    startHere: [
+      { label: 'Prompt、Skill、Agent、Workflow 区别', href: '/guides/prompt-skill-agent-workflow/', note: '先理解核心概念' },
+      { label: 'AI 生产力指南', href: '/guides/ai-productivity-guide/', note: '建立整体使用框架' },
+      { label: 'AI 工具选型指南', href: '/guides/ai-tools-selection-guide/', note: '选择合适工具组合' },
+    ],
+  },
+};
+const guide = collectionGuides[collection];
 ---
 
 <BaseLayout title={title} description={description} canonical={`/${collection}/`}>
@@ -25,11 +76,29 @@ const normalEntries = entries.filter((entry) => !entry.data.featured);
           <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">{collection}</p>
           <h1 class="mt-3 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{title}</h1>
           <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{description}</p>
+          <p class="mt-3 max-w-3xl text-base leading-7 text-slate-500">{guide.subtitle}</p>
           <div class="mt-6 flex flex-wrap gap-2">
             {categories.map((category) => <CategoryPill label={category} count={entries.filter((entry) => entry.data.category === category).length} />)}
           </div>
         </div>
         <SearchEntry compact />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="rounded-3xl border border-sky-100 bg-sky-50/60 p-6">
+      <div class="mb-5">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Start here</p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">新手推荐入口</h2>
+      </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        {guide.startHere.map((item) => (
+          <a href={item.href} class="rounded-2xl border border-sky-100 bg-white p-4 shadow-sm transition hover:border-sky-200 hover:shadow-md">
+            <div class="font-semibold leading-6 text-slate-950">{item.label}</div>
+            <div class="mt-2 text-sm leading-6 text-slate-600">{item.note}</div>
+          </a>
+        ))}
       </div>
     </div>
   </section>

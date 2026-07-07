@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['产品经理', 'PRD', '需求分析', '用户场景', '竞品分析', '需求文档', '产品研究'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+const workflowSteps = [
+  { title: '需求分析', description: '先判断需求是否真实、是否值得做、是否有更低成本方案。', href: '/workflows/demand-analysis-with-ai/' },
+  { title: 'PRD 初稿', description: '把明确后的功能想法整理成背景、场景、功能需求和验收标准。', href: '/prompts/ai-prd-prompt/' },
+  { title: '完整工作流', description: '从澄清目标到评审清单，系统完成一份 PRD。', href: '/workflows/write-prd-with-ai/' },
+  { title: 'Agent 复核', description: '用产品经理 Agent 检查目标、边界、风险和待确认问题。', href: '/agents/ai-product-manager-agent/' },
+];
+const readingOrder = [
+  { label: '先读：用 AI 做需求分析', href: '/workflows/demand-analysis-with-ai/', note: '适合需求还模糊、只有一句话想法时使用。' },
+  { label: '再读：AI 写 PRD Prompt', href: '/prompts/ai-prd-prompt/', note: '适合把明确后的功能想法快速写成 PRD 初稿。' },
+  { label: '深入：用 AI 从零写 PRD', href: '/workflows/write-prd-with-ai/', note: '适合需要完整评审流程和检查清单的场景。' },
+  { label: '扩展：AI 竞品分析 Prompt', href: '/prompts/ai-competitor-analysis-prompt/', note: '适合在需求评审前补充外部参考和竞品视角。' },
+];
+---
+
+<BaseLayout title="AI 产品经理专题：需求分析、PRD、竞品分析和产品 Agent" description="汇总 AI 产品经理相关内容，包括需求分析工作流、PRD Prompt、产品经理 Agent、竞品分析和用户场景拆解。" canonical="/topics/ai-product-manager/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 产品经理专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">产品经理使用 AI 的重点不是直接生成一份“看起来完整”的 PRD，而是先澄清问题、验证需求、拆解场景、识别风险，再进入文档写作和评审。</p>
+
+    <div class="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">推荐路径：从需求到 PRD</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-4">
+        {workflowSteps.map((step, index) => (
+          <a href={step.href} class="rounded-3xl border border-slate-200 bg-slate-50 p-5 transition hover:border-sky-200 hover:bg-sky-50">
+            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-sky-600 text-sm font-semibold text-white">{index + 1}</div>
+            <h3 class="mt-4 text-lg font-semibold text-slate-950">{step.title}</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-600">{step.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <section class="mt-10 rounded-[2rem] border border-sky-100 bg-sky-50/60 p-6 md:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">推荐阅读顺序</h2>
+      <p class="mt-3 text-sm leading-6 text-slate-600">如果你是第一次用 AI 做产品工作，建议按下面顺序阅读，而不是直接从 PRD 模板开始。</p>
+      <ol class="mt-6 grid gap-4 md:grid-cols-2">
+        {readingOrder.map((item, index) => (
+          <li class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+            <div class="text-sm font-semibold text-sky-700">Step {index + 1}</div>
+            <a href={item.href} class="mt-2 block font-semibold text-slate-950 hover:text-sky-700">{item.label}</a>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.note}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">需求判断</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">区分用户问题、业务目标和解决方案，避免把“别人要的功能”直接写成需求。</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">文档生成</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">用 AI 生成 PRD、用户故事、验收标准和评审材料，但事实和优先级必须人工确认。</p>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-slate-950">研究分析</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">将竞品、用户访谈和调研资料整理成可讨论的产品机会点。</p>
+      </div>
+    </div>
+
+    <section class="mt-14">
+      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

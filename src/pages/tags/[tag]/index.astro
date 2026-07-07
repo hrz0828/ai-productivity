@@ -13,14 +13,22 @@ export async function getStaticPaths() {
     props: {
       tag,
       entries: entries.filter((entry) => entry.data.tags.includes(tag)),
+      allEntries: entries,
     },
   }));
 }
 
-const { tag, entries } = Astro.props;
+const { tag, entries, allEntries } = Astro.props;
 const title = `#${tag} 标签文章 - ai-productivity`;
 const description = `浏览 ai-productivity 中 #${tag} 标签下的 AI Prompt、Skill、Agent、Tool、Workflow 和 Guide。`;
 const canonical = `/tags/${encodeURIComponent(tag)}/`;
+const isThinTag = entries.length < 3;
+const relatedEntries = allEntries
+  .filter((entry) => !entry.data.tags.includes(tag))
+  .filter((entry) => entry.data.tags.some((candidateTag) => entries.some((current) => current.data.tags.includes(candidateTag))))
+  .slice(0, 3);
+const fallbackEntries = allEntries.filter((entry) => !entries.some((current) => current.id === entry.id && current.collection === entry.collection)).slice(0, 3);
+const recommendations = relatedEntries.length ? relatedEntries : fallbackEntries;
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical}>
@@ -31,6 +39,9 @@ const canonical = `/tags/${encodeURIComponent(tag)}/`;
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Tag</p>
           <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">#{tag}</h1>
           <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">共收录 {entries.length} 篇内容，帮助你按关键词快速定位 AI 生产力方法、模板与实战案例。</p>
+          {isThinTag && (
+            <p class="mt-3 max-w-3xl text-base leading-7 text-amber-700">这个标签下的内容还在扩充中。下方会补充相近主题，避免只停留在单篇内容。</p>
+          )}
           <div class="mt-6 flex flex-wrap gap-3 text-sm">
             <a class="font-medium text-sky-700 hover:text-sky-900" href="/tags/">← 返回全部标签</a>
             <a class="font-medium text-sky-700 hover:text-sky-900" href="/search/">搜索更多内容 →</a>
@@ -53,4 +64,17 @@ const canonical = `/tags/${encodeURIComponent(tag)}/`;
       {entries.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
     </div>
   </section>
+
+  {isThinTag && recommendations.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+      <div class="mb-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Related</p>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">推荐延伸阅读</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">当前标签内容较少，先通过这些相近文章继续阅读。</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {recommendations.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+      </div>
+    </section>
+  )}
 </BaseLayout>

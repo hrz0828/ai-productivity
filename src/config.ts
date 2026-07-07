@@ -20,11 +20,15 @@ export const NAV_ITEMS = [
 
 export const TOPIC_ITEMS = [
   { label: 'AI 写作', href: '/topics/ai-writing/' },
+  { label: 'AI 产品经理', href: '/topics/ai-product-manager/' },
   { label: 'AI 编程', href: '/topics/ai-coding/' },
-  { label: 'AI 内容站', href: '/topics/ai-content-site/' },
+  { label: 'AI 知识管理', href: '/topics/ai-knowledge-management/' },
+  { label: 'AI 设计评审', href: '/topics/ai-design-review/' },
   { label: 'AI PPT', href: '/topics/ai-ppt/' },
+  { label: 'AI 会议效率', href: '/topics/ai-meeting-efficiency/' },
   { label: 'AI 自动化', href: '/topics/ai-automation/' },
   { label: 'AI Agent', href: '/topics/ai-agent/' },
+  { label: 'AI 内容站', href: '/topics/ai-content-site/' },
 ];
 
 export const COLLECTION_LABELS = {

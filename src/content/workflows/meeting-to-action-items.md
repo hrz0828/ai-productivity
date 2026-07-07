@@ -62,3 +62,9 @@ ogImage: "/images/og/default.png"
 
 AI 可以整理行动项，但不要替团队指定负责人。负责人和时间需要会后确认。
 
+## 延伸阅读
+
+- [AI 会议纪要 Agent：整理会议结论、行动项和跟进清单](/agents/ai-meeting-minutes-agent/)
+- [AI 会议纪要 Prompt：快速整理会议记录和行动项](/prompts/ai-meeting-minutes-prompt/)
+- [会议纪要整理 Skill：把会议记录变成可执行行动项](/skills/meeting-minutes-skill/)
+

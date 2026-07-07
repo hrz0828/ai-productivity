@@ -1,11 +1,33 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const glossary = [
+  { term: 'Prompt', cn: '提示词 / 给 AI 的任务指令', desc: '告诉 AI 要做什么、基于什么材料、按什么格式输出。适合一次性任务，例如写周报、改邮件、生成大纲。' },
+  { term: 'Skill', cn: '技能模块 / 可复用的 AI 能力', desc: '把一类任务的输入、步骤、输出和边界沉淀下来，适合反复复用，例如会议纪要整理 Skill。' },
+  { term: 'Agent', cn: '智能体 / 带目标和工具的 AI 助手', desc: '具备角色、目标、工作流程和约束的 AI 助手，适合持续处理某类问题，例如产品经理 Agent。' },
+  { term: 'Workflow', cn: '工作流 / 多步骤任务流程', desc: '把 Prompt、Skill、工具和人工检查点串起来，完成从输入到产出的复杂任务。' },
+  { term: 'Brief', cn: '创作简报 / 任务说明书', desc: '给写作者、设计师或 AI 的任务说明，通常包含目标、受众、背景、素材、风格和交付要求。' },
+  { term: 'CTA', cn: '行动号召 / 转化引导话术', desc: '引导用户点击、注册、下载、咨询或购买的文字，例如“立即查看模板”。' },
+  { term: 'JD', cn: '岗位说明 / 招聘职位描述', desc: '招聘场景中的职位说明，通常包含职责、要求、加分项、薪资范围和团队介绍。' },
+  { term: 'PRD', cn: '产品需求文档', desc: '产品经理用于描述需求背景、目标、用户故事、功能规则、验收标准和风险的文档。' },
+  { term: 'SEO', cn: '搜索引擎优化', desc: '通过内容结构、关键词、内链、页面体验和技术配置，让页面更容易被搜索引擎理解和收录。' },
+  { term: 'SOP', cn: '标准作业流程', desc: '把一项重复工作拆成稳定步骤、责任人、输入输出和检查点，方便团队执行和复盘。' },
+];
+const topicResources = [
+  { title: 'AI 产品经理', href: '/topics/ai-product-manager/', desc: '需求分析、PRD、产品经理 Agent 和竞品分析。' },
+  { title: 'AI 知识管理', href: '/topics/ai-knowledge-management/', desc: 'Notion、Obsidian、资料总结和个人知识库。' },
+  { title: 'AI 设计评审', href: '/topics/ai-design-review/', desc: 'Figma、设计 Brief、页面评审和用户体验检查。' },
+  { title: 'AI 写作', href: '/topics/ai-writing/', desc: '周报、邮件、PRD、SEO 文章和内容创作。' },
+  { title: 'AI 编程', href: '/topics/ai-coding/', desc: 'Claude Code、Cursor、代码审查和部署自动化。' },
+  { title: 'AI 会议效率', href: '/topics/ai-meeting-efficiency/', desc: '会议纪要、行动项、会后跟进和会议 Agent。' },
+  { title: 'AI 自动化', href: '/topics/ai-automation/', desc: 'n8n、自动化工具和重复任务工作流。' },
+];
 ---
-<BaseLayout title="Resources - ai-productivity" description="AI 生产力资源合集，包括 Prompt 模板、Skill 模板、Agent 配置和 Workflow 检查清单。" canonical="/resources/">
+<BaseLayout title="Resources - ai-productivity" description="AI 生产力资源合集，包括 Prompt 模板、Skill 模板、Agent 配置、Workflow 检查清单和 AI 生产力术语表。" canonical="/resources/">
   <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
     <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Resources</p>
     <h1 class="mt-3 text-4xl font-bold text-slate-950">AI 生产力资源合集</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">这里汇总本站最适合复用的模板、工作流和工具教程，帮助你从具体任务开始搭建自己的 AI 工作系统。</p>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">这里汇总本站最适合复用的模板、工作流、工具教程和术语解释，帮助你从具体任务开始搭建自己的 AI 工作系统。</p>
 
     <div class="mt-10 grid gap-6 md:grid-cols-2">
       <a href="/prompts/" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-sky-200 hover:shadow-lg">
@@ -27,6 +49,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </div>
 
     <div class="mt-12 grid gap-6">
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Learning paths</p>
+            <h2 class="mt-2 text-2xl font-bold text-slate-950">按专题学习</h2>
+          </div>
+          <a href="/topics/ai-writing/" class="text-sm font-medium text-sky-700 hover:text-sky-900">查看专题入口 →</a>
+        </div>
+        <p class="mt-3 text-sm leading-6 text-slate-600">如果你不想按 Prompt、Skill、Agent、Workflow 分类阅读，可以直接按工作场景进入专题。</p>
+        <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {topicResources.map((topic) => (
+            <a href={topic.href} class="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-sky-200 hover:bg-sky-50">
+              <h3 class="font-semibold text-slate-950">{topic.title}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">{topic.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-2xl font-bold text-slate-950">AI 生产力术语表</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">本站保留常见英文术语，但每个概念都提供中文解释，方便跨行业新手理解。</p>
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          {glossary.map((item) => (
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-lg font-semibold text-slate-950">{item.term}</h3>
+                <span class="rounded-full bg-white px-3 py-1 text-xs font-medium text-sky-700">{item.cn}</span>
+              </div>
+              <p class="mt-3 text-sm leading-6 text-slate-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-2xl font-bold text-slate-950">通用 Prompt 模板</h2>
         <pre class="mt-5 overflow-x-auto rounded-2xl bg-slate-950 p-5 text-sm leading-6 text-slate-100"><code>你是[角色]，擅长[能力]。
