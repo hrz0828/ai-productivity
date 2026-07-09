@@ -1,0 +1,99 @@
+---
+interface Props {
+  title: string;
+  collection: string;
+  slug: string;
+}
+
+const { title, collection, slug } = Astro.props;
+const feedbackItems = [
+  { id: 'useful', label: '👍 有用', message: '感谢反馈，我们会优先保留和扩展这类内容。' },
+  { id: 'not-useful', label: '👎 没帮助', message: '已记录。你也可以通过下方入口告诉我们哪里需要改进。' },
+  { id: 'outdated', label: '内容过时 / 催更', message: '已收到催更信号。我们会优先检查这篇内容。' },
+  { id: 'better-prompt', label: '我有更好的 Prompt', message: '欢迎提交你的改进版本，我们会评估后整理发布。' },
+];
+const feedbackKey = `${collection}/${slug}`;
+const articleUrl = `/${collection}/${slug}/`;
+const contactHref = `/feedback/?url=${encodeURIComponent(articleUrl)}`;
+const submitPromptHref = `/submit-prompt/?source=${encodeURIComponent(articleUrl)}`;
+---
+
+<section class="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" data-feedback-widget data-feedback-key={feedbackKey} data-article-title={title} data-collection={collection}>
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Feedback</p>
+      <h2 class="mt-2 text-2xl font-bold text-slate-950">这篇内容对你有帮助吗？</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-600">你的反馈会帮助我们优先更新过时内容、补充更好用的 Prompt。</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href={contactHref} class="inline-flex rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">提交详细建议 →</a>
+      <a href={submitPromptHref} class="inline-flex rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-700 transition hover:border-sky-300 hover:bg-sky-100">提交 Prompt →</a>
+    </div>
+  </div>
+
+  <div class="mt-5 flex flex-wrap gap-3">
+    {feedbackItems.map((item) => (
+      <button type="button" class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700 disabled:cursor-not-allowed disabled:opacity-60" data-feedback-value={item.id} data-feedback-message={item.message}>
+        {item.label}
+      </button>
+    ))}
+  </div>
+  <p class="mt-4 hidden text-sm font-medium text-sky-700" data-feedback-status aria-live="polite"></p>
+</section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-feedback-widget]').forEach((widget) => {
+      const key = widget.dataset.feedbackKey;
+      const title = widget.dataset.articleTitle;
+      const collection = widget.dataset.collection;
+      const storageKey = `article-feedback:${key}`;
+      const status = widget.querySelector('[data-feedback-status]');
+      const buttons = widget.querySelectorAll('[data-feedback-value]');
+      const previousValue = window.localStorage.getItem(storageKey);
+
+      function showStatus(message) {
+        if (!status) return;
+        status.textContent = message;
+        status.classList.remove('hidden');
+      }
+
+      if (previousValue) {
+        buttons.forEach((button) => {
+          if (button.dataset.feedbackValue === previousValue) {
+            button.textContent = `${button.textContent} · 已记录`;
+          }
+        });
+        showStatus('你已经反馈过这篇内容，感谢帮助我们改进。');
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const value = button.dataset.feedbackValue;
+          window.localStorage.setItem(storageKey, value);
+          buttons.forEach((item) => item.removeAttribute('disabled'));
+          button.setAttribute('disabled', 'true');
+          showStatus(button.dataset.feedbackMessage || '已收到反馈，感谢。');
+          window.trackInteraction?.('article_feedback_click', {
+            feedback_value: value,
+            article_key: key,
+            article_title: title,
+            collection,
+          });
+
+          if (value === 'outdated') {
+            window.setTimeout(() => {
+              window.location.href = `/feedback/?url=${encodeURIComponent(window.location.pathname)}&type=${encodeURIComponent('内容过时')}`;
+            }, 500);
+          }
+
+          if (value === 'better-prompt') {
+            window.setTimeout(() => {
+              window.location.href = `/submit-prompt/?source=${encodeURIComponent(window.location.pathname)}`;
+            }, 500);
+          }
+        });
+      });
+    });
+  });
+</script>

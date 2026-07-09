@@ -4,6 +4,7 @@ import ArticleCard from '../components/ArticleCard.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import CategoryPill from '../components/CategoryPill.astro';
 import SearchEntry from '../components/SearchEntry.astro';
+import QuickPromptShowcase from '../components/QuickPromptShowcase.astro';
 import { NAV_ITEMS, SITE, TOPIC_ITEMS } from '../config';
 import { getAllPublishedEntries } from '../utils/content';
 import { organizationJsonLd, websiteJsonLd } from '../utils/seo';
@@ -78,27 +79,27 @@ const scenarioCards = [
 const conceptCards = [
   {
     name: 'Prompt',
-    title: '提示词 / 给 AI 的任务指令',
+    title: '直接复制提示词',
     description: '适合马上完成一次具体任务，例如写周报、生成大纲或改写邮件。',
     href: '/prompts/',
   },
   {
+    name: 'Workflow',
+    title: '跟着步骤完成任务',
+    description: '适合复杂任务，把 Prompt、工具、人工检查点组合成完整路径。',
+    href: '/workflows/',
+  },
+  {
     name: 'Skill',
-    title: '技能模块 / 可复用的 AI 能力',
+    title: '沉淀可复用能力',
     description: '适合反复完成同类任务，把输入、步骤、输出格式沉淀下来。',
     href: '/skills/',
   },
   {
     name: 'Agent',
-    title: '智能体 / 带目标和角色的 AI 助手',
+    title: '搭建自动执行助手',
     description: '适合持续处理一类问题，例如产品经理 Agent、SEO 编辑 Agent。',
     href: '/agents/',
-  },
-  {
-    name: 'Workflow',
-    title: '工作流 / 多步骤任务流程',
-    description: '适合复杂任务，把 Prompt、工具、人工检查点组合成完整路径。',
-    href: '/workflows/',
   },
 ];
 const casePaths = [
@@ -178,6 +179,7 @@ const topicDetails = TOPIC_ITEMS.map((topic) => ({
     'AI 会议效率': '会议纪要、行动项、会后跟进和会议 Agent。',
     'AI 自动化': 'n8n、工作流自动化和重复任务处理。',
     'AI Agent': '智能体角色、系统提示词、边界和工作流程。',
+    '多模态 AI': 'AI 视频、图像设计、语音智能体和数字人工作流。',
     'AI 内容站': '内容站 SEO、部署、Search Console 和 AdSense。',
   } as Record<string, string>)[topic.label] ?? '围绕该主题系统阅读和实践。',
 }));
@@ -196,7 +198,7 @@ const moreTopicItems = topicDetails.slice(6);
           <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">探索 AI Prompt、Skill、Agent、Tool 与 Workflow，提升文档、PPT、设计、代码和办公自动化效率。</p>
           <div class="mt-8"><SearchEntry /></div>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/workflows/" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">查看工作流</a>
+            <a href="#quick-prompts" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">复制热门 Prompt</a>
             <a href="/guides/prompt-skill-agent-workflow/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">理解核心概念</a>
           </div>
         </div>
@@ -228,8 +230,23 @@ const moreTopicItems = topicDetails.slice(6);
     </div>
   </section>
 
+  <QuickPromptShowcase />
+
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-    <SectionHeader eyebrow="Start here" title="不知道从哪里开始？先按任务复杂度选择" description="如果只是马上完成一件事，先用 Prompt；如果任务经常重复，沉淀成 Skill；如果需要持续判断，设计 Agent；如果跨多个步骤和工具，就使用 Workflow。" href="/guides/prompt-skill-agent-workflow/" />
+    <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div class="grid gap-6 lg:grid-cols-[1fr_320px] lg:items-center">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Task finder</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-950">不知道该找 Prompt、Skill 还是 Workflow？</h2>
+          <p class="mt-3 text-base leading-7 text-slate-600">直接按“我要完成什么任务”浏览：写周报、做 PRD、竞品分析、代码审查、知识库搭建等场景已经整理好推荐路径。</p>
+        </div>
+        <a href="/tasks/" class="inline-flex justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">按任务找工具 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <SectionHeader eyebrow="Start here" title="不知道从哪里开始？先按任务复杂度选择" description="如果只是马上完成一件事，先复制 Prompt；如果想按流程做完一件事，选择 Workflow；如果任务经常重复，沉淀成 Skill；如果需要持续判断，设计 Agent。" href="/guides/prompt-skill-agent-workflow/" />
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {conceptCards.map((concept) => (
         <a href={concept.href} class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">

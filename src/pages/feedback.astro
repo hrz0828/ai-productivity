@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const email = 'hanruizhao001@gmail.com';
+const feedbackTypes = ['内容过时', 'Prompt 效果不好', '步骤看不懂', '链接或工具信息错误', '我有更好的写法', '其他问题'];
+---
+
+<BaseLayout title="内容反馈 - ai-productivity" description="反馈 ai-productivity 文章中的过时信息、Prompt 效果问题、步骤不清楚或工具信息错误。" canonical="/feedback/">
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Feedback</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">反馈内容问题或催更</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">AI 工具和 Prompt 更新很快。如果你发现内容过时、步骤不清楚、Prompt 效果不好，欢迎提交反馈，我们会优先处理高频问题。</p>
+
+    <div class="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <form data-feedback-form class="space-y-6">
+        <label class="block">
+          <span class="text-sm font-medium text-slate-700">页面链接</span>
+          <input name="pageUrl" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="url" placeholder="https://sts2hub.com/prompts/..." />
+        </label>
+
+        <label class="block">
+          <span class="text-sm font-medium text-slate-700">反馈类型</span>
+          <select name="type" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+            {feedbackTypes.map((type) => <option value={type}>{type}</option>)}
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="text-sm font-medium text-slate-700">问题描述</span>
+          <textarea name="detail" class="mt-2 min-h-36 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm leading-6 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="请说明哪里有问题、你期望怎样改、是否有新的工具版本或更好的 Prompt 写法。"></textarea>
+        </label>
+
+        <label class="block">
+          <span class="text-sm font-medium text-slate-700">你的联系方式（可选）</span>
+          <input name="contact" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="text" placeholder="邮箱 / 微信 / GitHub，方便需要时进一步确认" />
+        </label>
+
+        <div class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+          当前版本先通过邮件承接反馈，不需要登录。点击提交后会打开你的邮箱客户端，并自动带上反馈内容。
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <button type="submit" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-700">生成反馈邮件</button>
+          <a href={`mailto:${email}`} class="rounded-full border border-slate-200 px-6 py-3 text-center text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">直接发邮件</a>
+        </div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline define:vars={{ email }}>
+  const form = document.querySelector('[data-feedback-form]');
+  const params = new URLSearchParams(window.location.search);
+  const pageUrlInput = form?.querySelector('[name="pageUrl"]');
+  const typeSelect = form?.querySelector('[name="type"]');
+
+  if (pageUrlInput && params.get('url')) pageUrlInput.value = params.get('url');
+  if (typeSelect && params.get('type')) typeSelect.value = params.get('type');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const pageUrl = data.get('pageUrl') || window.location.href;
+    const type = data.get('type') || '内容反馈';
+    const detail = data.get('detail') || '（请在这里补充问题描述）';
+    const contact = data.get('contact') || '未提供';
+    const subject = `内容反馈：${type}`;
+    const body = `页面链接：\n${pageUrl}\n\n反馈类型：\n${type}\n\n问题描述：\n${detail}\n\n联系方式：\n${contact}`;
+
+    window.trackInteraction?.('feedback_mailto_submit', {
+      feedback_type: type,
+      page_url: pageUrl,
+    });
+
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>

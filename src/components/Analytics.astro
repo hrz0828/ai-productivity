@@ -23,3 +23,25 @@ const cloudflareToken = import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN;
     data-cf-beacon={`{"token":"${cloudflareToken}"}`}
   ></script>
 )}
+
+<script is:inline>
+  window.trackInteraction = window.trackInteraction || function trackInteraction(eventName, payload = {}) {
+    if (!eventName) return;
+
+    const enrichedPayload = {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      referrer: document.referrer || undefined,
+      timestamp: new Date().toISOString(),
+      ...payload,
+    };
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, enrichedPayload);
+    }
+
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      console.debug('[interaction]', eventName, enrichedPayload);
+    }
+  };
+</script>

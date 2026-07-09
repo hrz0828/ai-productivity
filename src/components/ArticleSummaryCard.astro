@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { COLLECTION_LABELS } from '../config';
+import { getReadingTime } from '../utils/readingTime';
+import type { CollectionName } from '../utils/content';
+
+type Entry = CollectionEntry<'prompts'> | CollectionEntry<'skills'> | CollectionEntry<'agents'> | CollectionEntry<'tools'> | CollectionEntry<'workflows'> | CollectionEntry<'guides'>;
+
+interface Props {
+  entry: Entry;
+  collection: CollectionName;
+  body: string;
+}
+
+const { entry, collection, body } = Astro.props;
+const typeLabel = COLLECTION_LABELS[collection];
+const primaryTags = entry.data.tags.slice(0, 3);
+const outcomeByCollection: Record<CollectionName, string> = {
+  prompts: '一段可复制使用的 Prompt 模板',
+  skills: '一套可复用的 AI 能力模块',
+  agents: '一个可配置的 AI 助手角色',
+  tools: '一个工具的上手路径和避坑建议',
+  workflows: '一套从输入到输出的完整执行流程',
+  guides: '一个主题的认知框架和行动建议',
+};
+const audience = primaryTags.length ? primaryTags.join(' / ') : entry.data.category;
+const tools = primaryTags.length ? primaryTags.join('、') : '通用 AI 工具';
+const summaryItems = [
+  { label: '适合人群', value: audience },
+  { label: '内容类型', value: typeLabel },
+  { label: '使用工具 / 标签', value: tools },
+  { label: '预计阅读', value: getReadingTime(body) },
+  { label: '你将获得', value: outcomeByCollection[collection] },
+];
+---
+
+<section class="mt-8 rounded-3xl border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-white p-6 shadow-sm sm:p-8">
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Quick summary</p>
+      <h2 class="mt-2 text-2xl font-bold text-slate-950">开始前先看这张摘要卡</h2>
+    </div>
+    <a href="/tasks/" class="text-sm font-semibold text-sky-700 hover:text-sky-900">按任务找更多 →</a>
+  </div>
+  <dl class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    {summaryItems.map((item) => (
+      <div class="rounded-2xl border border-sky-100 bg-white p-4 shadow-sm">
+        <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">{item.label}</dt>
+        <dd class="mt-2 text-sm font-semibold leading-6 text-slate-950">{item.value}</dd>
+      </div>
+    ))}
+  </dl>
+</section>

@@ -1,0 +1,104 @@
+---
+import type { AnyContentEntry } from '../utils/content';
+
+interface Props {
+  entries: AnyContentEntry[];
+}
+
+const { entries } = Astro.props;
+const categories = [...new Set(entries.map((entry) => entry.data.category))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))]
+  .sort((a, b) => a.localeCompare(b, 'zh-CN'))
+  .slice(0, 24);
+---
+
+<div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm" data-listing-filters>
+  <div class="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
+    <label class="block">
+      <span class="text-sm font-medium text-slate-700">按关键词筛选</span>
+      <input data-filter-query class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="search" placeholder="输入标题、摘要或标签..." />
+    </label>
+    <label class="block">
+      <span class="text-sm font-medium text-slate-700">按分类</span>
+      <select data-filter-category class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+        <option value="">全部分类</option>
+        {categories.map((category) => <option value={category}>{category}</option>)}
+      </select>
+    </label>
+    <label class="block">
+      <span class="text-sm font-medium text-slate-700">按标签</span>
+      <select data-filter-tag class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+        <option value="">全部标签</option>
+        {tags.map((tag) => <option value={tag}>{tag}</option>)}
+      </select>
+    </label>
+  </div>
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
+    <p class="text-slate-500" data-filter-status>显示全部内容。</p>
+    <button type="button" class="rounded-full border border-slate-200 px-4 py-2 font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700" data-filter-reset>重置筛选</button>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filters = document.querySelector('[data-listing-filters]');
+    const grid = document.querySelector('[data-listing-grid]');
+    if (!filters || !grid) return;
+
+    const queryInput = filters.querySelector('[data-filter-query]');
+    const categorySelect = filters.querySelector('[data-filter-category]');
+    const tagSelect = filters.querySelector('[data-filter-tag]');
+    const resetButton = filters.querySelector('[data-filter-reset]');
+    const status = filters.querySelector('[data-filter-status]');
+    const cards = [...grid.querySelectorAll('[data-listing-card]')];
+    let timer;
+
+    function normalize(value) {
+      return (value || '').toString().trim().toLowerCase();
+    }
+
+    function applyFilters() {
+      const query = normalize(queryInput?.value);
+      const category = categorySelect?.value || '';
+      const tag = tagSelect?.value || '';
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const haystack = normalize(card.dataset.searchText);
+        const cardCategory = card.dataset.category || '';
+        const cardTags = (card.dataset.tags || '').split('|').filter(Boolean);
+        const matchesQuery = !query || haystack.includes(query);
+        const matchesCategory = !category || cardCategory === category;
+        const matchesTag = !tag || cardTags.includes(tag);
+        const visible = matchesQuery && matchesCategory && matchesTag;
+        card.classList.toggle('hidden', !visible);
+        if (visible) visibleCount += 1;
+      });
+
+      if (status) {
+        status.textContent = visibleCount === cards.length ? '显示全部内容。' : `筛选出 ${visibleCount} 篇内容。`;
+      }
+
+      window.trackInteraction?.('listing_filter_change', {
+        query: query || undefined,
+        category: category || undefined,
+        tag: tag || undefined,
+        visible_count: visibleCount,
+        page_path: window.location.pathname,
+      });
+    }
+
+    queryInput?.addEventListener('input', () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(applyFilters, 200);
+    });
+    categorySelect?.addEventListener('change', applyFilters);
+    tagSelect?.addEventListener('change', applyFilters);
+    resetButton?.addEventListener('click', () => {
+      if (queryInput) queryInput.value = '';
+      if (categorySelect) categorySelect.value = '';
+      if (tagSelect) tagSelect.value = '';
+      applyFilters();
+    });
+  });
+</script>

@@ -40,3 +40,19 @@ export function getRelatedEntries<T extends AnyContentEntry>(entry: T, entries: 
     .slice(0, limit)
     .map(({ candidate }) => candidate);
 }
+
+export function getRelatedAcrossCollections(entry: AnyContentEntry, entries: AnyContentEntry[], limit = 3) {
+  const tags = new Set(entry.data.tags);
+  return entries
+    .filter((candidate) => !(candidate.id === entry.id && candidate.collection === entry.collection))
+    .map((candidate) => {
+      const tagScore = candidate.data.tags.filter((tag) => tags.has(tag)).length;
+      const categoryScore = candidate.data.category === entry.data.category ? 2 : 0;
+      const typeDiversityScore = candidate.collection !== entry.collection ? 1 : 0;
+      return { candidate, score: tagScore + categoryScore + typeDiversityScore };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score || b.candidate.data.pubDate.valueOf() - a.candidate.data.pubDate.valueOf())
+    .slice(0, limit)
+    .map(({ candidate }) => candidate);
+}

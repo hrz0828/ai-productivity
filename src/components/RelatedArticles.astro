@@ -4,16 +4,22 @@ import type { CollectionName, AnyContentEntry } from '../utils/content';
 
 interface Props {
   entries: AnyContentEntry[];
-  collection: CollectionName;
+  collection?: CollectionName;
 }
 const { entries, collection } = Astro.props;
 ---
 
 {entries.length > 0 && (
   <section class="mt-12">
-    <h2 class="text-2xl font-semibold text-slate-950">相关文章</h2>
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">You may need</p>
+        <h2 class="mt-1 text-2xl font-semibold text-slate-950">你可能还需要</h2>
+      </div>
+      <a href="/tasks/" class="text-sm font-semibold text-sky-700 hover:text-sky-900">按任务找更多 →</a>
+    </div>
     <div class="mt-6 grid gap-5 md:grid-cols-3">
-      {entries.map((entry) => <ArticleCard entry={entry} collection={collection} />)}
+      {entries.map((entry) => <ArticleCard entry={entry} collection={entry.collection ?? collection} />)}
     </div>
   </section>
 )}

@@ -14,6 +14,8 @@ export const NAV_ITEMS = [
   { label: 'Agents', href: '/agents/' },
   { label: 'Tools', href: '/tools/' },
   { label: 'Workflows', href: '/workflows/' },
+  { label: 'Tasks', href: '/tasks/' },
+  { label: 'Submit', href: '/submit-prompt/' },
   { label: 'Guides', href: '/guides/' },
   { label: 'Topics', href: '/topics/ai-writing/' },
 ];
@@ -28,6 +30,7 @@ export const TOPIC_ITEMS = [
   { label: 'AI 会议效率', href: '/topics/ai-meeting-efficiency/' },
   { label: 'AI 自动化', href: '/topics/ai-automation/' },
   { label: 'AI Agent', href: '/topics/ai-agent/' },
+  { label: '多模态 AI', href: '/topics/ai-multimodal/' },
   { label: 'AI 内容站', href: '/topics/ai-content-site/' },
 ];
 

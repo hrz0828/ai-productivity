@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const email = 'hanruizhao001@gmail.com';
+const toolOptions = ['ChatGPT', 'Claude', 'Gemini', 'Cursor', 'Claude Code', 'Midjourney', 'Runway / Pika / 可灵', '其他工具'];
+---
+
+<BaseLayout title="提交你的 Prompt - ai-productivity" description="向 ai-productivity 提交你在工作中验证有效的 AI Prompt、使用场景、示例输入和示例输出。" canonical="/submit-prompt/">
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Contribute</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">提交你的 Prompt</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">如果你有在真实工作中验证过的 Prompt，可以提交给我们。优质内容会整理成正式文章，并可按你的意愿署名。</p>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-[1fr_280px]">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <form data-submit-prompt-form class="space-y-6">
+          <label class="block">
+            <span class="text-sm font-medium text-slate-700">Prompt 标题</span>
+            <input name="title" required class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="text" placeholder="例如：适合产品经理的 PRD 评审 Prompt" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium text-slate-700">适用场景</span>
+            <input name="scenario" required class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="text" placeholder="例如：需求评审、简历优化、小红书选题、代码审查" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium text-slate-700">推荐使用工具</span>
+            <select name="tool" class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+              {toolOptions.map((tool) => <option value={tool}>{tool}</option>)}
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium text-slate-700">Prompt 正文</span>
+            <textarea name="prompt" required class="mt-2 min-h-52 w-full rounded-2xl border border-slate-200 px-4 py-3 font-mono text-sm leading-6 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="请粘贴完整 Prompt，建议包含角色、任务目标、输入材料、输出格式和约束。"></textarea>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium text-slate-700">使用示例（可选）</span>
+            <textarea name="example" class="mt-2 min-h-32 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm leading-6 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" placeholder="可以补充示例输入、示例输出或使用注意事项。"></textarea>
+          </label>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">你的昵称</span>
+              <input name="name" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="text" placeholder="可选，用于署名" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">联系方式</span>
+              <input name="contact" class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="text" placeholder="可选，方便确认" />
+            </label>
+          </div>
+
+          <label class="flex gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+            <input name="allowPublic" class="mt-1" type="checkbox" checked />
+            <span>允许在审核整理后公开展示该 Prompt。我们会避免公开你的联系方式。</span>
+          </label>
+
+          <button type="submit" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-700">生成投稿邮件</button>
+        </form>
+      </div>
+
+      <aside class="space-y-4">
+        <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 class="font-semibold text-slate-950">优先收录什么？</h2>
+          <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+            <li>真实工作中用过</li>
+            <li>输入和输出格式清晰</li>
+            <li>不虚构事实或数据</li>
+            <li>能解决高频任务</li>
+          </ul>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 class="font-semibold text-slate-950">不会收录什么？</h2>
+          <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+            <li>涉及隐私或敏感数据</li>
+            <li>鼓励违规或误导行为</li>
+            <li>没有明确使用场景</li>
+            <li>明显不可复用的内容</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline define:vars={{ email }}>
+  const form = document.querySelector('[data-submit-prompt-form]');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const title = data.get('title') || 'Prompt 投稿';
+    const scenario = data.get('scenario') || '';
+    const tool = data.get('tool') || '';
+    const prompt = data.get('prompt') || '';
+    const example = data.get('example') || '未提供';
+    const name = data.get('name') || '匿名';
+    const contact = data.get('contact') || '未提供';
+    const allowPublic = data.get('allowPublic') ? '是' : '否';
+    const subject = `Prompt 投稿：${title}`;
+    const body = `Prompt 标题：\n${title}\n\n适用场景：\n${scenario}\n\n推荐工具：\n${tool}\n\nPrompt 正文：\n${prompt}\n\n使用示例：\n${example}\n\n投稿人：\n${name}\n\n联系方式：\n${contact}\n\n是否允许公开展示：\n${allowPublic}`;
+
+    window.trackInteraction?.('submit_prompt_mailto', {
+      prompt_title: title,
+      scenario,
+      tool,
+      allow_public: allowPublic,
+    });
+
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>

@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import CategoryPill from '../components/CategoryPill.astro';
 import SearchEntry from '../components/SearchEntry.astro';
+import ListingFilters from '../components/ListingFilters.astro';
 import type { CollectionName, AnyContentEntry } from '../utils/content';
 
 interface Props {
@@ -124,9 +125,16 @@ const guide = collectionGuides[collection];
       <div class="text-sm text-slate-500">共 {entries.length} 篇</div>
     </div>
     {entries.length > 0 ? (
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {(normalEntries.length ? normalEntries : entries).map((entry) => <ArticleCard entry={entry} collection={collection} />)}
-      </div>
+      <>
+        <ListingFilters entries={entries} />
+        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-listing-grid>
+          {(normalEntries.length ? normalEntries : entries).map((entry) => (
+            <div data-listing-card data-category={entry.data.category} data-tags={entry.data.tags.join('|')} data-search-text={`${entry.data.title} ${entry.data.description} ${entry.data.category} ${entry.data.tags.join(' ')}`}>
+              <ArticleCard entry={entry} collection={collection} />
+            </div>
+          ))}
+        </div>
+      </>
     ) : (
       <div class="rounded-3xl border border-slate-200 bg-white p-8 text-slate-600">内容正在准备中。</div>
     )}

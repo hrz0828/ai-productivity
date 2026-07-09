@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getAllPublishedEntries } from '../../utils/content';
+
+const entries = await getAllPublishedEntries();
+const keywords = ['多模态', '视频', '图像', '设计', '语音', '数字人', 'Midjourney', 'Runway', 'Pika', '可灵', 'Voice Agent', 'ElevenLabs', '短视频'];
+const articles = entries.filter((entry) =>
+  keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
+).slice(0, 12);
+
+const sections = [
+  {
+    title: 'AI 视频生成',
+    desc: '从脚本、分镜到 Runway、Pika、可灵等工具选择，适合短视频、产品演示和营销素材。',
+    href: '/tools/ai-video-generation-tools-guide/',
+  },
+  {
+    title: 'AI 图像与设计',
+    desc: '用 Midjourney、Stable Diffusion、Flux、Figma AI 等工具生成封面、海报、运营图和视觉参考。',
+    href: '/guides/midjourney-prompt-beginner-guide/',
+  },
+  {
+    title: 'AI 语音与 Voice Agent',
+    desc: '理解语音智能体、TTS、语音客服和播客生成，适合客服、教育和内容分发场景。',
+    href: '/tools/voice-agent-beginner-guide/',
+  },
+  {
+    title: '数字人与口播视频',
+    desc: '围绕数字人口播、合规换脸边界和产品介绍视频，建立可复用的多模态内容生产流程。',
+    href: '/workflows/article-to-short-video-workflow/',
+  },
+];
+---
+
+<BaseLayout title="多模态 AI 专题：视频生成、图像设计、语音智能体与数字人" description="多模态 AI 专题，汇总 AI 视频生成、AI 图像设计、Voice Agent、数字人和文章转短视频工作流。" canonical="/topics/ai-multimodal/">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">多模态 AI 专题</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">AI 生产力不只停留在文字。这里汇总视频生成、图像设计、语音智能体、数字人和多模态内容工作流，帮助你把文本、图片、语音和视频串成完整生产链路。</p>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {sections.map((section) => (
+        <a href={section.href} class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg">
+          <h2 class="text-xl font-semibold text-slate-950">{section.title}</h2>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{section.desc}</p>
+          <div class="mt-5 text-sm font-semibold text-sky-700">查看入门内容 →</div>
+        </a>
+      ))}
+    </div>
+
+    <section class="mt-14 rounded-[2rem] border border-sky-100 bg-sky-50/70 p-6 sm:p-8">
+      <div class="grid gap-6 lg:grid-cols-[1fr_320px] lg:items-center">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Workflow</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-950">推荐从“文章转短视频”开始</h2>
+          <p class="mt-3 text-base leading-7 text-slate-600">这是最容易落地的多模态工作流：先用 AI 提炼文章结构，再生成短视频脚本、分镜、配音和画面提示词，最后进入视频生成工具。</p>
+        </div>
+        <a href="/workflows/article-to-short-video-workflow/" class="inline-flex justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">查看工作流 →</a>
+      </div>
+    </section>
+
+    <section class="mt-14">
+      <div class="mb-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Articles</p>
+        <h2 class="mt-2 text-3xl font-bold text-slate-950">多模态相关内容</h2>
+      </div>
+      {articles.length > 0 ? (
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+        </div>
+      ) : (
+        <div class="rounded-3xl border border-slate-200 bg-white p-8 text-slate-600">多模态内容正在准备中。</div>
+      )}
+    </section>
+  </section>
+</BaseLayout>
