@@ -3,8 +3,8 @@ title: "GitHub Actions 内容站自动化：检查构建和内容质量"
 description: "介绍如何用 GitHub Actions 为 Astro 内容站增加构建检查、链接检查和内容发布流程。"
 category: "GitHub"
 tags: ["GitHub Actions", "自动化", "Astro", "内容站"]
-pubDate: 2026-07-24
-updatedDate: 2026-07-24
+pubDate: 2026-05-22
+updatedDate: 2026-05-22
 author: "ai-productivity"
 draft: false
 featured: false

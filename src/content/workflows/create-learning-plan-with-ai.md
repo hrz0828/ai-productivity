@@ -3,8 +3,8 @@ title: "用 AI 生成学习计划的完整工作流"
 description: "一个从学习目标到每周计划、练习任务、验收标准和复盘问题的 AI 学习计划工作流。"
 category: "AI 生产力"
 tags: ["AI Workflow", "学习计划", "个人成长", "复盘", "生产力"]
-pubDate: 2026-08-12
-updatedDate: 2026-08-12
+pubDate: 2026-06-21
+updatedDate: 2026-06-21
 author: "ai-productivity"
 draft: false
 featured: false

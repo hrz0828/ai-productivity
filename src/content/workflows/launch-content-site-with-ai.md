@@ -3,8 +3,8 @@ title: "用 AI 搭建并上线内容站的完整工作流"
 description: "从定位、内容规划、Astro 开发、Cloudflare 部署到 SEO 和 AdSense 准备，用 AI 辅助完成内容站上线。"
 category: "建站工作流"
 tags: ["AI Workflow", "内容站", "Astro", "Cloudflare Pages"]
-pubDate: 2026-08-17
-updatedDate: 2026-08-17
+pubDate: 2026-06-29
+updatedDate: 2026-06-29
 author: "ai-productivity"
 draft: false
 featured: false

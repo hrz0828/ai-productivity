@@ -3,8 +3,8 @@ title: "如何用 AI 做文档自动化：从周报到 PRD"
 description: "介绍如何用 AI 自动化常见文档工作，包括日报、周报、会议纪要、PRD、复盘和 SOP。"
 category: "文档自动化"
 tags: ["AI 指南", "文档写作", "自动化", "办公效率"]
-pubDate: 2026-08-03
-updatedDate: 2026-08-03
+pubDate: 2026-06-02
+updatedDate: 2026-06-02
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "SEO Brief 生成 Skill：为文章生产清晰写作简报"
 description: "一个帮助内容编辑生成 SEO 写作简报的 AI Skill，覆盖关键词、搜索意图、结构和内链建议。"
 category: "内容创作"
 tags: ["AI Skill", "SEO", "内容创作", "写作简报"]
-pubDate: 2026-07-16
-updatedDate: 2026-07-16
+pubDate: 2026-05-14
+updatedDate: 2026-05-14
 author: "ai-productivity"
 draft: false
 featured: false

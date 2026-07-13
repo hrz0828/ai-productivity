@@ -3,8 +3,8 @@ title: "用 AI 写 SEO 文章的完整工作流"
 description: "从关键词、搜索意图、文章 Brief 到草稿和优化，用 AI 辅助生产更有结构的 SEO 内容。"
 category: "内容工作流"
 tags: ["AI Workflow", "SEO", "内容创作", "写作"]
-pubDate: 2026-07-30
-updatedDate: 2026-07-30
+pubDate: 2026-05-28
+updatedDate: 2026-05-28
 author: "ai-productivity"
 draft: false
 featured: false

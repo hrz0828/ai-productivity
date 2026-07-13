@@ -3,8 +3,8 @@ title: "Gemini 多模态研究工作流：整理图片、PDF 和网页资料"
 description: "一个使用 Gemini 处理多模态资料的研究工作流，帮助你从图片、PDF、网页和笔记中提炼观点、证据、风险和后续行动。"
 category: "Gemini"
 tags: ["Gemini", "多模态", "研究", "资料整理", "AI Workflow"]
-pubDate: 2026-08-07
-updatedDate: 2026-08-07
+pubDate: 2026-06-11
+updatedDate: 2026-06-11
 author: "ai-productivity"
 draft: false
 featured: false

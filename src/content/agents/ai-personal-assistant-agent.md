@@ -3,8 +3,8 @@ title: "AI 个人助理 Agent：整理任务、日程、资料和复盘"
 description: "一个面向个人效率的 AI Agent 配置，用于整理任务清单、规划日程、总结资料、生成提醒和进行周期复盘。"
 category: "AI 生产力"
 tags: ["AI Agent", "个人助理", "任务管理", "生产力", "复盘"]
-pubDate: 2026-08-11
-updatedDate: 2026-08-11
+pubDate: 2026-06-18
+updatedDate: 2026-06-18
 author: "ai-productivity"
 draft: false
 featured: false

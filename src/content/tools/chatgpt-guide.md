@@ -3,8 +3,8 @@ title: "ChatGPT 使用教程：从日常问答到工作流设计"
 description: "介绍 ChatGPT 在写作、总结、研究、头脑风暴和工作流设计中的常见用法和注意事项。"
 category: "ChatGPT"
 tags: ["ChatGPT", "AI 工具", "Prompt", "AI 写作"]
-pubDate: 2026-08-24
-updatedDate: 2026-08-24
+pubDate: 2026-07-06
+updatedDate: 2026-07-06
 author: "ai-productivity"
 draft: false
 featured: false

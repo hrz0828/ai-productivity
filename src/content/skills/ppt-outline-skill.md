@@ -3,8 +3,8 @@ title: "PPT 大纲生成 Skill：从主题设计演示结构"
 description: "一个用于生成 PPT 大纲的 AI Skill，帮助明确演示目标、受众、叙事结构和页面规划。"
 category: "PPT 制作"
 tags: ["AI Skill", "PPT", "大纲", "演示"]
-pubDate: 2026-07-14
-updatedDate: 2026-07-14
+pubDate: 2026-05-12
+updatedDate: 2026-05-12
 author: "ai-productivity"
 draft: false
 featured: false

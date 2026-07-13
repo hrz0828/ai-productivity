@@ -3,8 +3,8 @@ title: "AI 生成 PPT 大纲 Prompt：从主题到页面结构"
 description: "一个用于快速生成 PPT 大纲的 Prompt，帮助你明确受众、演示目标、叙事逻辑和页面结构。"
 category: "PPT 制作"
 tags: ["AI Prompt", "PPT", "大纲", "演示文稿"]
-pubDate: 2026-07-10
-updatedDate: 2026-07-10
+pubDate: 2026-05-08
+updatedDate: 2026-05-08
 author: "ai-productivity"
 draft: false
 featured: false

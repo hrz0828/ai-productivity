@@ -3,8 +3,8 @@ title: "AI 竞品分析 Prompt：快速整理竞品定位、功能和机会点"
 description: "一个用于竞品分析的 AI Prompt，帮助你从公开资料中整理竞品定位、核心功能、优劣势和差异化机会。"
 category: "研究分析"
 tags: ["AI Prompt", "竞品分析", "产品经理", "研究"]
-pubDate: 2026-07-12
-updatedDate: 2026-07-12
+pubDate: 2026-05-10
+updatedDate: 2026-05-10
 author: "ai-productivity"
 draft: false
 featured: false

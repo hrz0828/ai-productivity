@@ -3,8 +3,8 @@ title: "AI 简历优化 Prompt：根据岗位 JD 优化简历表达"
 description: "一个用于简历优化的 AI Prompt，帮助根据目标岗位提炼经历、优化项目表达和匹配关键词。"
 category: "职场效率"
 tags: ["AI Prompt", "简历", "求职", "职场写作"]
-pubDate: 2026-08-10
-updatedDate: 2026-08-10
+pubDate: 2026-06-17
+updatedDate: 2026-06-17
 author: "ai-productivity"
 draft: false
 featured: false

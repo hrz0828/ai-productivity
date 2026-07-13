@@ -128,8 +128,21 @@ It runs on pushes and pull requests to `main`:
 
 ```text
 npm ci
-npm run build
+npm run check:content-dates
+npm run build:site
 ```
+
+For local development, `npm run build` runs the content date guard and then `npm run build:site`.
+
+## Content maintenance
+
+Content publishing and homepage/search UX safeguards are documented in:
+
+```text
+docs/content-maintenance.md
+```
+
+Use this checklist when adding content, changing homepage curation, or updating search/Prompt-copy behavior.
 
 ## Important URLs after deploy
 

@@ -3,8 +3,8 @@ title: "会议纪要整理 Skill：提炼结论、行动项和风险"
 description: "一个可复用的会议纪要整理 Skill，把原始会议记录转化为清晰纪要、决策结论和行动项。"
 category: "会议效率"
 tags: ["AI Skill", "会议纪要", "行动项", "协作"]
-pubDate: 2026-07-13
-updatedDate: 2026-07-13
+pubDate: 2026-05-11
+updatedDate: 2026-05-11
 author: "ai-productivity"
 draft: false
 featured: false

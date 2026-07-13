@@ -3,8 +3,8 @@ title: "Notion AI 知识管理教程：从资料收集到可复用知识库"
 description: "介绍如何用 Notion AI 搭建个人和团队知识库，包括资料收集、摘要、标签、数据库字段、复盘和内容再利用。"
 category: "知识管理"
 tags: ["Notion AI", "知识管理", "AI 工具", "资料整理", "个人知识库"]
-pubDate: 2026-08-08
-updatedDate: 2026-08-08
+pubDate: 2026-06-13
+updatedDate: 2026-06-13
 author: "ai-productivity"
 draft: false
 featured: false

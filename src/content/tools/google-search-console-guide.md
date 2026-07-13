@@ -3,8 +3,8 @@ title: "Google Search Console 入门：内容站如何提交 sitemap"
 description: "介绍 AI 内容站如何使用 Google Search Console 验证站点、提交 sitemap、请求索引和监控搜索表现。"
 category: "SEO 工具"
 tags: ["Google Search Console", "SEO", "Sitemap", "内容站"]
-pubDate: 2026-08-15
-updatedDate: 2026-08-15
+pubDate: 2026-06-24
+updatedDate: 2026-06-24
 author: "ai-productivity"
 draft: false
 featured: false

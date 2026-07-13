@@ -3,8 +3,8 @@ title: "Obsidian + AI 知识管理教程：把资料变成可复用笔记"
 description: "介绍如何结合 Obsidian 和 AI 做个人知识管理，包括资料摘要、标签、双链和输出复盘。"
 category: "知识管理"
 tags: ["Obsidian", "知识管理", "AI 工具", "笔记"]
-pubDate: 2026-08-27
-updatedDate: 2026-08-27
+pubDate: 2026-07-09
+updatedDate: 2026-07-09
 author: "ai-productivity"
 draft: false
 featured: false

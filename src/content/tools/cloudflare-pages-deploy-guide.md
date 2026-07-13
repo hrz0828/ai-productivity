@@ -3,8 +3,8 @@ title: "Cloudflare Pages 部署 Astro 内容站教程"
 description: "介绍如何把 Astro 内容站通过 GitHub 自动部署到 Cloudflare Pages，并绑定自定义域名。"
 category: "Cloudflare"
 tags: ["Cloudflare Pages", "Astro", "部署", "GitHub"]
-pubDate: 2026-07-23
-updatedDate: 2026-07-23
+pubDate: 2026-05-21
+updatedDate: 2026-05-21
 author: "ai-productivity"
 draft: false
 featured: false

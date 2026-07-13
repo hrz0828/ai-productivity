@@ -3,6 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { hotSearchKeywords, taskShortcuts } from '../data/taskFinder';
 
 const featuredTasks = taskShortcuts.slice(0, 8);
+const searchTypes = [
+  { label: '全部', value: 'all' },
+  { label: 'Prompt', value: 'prompts' },
+  { label: 'Skill', value: 'skills' },
+  { label: 'Agent', value: 'agents' },
+  { label: 'Tool', value: 'tools' },
+  { label: 'Workflow', value: 'workflows' },
+  { label: 'Guide', value: 'guides' },
+];
 ---
 
 <BaseLayout title="搜索 - ai-productivity" description="搜索 ai-productivity 的 AI Prompt、Skill、Agent、Tool、Workflow 和 Guide。" canonical="/search/">
@@ -21,7 +30,21 @@ const featuredTasks = taskShortcuts.slice(0, 8);
           ))}
         </div>
       </div>
-      <div id="search-status" class="mt-4 text-sm text-slate-500">输入关键词开始搜索。</div>
+      <div class="mt-5 border-t border-slate-100 pt-5">
+        <p id="search-type-label" class="text-sm font-medium text-slate-700">按内容类型筛选</p>
+        <div class="mt-3 flex flex-wrap gap-2" data-search-types role="group" aria-labelledby="search-type-label">
+          {searchTypes.map((type) => (
+            <button type="button" class:list={[
+              'rounded-full px-3 py-1.5 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2',
+              type.value === 'all' ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-sky-50 hover:text-sky-700',
+            ]} data-search-type={type.value} aria-pressed={type.value === 'all' ? 'true' : 'false'}>{type.label}</button>
+          ))}
+        </div>
+      </div>
+      <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div id="search-status" class="text-sm text-slate-500">输入关键词开始搜索。</div>
+        <button type="button" class="hidden rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600 transition hover:border-sky-200 hover:text-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2" data-search-reset>清空搜索</button>
+      </div>
       <div id="search-results" class="mt-6 space-y-4"></div>
       <noscript>搜索功能需要启用 JavaScript。</noscript>
     </div>
@@ -46,12 +69,14 @@ const featuredTasks = taskShortcuts.slice(0, 8);
   </section>
 </BaseLayout>
 
-<script is:inline type="module">
+<script is:inline define:vars={{ hotSearchKeywords, featuredTasks }}>
   const input = document.querySelector('#site-search');
   const status = document.querySelector('#search-status');
   const results = document.querySelector('#search-results');
+  const reset = document.querySelector('[data-search-reset]');
   let pagefind;
   let timer;
+  let activeType = 'all';
 
   async function loadPagefind() {
     if (!pagefind) {
@@ -61,16 +86,100 @@ const featuredTasks = taskShortcuts.slice(0, 8);
     return pagefind;
   }
 
+  function updateResetVisibility(hasActiveSearch) {
+    reset?.classList.toggle('hidden', !hasActiveSearch);
+  }
+
   function renderEmpty(message) {
     results.innerHTML = '';
     status.textContent = message;
   }
 
+  function renderEmptyWithSuggestions(message) {
+    status.textContent = message;
+    const keywordButtons = hotSearchKeywords.slice(0, 6).map((keyword) => `
+      <button type="button" class="rounded-full bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-700" data-empty-keyword="${keyword}">${keyword}</button>
+    `).join('');
+    const taskLinks = featuredTasks.slice(0, 4).map((task) => `
+      <a href="/tasks/#${task.groupId}" class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-sky-200 hover:shadow-sm">
+        <div class="text-sm font-semibold text-slate-950">${task.title}</div>
+        <div class="mt-1 text-xs text-slate-500">${task.groupTitle} · ${task.difficulty}</div>
+      </a>
+    `).join('');
+
+    results.innerHTML = `
+      <div class="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-6">
+        <h2 class="text-lg font-semibold text-slate-950">没有匹配结果，试试这些入口</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">可以换一个更宽泛的关键词，或直接从常见任务进入。</p>
+        <div class="mt-5">
+          <p class="text-sm font-medium text-slate-700">推荐关键词</p>
+          <div class="mt-3 flex flex-wrap gap-2">${keywordButtons}</div>
+        </div>
+        <div class="mt-6">
+          <p class="text-sm font-medium text-slate-700">常见任务</p>
+          <div class="mt-3 grid gap-3 sm:grid-cols-2">${taskLinks}</div>
+        </div>
+      </div>
+    `;
+
+    results.querySelectorAll('[data-empty-keyword]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const keyword = button.dataset.emptyKeyword;
+        input.value = keyword;
+        activeType = 'all';
+        updateTypeButtons();
+        runSearch(keyword);
+        window.trackInteraction?.('search_empty_keyword_click', {
+          keyword,
+          page_path: window.location.pathname,
+        });
+      });
+    });
+  }
+
+  function getResultType(url) {
+    return url.split('/').filter(Boolean)[0] || '';
+  }
+
+  function getTypeLabel(type) {
+    return {
+      prompts: 'Prompt',
+      skills: 'Skill',
+      agents: 'Agent',
+      tools: 'Tool',
+      workflows: 'Workflow',
+      guides: 'Guide',
+    }[type] || 'Page';
+  }
+
+  function updateTypeButtons() {
+    document.querySelectorAll('[data-search-type]').forEach((button) => {
+      const isActive = button.dataset.searchType === activeType;
+      button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      button.classList.toggle('bg-sky-600', isActive);
+      button.classList.toggle('text-white', isActive);
+      button.classList.toggle('bg-slate-100', !isActive);
+      button.classList.toggle('text-slate-700', !isActive);
+      button.classList.toggle('hover:bg-sky-50', !isActive);
+      button.classList.toggle('hover:text-sky-700', !isActive);
+    });
+  }
+
+  function updateUrl(query) {
+    const params = new URLSearchParams();
+    if (query) params.set('q', query);
+    if (activeType !== 'all') params.set('type', activeType);
+    const nextUrl = params.toString() ? `/search/?${params.toString()}` : '/search/';
+    window.history.replaceState({}, '', nextUrl);
+  }
+
   function renderResult(data) {
+    const type = getResultType(data.url);
     const article = document.createElement('article');
     article.className = 'rounded-2xl border border-slate-200 p-5 transition hover:border-sky-200 hover:shadow-sm';
     article.innerHTML = `
-      <h2 class="text-lg font-semibold text-slate-950"><a class="hover:text-sky-700" href="${data.url}">${data.meta.title || data.url}</a></h2>
+      <div class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-700">${getTypeLabel(type)}</div>
+      <h2 class="mt-2 text-lg font-semibold text-slate-950"><a class="hover:text-sky-700" href="${data.url}">${data.meta.title || data.url}</a></h2>
       <p class="mt-2 text-sm leading-6 text-slate-600">${data.excerpt || ''}</p>
       <a class="mt-3 inline-flex text-sm font-medium text-sky-700" href="${data.url}">打开页面 →</a>
     `;
@@ -81,27 +190,58 @@ const featuredTasks = taskShortcuts.slice(0, 8);
     const value = query.trim();
     if (!value) {
       renderEmpty('输入关键词开始搜索。');
+      updateResetVisibility(activeType !== 'all');
+      updateUrl('');
       return;
     }
 
     status.textContent = '搜索中...';
+    updateResetVisibility(true);
+    updateUrl(value);
     const pf = await loadPagefind();
     const search = await pf.search(value);
-    const items = await Promise.all(search.results.slice(0, 10).map((result) => result.data()));
+    const allItems = await Promise.all(search.results.slice(0, 40).map((result) => result.data()));
+    const items = allItems.filter((item) => activeType === 'all' || getResultType(item.url) === activeType).slice(0, 10);
 
     results.innerHTML = '';
     if (!items.length) {
-      renderEmpty('没有找到相关内容，请尝试更换关键词。');
+      renderEmptyWithSuggestions(activeType === 'all' ? '没有找到相关内容，请尝试更换关键词。' : `当前类型没有结果，可切换到“全部”或更换关键词。`);
       return;
     }
 
-    status.textContent = `找到 ${search.results.length} 条结果，显示前 ${items.length} 条。`;
+    const typeText = activeType === 'all' ? '' : ` · 已筛选 ${getTypeLabel(activeType)}`;
+    status.textContent = `找到 ${activeType === 'all' ? search.results.length : allItems.filter((item) => getResultType(item.url) === activeType).length} 条结果${typeText}，显示前 ${items.length} 条。`;
     items.forEach((item) => results.appendChild(renderResult(item)));
   }
 
   input?.addEventListener('input', (event) => {
     window.clearTimeout(timer);
     timer = window.setTimeout(() => runSearch(event.target.value), 250);
+  });
+
+  reset?.addEventListener('click', () => {
+    input.value = '';
+    activeType = 'all';
+    updateTypeButtons();
+    renderEmpty('输入关键词开始搜索。');
+    updateResetVisibility(false);
+    updateUrl('');
+    input.focus();
+    window.trackInteraction?.('search_reset_click', {
+      page_path: window.location.pathname,
+    });
+  });
+
+  document.querySelectorAll('[data-search-type]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activeType = button.dataset.searchType || 'all';
+      updateTypeButtons();
+      runSearch(input?.value || '');
+      window.trackInteraction?.('search_type_filter_click', {
+        type: activeType,
+        page_path: window.location.pathname,
+      });
+    });
   });
 
   document.querySelectorAll('[data-search-keyword]').forEach((button) => {
@@ -125,4 +265,17 @@ const featuredTasks = taskShortcuts.slice(0, 8);
       });
     });
   });
+
+  const params = new URLSearchParams(window.location.search);
+  const initialType = params.get('type');
+  if (initialType && document.querySelector(`[data-search-type="${initialType}"]`)) {
+    activeType = initialType;
+    updateTypeButtons();
+  }
+
+  const initialQuery = params.get('q');
+  if (initialQuery) {
+    input.value = initialQuery;
+    runSearch(initialQuery);
+  }
 </script>

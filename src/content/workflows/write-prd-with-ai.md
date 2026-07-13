@@ -3,8 +3,8 @@ title: "用 AI 从零写一份 PRD 的完整工作流"
 description: "从需求想法到产品需求文档，使用 AI 完成背景澄清、用户场景、功能拆解、风险和待确认问题。"
 category: "文档工作流"
 tags: ["AI Workflow", "PRD", "产品经理", "需求分析"]
-pubDate: 2026-07-27
-updatedDate: 2026-07-27
+pubDate: 2026-05-25
+updatedDate: 2026-05-25
 author: "ai-productivity"
 draft: false
 featured: false

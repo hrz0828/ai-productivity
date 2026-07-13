@@ -3,8 +3,8 @@ title: "设计评审 Skill：用 AI 检查页面目标、层级和可用性"
 description: "一个可复用的 AI 设计评审 Skill，帮助产品、设计和运营团队从目标、信息层级、CTA、文案、交互状态和可访问性角度检查页面。"
 category: "设计工具"
 tags: ["AI Skill", "设计评审", "AI 设计", "用户体验", "Figma"]
-pubDate: 2026-08-09
-updatedDate: 2026-08-09
+pubDate: 2026-06-15
+updatedDate: 2026-06-15
 author: "ai-productivity"
 draft: false
 featured: false

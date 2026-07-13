@@ -3,8 +3,8 @@ title: "如何用 AI 辅助代码开发：任务拆解、实现和测试"
 description: "一份面向开发者的 AI 编程指南，介绍如何让 AI 辅助理解代码、实现功能、修复 Bug 和补充测试。"
 category: "AI 编程"
 tags: ["AI 指南", "AI 编程", "Claude Code", "Cursor"]
-pubDate: 2026-08-04
-updatedDate: 2026-08-04
+pubDate: 2026-06-04
+updatedDate: 2026-06-04
 author: "ai-productivity"
 draft: false
 featured: false

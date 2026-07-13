@@ -3,8 +3,8 @@ title: "如何设计一个可复用 AI Agent：角色、目标和工作流程"
 description: "介绍 AI Agent 设计方法，包括角色定义、目标、输入输出、工具边界、检查点和失败处理。"
 category: "AI Agent"
 tags: ["AI 指南", "AI Agent", "智能体", "工作流"]
-pubDate: 2026-08-06
-updatedDate: 2026-08-06
+pubDate: 2026-06-08
+updatedDate: 2026-06-08
 author: "ai-productivity"
 draft: false
 featured: false

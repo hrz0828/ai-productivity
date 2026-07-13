@@ -3,8 +3,8 @@ title: "n8n AI 自动化入门：连接工具并构建工作流"
 description: "介绍如何用 n8n 把表单、文档、邮件、AI 模型和数据库连接起来，构建自动化办公流程。"
 category: "自动化"
 tags: ["n8n", "AI 自动化", "Workflow", "办公效率"]
-pubDate: 2026-07-26
-updatedDate: 2026-07-26
+pubDate: 2026-05-24
+updatedDate: 2026-05-24
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "AI 写调研报告 Prompt：从资料整理到结构化分析"
 description: "一个适合产品、运营、市场和研究人员使用的调研报告 Prompt，帮助你整理资料、提炼结论、输出结构化分析报告。"
 category: "研究分析"
 tags: ["AI Prompt", "调研报告", "研究", "资料整理", "市场分析"]
-pubDate: 2026-08-03
-updatedDate: 2026-08-03
+pubDate: 2026-06-03
+updatedDate: 2026-06-03
 author: "ai-productivity"
 draft: false
 featured: false

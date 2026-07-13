@@ -3,8 +3,8 @@ title: "用 AI 写项目复盘报告的工作流"
 description: "一个用于项目复盘的 AI 工作流，帮助整理目标、结果、过程、问题、经验和下一步行动。"
 category: "文档工作流"
 tags: ["AI Workflow", "项目复盘", "复盘", "文档写作"]
-pubDate: 2026-08-23
-updatedDate: 2026-08-23
+pubDate: 2026-07-05
+updatedDate: 2026-07-05
 author: "ai-productivity"
 draft: false
 featured: false

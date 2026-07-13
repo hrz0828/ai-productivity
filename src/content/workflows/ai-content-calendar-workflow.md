@@ -3,8 +3,8 @@ title: "用 AI 制定内容日历的工作流"
 description: "一个帮助内容站制定月度内容计划的 AI 工作流，覆盖关键词、栏目、发布时间和复盘指标。"
 category: "内容工作流"
 tags: ["AI Workflow", "内容日历", "SEO", "内容运营"]
-pubDate: 2026-08-18
-updatedDate: 2026-08-18
+pubDate: 2026-06-30
+updatedDate: 2026-06-30
 author: "ai-productivity"
 draft: false
 featured: false

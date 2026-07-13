@@ -3,8 +3,8 @@ title: "用 AI 批量生成小红书选题的工作流"
 description: "一个面向内容创作者的小红书选题工作流，帮助从人群、痛点、关键词和爆款结构生成选题池。"
 category: "内容工作流"
 tags: ["AI Workflow", "小红书", "内容选题", "内容运营"]
-pubDate: 2026-08-19
-updatedDate: 2026-08-19
+pubDate: 2026-07-01
+updatedDate: 2026-07-01
 author: "ai-productivity"
 draft: false
 featured: false

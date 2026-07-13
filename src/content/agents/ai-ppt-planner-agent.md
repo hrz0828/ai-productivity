@@ -3,8 +3,8 @@ title: "AI PPT 策划 Agent：从主题到演示结构"
 description: "一个面向演示文稿策划的 AI Agent，用于受众分析、叙事结构设计、页面大纲和演讲备注生成。"
 category: "PPT 策划 Agent"
 tags: ["AI Agent", "PPT", "演示", "内容策划"]
-pubDate: 2026-07-20
-updatedDate: 2026-07-20
+pubDate: 2026-05-18
+updatedDate: 2026-05-18
 author: "ai-productivity"
 draft: false
 featured: false

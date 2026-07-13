@@ -3,8 +3,8 @@ title: "邮件写作 Skill：生成清晰、礼貌、行动导向的工作邮件
 description: "一个用于工作邮件写作的 AI Skill，帮助明确沟通目标、收件人、语气和行动要求。"
 category: "职场沟通"
 tags: ["AI Skill", "邮件", "职场沟通", "写作"]
-pubDate: 2026-08-11
-updatedDate: 2026-08-11
+pubDate: 2026-06-19
+updatedDate: 2026-06-19
 author: "ai-productivity"
 draft: false
 featured: false

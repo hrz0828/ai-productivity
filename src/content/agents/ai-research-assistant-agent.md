@@ -3,8 +3,8 @@ title: "AI 研究助理 Agent：辅助资料收集、观点整理和报告生成
 description: "一个面向主题研究的 AI Agent 配置，用于拆解研究问题、整理资料、提炼观点和生成研究报告。"
 category: "研究助理 Agent"
 tags: ["AI Agent", "研究", "资料整理", "报告"]
-pubDate: 2026-07-18
-updatedDate: 2026-07-18
+pubDate: 2026-05-16
+updatedDate: 2026-05-16
 author: "ai-productivity"
 draft: false
 featured: false

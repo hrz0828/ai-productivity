@@ -3,8 +3,8 @@ title: "用 AI 搭建个人知识库的工作流"
 description: "一个把资料收集、摘要、标签、关联和复盘结合起来的 AI 个人知识库工作流。"
 category: "知识管理工作流"
 tags: ["AI Workflow", "知识管理", "Obsidian", "Notion"]
-pubDate: 2026-08-01
-updatedDate: 2026-08-01
+pubDate: 2026-05-30
+updatedDate: 2026-05-30
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "用 AI 做代码审查的完整工作流"
 description: "一个适合开发者的 AI Code Review 工作流，从 diff 理解、问题发现、测试建议到修复方案。"
 category: "代码工作流"
 tags: ["AI Workflow", "代码审查", "AI 编程", "测试"]
-pubDate: 2026-07-29
-updatedDate: 2026-07-29
+pubDate: 2026-05-27
+updatedDate: 2026-05-27
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "用 AI 生成落地页文案的工作流"
 description: "从目标用户、价值主张、痛点、功能利益到 CTA，用 AI 辅助生成落地页文案。"
 category: "设计工作流"
 tags: ["AI Workflow", "落地页", "文案", "转化"]
-pubDate: 2026-08-22
-updatedDate: 2026-08-22
+pubDate: 2026-07-04
+updatedDate: 2026-07-04
 author: "ai-productivity"
 draft: false
 featured: false

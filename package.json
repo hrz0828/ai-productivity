@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist",
+    "check:content-dates": "node scripts/check-content-dates.mjs",
+    "build:site": "astro check && astro build && pagefind --site dist",
+    "build": "npm run check:content-dates && npm run build:site",
     "preview": "astro preview",
     "astro": "astro"
   },

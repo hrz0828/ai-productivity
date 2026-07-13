@@ -3,8 +3,8 @@ title: "Cursor AI 编程入门：适合产品型开发者的使用方式"
 description: "Cursor 是面向开发者的 AI 代码编辑器，适合用来理解项目、生成代码、重构和辅助调试。"
 category: "Cursor"
 tags: ["Cursor", "AI 编程", "代码编辑器", "开发工具"]
-pubDate: 2026-07-22
-updatedDate: 2026-07-22
+pubDate: 2026-05-20
+updatedDate: 2026-05-20
 author: "ai-productivity"
 draft: false
 featured: false

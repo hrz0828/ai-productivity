@@ -3,8 +3,8 @@ title: "AI 写 SOP Prompt：把重复工作整理成标准流程"
 description: "一个帮助团队把重复任务整理成 SOP 的 Prompt，覆盖适用场景、步骤、负责人、输入输出、检查点和风险提醒。"
 category: "办公效率"
 tags: ["AI Prompt", "SOP", "流程", "团队协作", "办公效率"]
-pubDate: 2026-08-04
-updatedDate: 2026-08-04
+pubDate: 2026-06-05
+updatedDate: 2026-06-05
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "如何写出高质量 Prompt：结构、约束和示例"
 description: "一份 Prompt 写作指南，介绍如何通过角色、目标、输入、输出格式、约束、示例和反馈闭环提高 AI 输出质量。"
 category: "Prompt 工程"
 tags: ["AI 指南", "Prompt", "提示词", "AI 写作"]
-pubDate: 2026-08-05
-updatedDate: 2026-08-05
+pubDate: 2026-06-06
+updatedDate: 2026-06-06
 author: "ai-productivity"
 draft: false
 featured: false

@@ -5,7 +5,8 @@ import SectionHeader from '../components/SectionHeader.astro';
 import CategoryPill from '../components/CategoryPill.astro';
 import SearchEntry from '../components/SearchEntry.astro';
 import QuickPromptShowcase from '../components/QuickPromptShowcase.astro';
-import { NAV_ITEMS, SITE, TOPIC_ITEMS } from '../config';
+import { COLLECTION_LABELS, SITE, TOPIC_ITEMS } from '../config';
+import { hotSearchKeywords } from '../data/taskFinder';
 import { getAllPublishedEntries } from '../utils/content';
 import { organizationJsonLd, websiteJsonLd } from '../utils/seo';
 
@@ -18,18 +19,25 @@ const featured = entries.filter((entry) => entry.data.featured).slice(0, 6);
 const workflows = entries.filter((entry) => entry.collection === 'workflows').slice(0, 3);
 const prompts = entries.filter((entry) => entry.collection === 'prompts').slice(0, 3);
 const tools = entries.filter((entry) => entry.collection === 'tools').slice(0, 3);
-const newestPrompts = entries.filter((entry) => entry.collection === 'prompts').slice(0, 4);
-const newestWorkflows = entries.filter((entry) => entry.collection === 'workflows').slice(0, 4);
-const newestTools = entries.filter((entry) => entry.collection === 'tools').slice(0, 4);
 const categoryCounts = entries.reduce((acc, entry) => {
   acc.set(entry.data.category, (acc.get(entry.data.category) ?? 0) + 1);
   return acc;
 }, new Map<string, number>());
+const collectionCounts = entries.reduce((acc, entry) => {
+  acc.set(entry.collection, (acc.get(entry.collection) ?? 0) + 1);
+  return acc;
+}, new Map<string, number>());
 const topCategories = [...categoryCounts.entries()].filter(([, count]) => count >= 2).sort((a, b) => b[1] - a[1]).slice(0, 12);
+const collectionLinks = Object.entries(COLLECTION_LABELS).map(([collection, label]) => ({
+  label,
+  href: `/${collection}/`,
+  count: collectionCounts.get(collection as keyof typeof COLLECTION_LABELS) ?? 0,
+}));
+const heroSearchKeywords = hotSearchKeywords.slice(0, 8);
 const jsonLd = [websiteJsonLd(), organizationJsonLd()];
 const stats = [
   { label: '原创内容', value: `${entries.length}+` },
-  { label: '内容栏目', value: `${NAV_ITEMS.length}` },
+  { label: '内容类型', value: `${collectionLinks.length}` },
   { label: '成熟主题', value: `${topCategories.length}+` },
 ];
 const scenarioCards = [
@@ -38,42 +46,36 @@ const scenarioCards = [
     audience: '职场写作、团队同步',
     output: '结构化工作汇报',
     href: '/prompts/ai-weekly-report-prompt/',
-    secondaryHref: '/prompts/ai-daily-report-prompt/',
   },
   {
     title: '写 PRD / 需求文档',
     audience: '产品经理、项目负责人',
     output: '需求文档与执行路径',
     href: '/workflows/write-prd-with-ai/',
-    secondaryHref: '/prompts/ai-prd-prompt/',
   },
   {
     title: '快速生成 PPT 大纲',
     audience: '汇报、培训、方案展示',
     output: '可展开的演示结构',
     href: '/workflows/create-ppt-with-ai/',
-    secondaryHref: '/prompts/ai-ppt-outline-prompt/',
   },
   {
     title: '整理会议纪要',
     audience: '项目协作、管理同步',
     output: '纪要、结论和行动项',
     href: '/workflows/meeting-to-action-items/',
-    secondaryHref: '/prompts/ai-meeting-minutes-prompt/',
   },
   {
     title: '做竞品分析',
     audience: '产品、运营、市场研究',
     output: '竞品维度和分析报告',
     href: '/workflows/competitive-analysis-with-ai/',
-    secondaryHref: '/prompts/ai-competitor-analysis-prompt/',
   },
   {
-    title: '用 AI 做代码审查',
-    audience: '开发者、技术负责人',
-    output: '风险清单和修改建议',
-    href: '/workflows/code-review-with-ai/',
-    secondaryHref: '/prompts/ai-code-review-prompt/',
+    title: '把文章改成短视频',
+    audience: '内容运营、知识博主',
+    output: '脚本、分镜和配音提示词',
+    href: '/workflows/article-to-short-video-workflow/',
   },
 ];
 const conceptCards = [
@@ -128,11 +130,11 @@ const casePaths = [
     ],
   },
   {
-    title: '我要制定学习计划',
+    title: '我要把文章改成短视频',
     steps: [
-      { label: '先用工作流拆解学习目标', href: '/workflows/create-learning-plan-with-ai/' },
-      { label: '用学习教练 Agent 跟踪复盘', href: '/agents/ai-learning-coach-agent/' },
-      { label: '用个人助理 Agent 安排任务', href: '/agents/ai-personal-assistant-agent/' },
+      { label: '先拆成长文转视频流程', href: '/workflows/article-to-short-video-workflow/' },
+      { label: '再选择 AI 视频生成工具', href: '/tools/ai-video-generation-tools-guide/' },
+      { label: '补充图像 Prompt 模板', href: '/prompts/ai-image-prompt-template/' },
     ],
   },
 ];
@@ -143,7 +145,7 @@ const learningPaths = [
     links: [
       { label: 'Prompt、Skill、Agent、Workflow 有什么区别？', href: '/guides/prompt-skill-agent-workflow/' },
       { label: '如何写出高质量 Prompt', href: '/guides/high-quality-prompt-guide/' },
-      { label: 'AI 写周报 Prompt', href: '/prompts/ai-weekly-report-prompt/' },
+      { label: 'AI 工具选型指南', href: '/guides/ai-tools-selection-guide/' },
     ],
   },
   {
@@ -156,17 +158,25 @@ const learningPaths = [
     ],
   },
   {
-    title: 'AI 辅助开发',
-    description: '适合用 Claude Code、Cursor 和 AI Code Review 提升开发效率。',
+    title: '多模态工具链',
+    description: '适合从文字扩展到图像、视频和语音智能体。',
     links: [
-      { label: 'AI 编程助手使用指南', href: '/guides/ai-coding-assistant-guide/' },
-      { label: 'Claude Code 入门', href: '/tools/claude-code-guide/' },
-      { label: '用 AI 做代码审查', href: '/workflows/code-review-with-ai/' },
+      { label: '多模态 AI 专题', href: '/topics/ai-multimodal/' },
+      { label: 'Midjourney 提示词入门', href: '/guides/midjourney-prompt-beginner-guide/' },
+      { label: 'Voice Agent 入门', href: '/tools/voice-agent-beginner-guide/' },
     ],
   },
 ];
-const usedInFocusedModules = new Set([...tools, ...workflows].map(getEntryKey));
+const usedInFocusedModules = new Set([...featured, ...tools, ...workflows, ...prompts].map(getEntryKey));
+[...scenarioCards, ...casePaths.flatMap((path) => path.steps), ...learningPaths.flatMap((path) => path.links)].forEach((item) => {
+  const [, collection, slug] = item.href.match(/^\/(prompts|skills|agents|tools|workflows|guides)\/([^/]+)\//) ?? [];
+  if (collection && slug) usedInFocusedModules.add(`${collection}/${slug}`);
+});
 const latest = excludeEntries(entries, usedInFocusedModules, 6);
+const usedBeforeExplore = new Set([...usedInFocusedModules, ...latest.map(getEntryKey)]);
+const newestPrompts = excludeEntries(entries.filter((entry) => entry.collection === 'prompts'), usedBeforeExplore, 4);
+const newestWorkflows = excludeEntries(entries.filter((entry) => entry.collection === 'workflows'), usedBeforeExplore, 4);
+const newestTools = excludeEntries(entries.filter((entry) => entry.collection === 'tools'), usedBeforeExplore, 4);
 const topicDetails = TOPIC_ITEMS.map((topic) => ({
   ...topic,
   description: ({
@@ -197,9 +207,15 @@ const moreTopicItems = topicDetails.slice(6);
           <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">用 Prompt、Agent 和 Workflow 重构日常工作</h1>
           <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">探索 AI Prompt、Skill、Agent、Tool 与 Workflow，提升文档、PPT、设计、代码和办公自动化效率。</p>
           <div class="mt-8"><SearchEntry /></div>
+          <div class="mt-4 flex flex-wrap items-center gap-2">
+            <span class="text-sm font-medium text-slate-500">热门搜索：</span>
+            {heroSearchKeywords.map((keyword) => (
+              <a href={`/search/?q=${encodeURIComponent(keyword)}`} class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700">{keyword}</a>
+            ))}
+          </div>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#quick-prompts" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">复制热门 Prompt</a>
-            <a href="/guides/prompt-skill-agent-workflow/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">理解核心概念</a>
+            <a href="/tasks/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">按任务查找</a>
           </div>
         </div>
         <div class="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-2xl">
@@ -223,6 +239,19 @@ const moreTopicItems = topicDetails.slice(6);
                 <div class="text-2xl font-bold text-white">{stat.value}</div>
                 <div class="mt-1 text-xs text-slate-300">{stat.label}</div>
               </div>
+            ))}
+          </div>
+          <div class="mt-5 rounded-2xl bg-white/10 p-4">
+            <div class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-200">栏目直达</div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {collectionLinks.map((item) => (
+                <a href={item.href} class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-100 transition hover:bg-white/20 hover:text-white">{item.label} · {item.count}</a>
+              ))}
+            </div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            {topCategories.slice(0, 6).map(([category, count]) => (
+              <a href={`/categories/${encodeURIComponent(category)}/`} class="rounded-full border border-white/10 px-3 py-1.5 font-medium text-sky-100 transition hover:border-sky-200 hover:text-white">{category} {count}</a>
             ))}
           </div>
         </div>

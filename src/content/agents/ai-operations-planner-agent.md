@@ -3,8 +3,8 @@ title: "AI 运营策划 Agent：生成活动方案、内容计划和执行清单
 description: "一个面向运营人员的 AI Agent，用于活动策划、内容排期、渠道计划和执行复盘。"
 category: "运营策划 Agent"
 tags: ["AI Agent", "运营", "活动策划", "内容计划"]
-pubDate: 2026-08-14
-updatedDate: 2026-08-14
+pubDate: 2026-06-23
+updatedDate: 2026-06-23
 author: "ai-productivity"
 draft: false
 featured: false

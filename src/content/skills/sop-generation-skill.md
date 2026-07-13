@@ -3,8 +3,8 @@ title: "SOP 生成 Skill：把经验整理成可执行流程"
 description: "一个用于把个人经验、操作记录或团队规范整理为 SOP 的 AI Skill，适合流程沉淀和团队协作。"
 category: "办公效率"
 tags: ["AI Skill", "SOP", "流程", "团队协作"]
-pubDate: 2026-07-17
-updatedDate: 2026-07-17
+pubDate: 2026-05-15
+updatedDate: 2026-05-15
 author: "ai-productivity"
 draft: false
 featured: false

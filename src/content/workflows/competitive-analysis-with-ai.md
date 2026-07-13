@@ -3,8 +3,8 @@ title: "用 AI 做竞品分析的完整工作流"
 description: "一个从资料收集到横向对比和机会点提炼的 AI 竞品分析工作流，适合产品和运营团队使用。"
 category: "研究工作流"
 tags: ["AI Workflow", "竞品分析", "产品研究", "市场分析"]
-pubDate: 2026-07-31
-updatedDate: 2026-07-31
+pubDate: 2026-05-29
+updatedDate: 2026-05-29
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "Obsidian + AI 资料总结工作流：把收藏变成可复用笔记"
 description: "一个结合 Obsidian 和 AI 的资料总结工作流，帮助你从文章、报告和笔记中提炼摘要、标签、双链、观点和后续输出。"
 category: "知识管理"
 tags: ["Obsidian", "知识管理", "资料总结", "个人知识库", "AI Workflow"]
-pubDate: 2026-08-15
-updatedDate: 2026-08-15
+pubDate: 2026-06-25
+updatedDate: 2026-06-25
 author: "ai-productivity"
 draft: false
 featured: false

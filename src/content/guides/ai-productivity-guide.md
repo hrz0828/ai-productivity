@@ -3,8 +3,8 @@ title: "AI 工作流入门指南：从单次提问到生产力系统"
 description: "一份 AI 工作流入门指南，帮助你理解如何把 Prompt、Skill、Agent 和 Tool 组合成可复用的生产力系统。"
 category: "AI 生产力"
 tags: ["AI 指南", "AI Workflow", "Prompt", "生产力"]
-pubDate: 2026-08-02
-updatedDate: 2026-08-02
+pubDate: 2026-05-31
+updatedDate: 2026-05-31
 author: "ai-productivity"
 draft: false
 featured: false

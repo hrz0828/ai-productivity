@@ -3,8 +3,8 @@ title: "AI 写岗位 JD Prompt：快速生成招聘职位描述"
 description: "一个适合 HR、招聘负责人和业务主管使用的 JD 写作 Prompt，帮助你生成职责清晰、要求明确、语气专业的岗位说明。"
 category: "职场效率"
 tags: ["AI Prompt", "JD", "招聘", "岗位说明", "职场写作"]
-pubDate: 2026-08-02
-updatedDate: 2026-08-02
+pubDate: 2026-06-01
+updatedDate: 2026-06-01
 author: "ai-productivity"
 draft: false
 featured: false

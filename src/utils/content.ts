@@ -1,6 +1,12 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { COLLECTION_LABELS } from '../config';
 
+const now = new Date();
+
+function isPublished(data: Pick<AnyContentEntry['data'], 'draft' | 'pubDate'>) {
+  return !data.draft && data.pubDate.valueOf() <= now.valueOf();
+}
+
 export type CollectionName = keyof typeof COLLECTION_LABELS;
 export type AnyContentEntry = CollectionEntry<CollectionName>;
 
@@ -11,7 +17,7 @@ export function getEntryPermalink(collection: CollectionName, slug: string) {
 }
 
 export async function getPublishedCollection(collection: CollectionName) {
-  const entries = await getCollection(collection, ({ data }) => !data.draft);
+  const entries = await getCollection(collection, ({ data }) => isPublished(data));
   return entries.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 

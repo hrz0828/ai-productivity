@@ -3,8 +3,8 @@ title: "代码审查 Skill：建立 AI 辅助 Code Review 流程"
 description: "一个面向开发者的代码审查 Skill，用于让 AI 按正确性、安全性、性能和可维护性审查代码。"
 category: "代码编写"
 tags: ["AI Skill", "Code Review", "AI 编程", "测试"]
-pubDate: 2026-07-15
-updatedDate: 2026-07-15
+pubDate: 2026-05-13
+updatedDate: 2026-05-13
 author: "ai-productivity"
 draft: false
 featured: false

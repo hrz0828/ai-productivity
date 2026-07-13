@@ -3,8 +3,8 @@ title: "Notion AI 工作流教程：整理资料、任务和知识库"
 description: "介绍如何使用 Notion AI 辅助整理资料、生成任务清单、总结文档和搭建个人知识库。"
 category: "Notion"
 tags: ["Notion AI", "知识管理", "任务管理", "AI 工具"]
-pubDate: 2026-07-25
-updatedDate: 2026-07-25
+pubDate: 2026-05-23
+updatedDate: 2026-05-23
 author: "ai-productivity"
 draft: false
 featured: false

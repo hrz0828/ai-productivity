@@ -3,8 +3,8 @@ title: "用 AI 做需求分析的完整工作流"
 description: "从一句需求想法到可评审的需求分析结果，使用 AI 完成背景澄清、用户场景、优先级、风险和待确认问题梳理。"
 category: "产品经理"
 tags: ["AI Workflow", "需求分析", "产品经理", "PRD", "用户场景"]
-pubDate: 2026-08-05
-updatedDate: 2026-08-05
+pubDate: 2026-06-07
+updatedDate: 2026-06-07
 author: "ai-productivity"
 draft: false
 featured: false

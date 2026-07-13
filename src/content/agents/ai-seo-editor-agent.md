@@ -3,8 +3,8 @@ title: "AI SEO 编辑 Agent：辅助关键词规划和文章优化"
 description: "一个面向内容站的 AI SEO 编辑 Agent，用于关键词拆解、文章 Brief、标题优化和内链建议。"
 category: "SEO 编辑 Agent"
 tags: ["AI Agent", "SEO", "内容运营", "编辑"]
-pubDate: 2026-07-21
-updatedDate: 2026-07-21
+pubDate: 2026-05-19
+updatedDate: 2026-05-19
 author: "ai-productivity"
 draft: false
 featured: false

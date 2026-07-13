@@ -3,8 +3,8 @@ title: "Figma AI 设计辅助教程：从设计 Brief 到页面评审"
 description: "介绍如何用 AI 辅助 Figma 设计流程，包括设计 Brief、页面文案、组件建议和设计评审。"
 category: "设计工具"
 tags: ["Figma", "AI 设计", "设计评审", "用户体验"]
-pubDate: 2026-08-26
-updatedDate: 2026-08-26
+pubDate: 2026-07-08
+updatedDate: 2026-07-08
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "AI 写 OKR Prompt：从目标想法生成可执行 OKR"
 description: "一个用于生成 OKR 初稿的 AI Prompt，帮助把模糊目标整理为 Objective、Key Results 和行动计划。"
 category: "办公效率"
 tags: ["AI Prompt", "OKR", "目标管理", "办公效率"]
-pubDate: 2026-08-09
-updatedDate: 2026-08-09
+pubDate: 2026-06-14
+updatedDate: 2026-06-14
 author: "ai-productivity"
 draft: false
 featured: false

@@ -3,8 +3,8 @@ title: "AI 学习教练 Agent：制定学习计划并跟踪复盘"
 description: "一个面向个人学习的 AI Agent，用于拆解学习目标、制定计划、生成练习和复盘反馈。"
 category: "学习教练 Agent"
 tags: ["AI Agent", "学习计划", "个人成长", "复盘"]
-pubDate: 2026-08-13
-updatedDate: 2026-08-13
+pubDate: 2026-06-22
+updatedDate: 2026-06-22
 author: "ai-productivity"
 draft: false
 featured: false

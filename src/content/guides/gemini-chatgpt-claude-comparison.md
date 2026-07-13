@@ -3,8 +3,8 @@ title: "Gemini、ChatGPT、Claude 怎么选：适合场景与使用建议"
 description: "对比 Gemini、ChatGPT 和 Claude 在研究、多模态、写作、代码、长文理解和日常办公中的适用场景，帮助中文用户选择合适工具。"
 category: "Gemini"
 tags: ["Gemini", "ChatGPT", "Claude", "AI 工具", "工具选型"]
-pubDate: 2026-08-06
-updatedDate: 2026-08-06
+pubDate: 2026-06-09
+updatedDate: 2026-06-09
 author: "ai-productivity"
 draft: false
 featured: false

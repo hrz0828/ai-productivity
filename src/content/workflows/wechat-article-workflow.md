@@ -3,8 +3,8 @@ title: "用 AI 写公众号文章的完整工作流"
 description: "从选题、文章结构、开头、正文到标题优化，用 AI 辅助生成更完整的公众号文章。"
 category: "内容工作流"
 tags: ["AI Workflow", "公众号", "内容创作", "写作"]
-pubDate: 2026-08-20
-updatedDate: 2026-08-20
+pubDate: 2026-07-02
+updatedDate: 2026-07-02
 author: "ai-productivity"
 draft: false
 featured: false

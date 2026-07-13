@@ -3,8 +3,8 @@ title: "AI 写邮件 Prompt：快速生成清晰专业的工作邮件"
 description: "一个用于生成工作邮件的 AI Prompt，适合写沟通邮件、催办邮件、项目同步邮件和合作邮件。"
 category: "文档写作"
 tags: ["AI Prompt", "邮件", "职场写作", "办公效率"]
-pubDate: 2026-08-08
-updatedDate: 2026-08-08
+pubDate: 2026-06-12
+updatedDate: 2026-06-12
 author: "ai-productivity"
 draft: false
 featured: false

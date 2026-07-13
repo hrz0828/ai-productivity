@@ -3,8 +3,8 @@ title: "Google AdSense 接入教程：内容站审核前要准备什么"
 description: "介绍内容站接入 Google AdSense 前需要准备的内容、页面、ads.txt、隐私政策和审核注意事项。"
 category: "商业化"
 tags: ["Google AdSense", "广告", "内容站", "商业化"]
-pubDate: 2026-08-16
-updatedDate: 2026-08-16
+pubDate: 2026-06-27
+updatedDate: 2026-06-27
 author: "ai-productivity"
 draft: false
 featured: false

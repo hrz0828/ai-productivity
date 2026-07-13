@@ -3,8 +3,8 @@ title: "AI 单元测试 Prompt：为函数和组件生成测试用例"
 description: "一个适合开发者使用的单元测试 Prompt，帮助你根据函数、组件或业务规则生成测试场景、边界条件和测试代码。"
 category: "代码编写"
 tags: ["AI Prompt", "单元测试", "AI 编程", "测试", "代码编写"]
-pubDate: 2026-08-17
-updatedDate: 2026-08-17
+pubDate: 2026-06-28
+updatedDate: 2026-06-28
 author: "ai-productivity"
 draft: false
 featured: false

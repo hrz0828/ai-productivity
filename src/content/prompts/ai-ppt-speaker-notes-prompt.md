@@ -3,8 +3,8 @@ title: "AI PPT 演讲稿 Prompt：为每页幻灯片生成讲稿和过渡语"
 description: "一个适合汇报、培训和路演场景的 PPT 演讲稿 Prompt，帮助你为每页幻灯片生成讲稿、过渡语、重点提醒和时间控制。"
 category: "PPT 制作"
 tags: ["AI Prompt", "PPT", "演示", "演讲稿", "汇报"]
-pubDate: 2026-08-16
-updatedDate: 2026-08-16
+pubDate: 2026-06-26
+updatedDate: 2026-06-26
 author: "ai-productivity"
 draft: false
 featured: false

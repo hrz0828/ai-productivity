@@ -3,8 +3,8 @@ title: "AI 会议纪要 Agent：整理会议结论、行动项和跟进清单"
 description: "一个面向团队会议的 AI Agent 配置，用于整理会议记录、提炼结论、生成行动项、标记负责人和待确认问题。"
 category: "会议效率"
 tags: ["AI Agent", "会议纪要", "行动项", "团队协作", "会议效率"]
-pubDate: 2026-08-10
-updatedDate: 2026-08-10
+pubDate: 2026-06-16
+updatedDate: 2026-06-16
 author: "ai-productivity"
 draft: false
 featured: false

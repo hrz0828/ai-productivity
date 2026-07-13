@@ -3,8 +3,8 @@ title: "资料总结 Skill：把长文资料转成摘要、观点和行动建议
 description: "一个用于资料总结的 AI Skill，适合整理文章、报告、会议材料和调研笔记。"
 category: "研究分析"
 tags: ["AI Skill", "资料总结", "研究", "知识管理"]
-pubDate: 2026-08-12
-updatedDate: 2026-08-12
+pubDate: 2026-06-20
+updatedDate: 2026-06-20
 author: "ai-productivity"
 draft: false
 featured: false

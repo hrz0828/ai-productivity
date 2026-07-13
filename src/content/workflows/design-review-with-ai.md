@@ -3,8 +3,8 @@ title: "用 AI 做设计评审的工作流"
 description: "一个用于设计稿评审的 AI 工作流，从目标、用户路径、视觉层级、文案和可用性角度检查设计。"
 category: "设计工作流"
 tags: ["AI Workflow", "设计评审", "用户体验", "设计"]
-pubDate: 2026-08-21
-updatedDate: 2026-08-21
+pubDate: 2026-07-03
+updatedDate: 2026-07-03
 author: "ai-productivity"
 draft: false
 featured: false

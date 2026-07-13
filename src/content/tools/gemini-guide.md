@@ -3,8 +3,8 @@ title: "Gemini 使用教程：适合研究、长文理解和多模态任务"
 description: "介绍 Gemini 在资料理解、长文总结、多模态输入和研究任务中的使用方式。"
 category: "Gemini"
 tags: ["Gemini", "AI 工具", "研究", "多模态"]
-pubDate: 2026-08-25
-updatedDate: 2026-08-25
+pubDate: 2026-07-07
+updatedDate: 2026-07-07
 author: "ai-productivity"
 draft: false
 featured: false

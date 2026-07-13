@@ -3,8 +3,8 @@ title: "用 AI 把会议记录整理成行动项的工作流"
 description: "一个从会议转写到行动项表格的 AI 工作流，帮助团队提炼结论、负责人、截止时间和待确认问题。"
 category: "会议工作流"
 tags: ["AI Workflow", "会议纪要", "行动项", "团队协作"]
-pubDate: 2026-07-28
-updatedDate: 2026-07-28
+pubDate: 2026-05-26
+updatedDate: 2026-05-26
 author: "ai-productivity"
 draft: false
 featured: false
