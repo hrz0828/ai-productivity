@@ -1,13 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="关于本站 - ai-productivity" description="了解 ai-productivity 的定位、内容范围、编辑原则和服务对象。" canonical="/about/">
+<BaseLayout title="关于本站 - ai-productivity" description="了解 ai-productivity 的维护背景、内容范围、编辑原则、AI 辅助写作说明和人工复核机制。" canonical="/about/">
   <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
     <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">About</p>
     <h1 class="mt-3 text-4xl font-bold text-slate-950">关于 ai-productivity</h1>
     <div class="prose prose-slate mt-8 max-w-none rounded-3xl border border-slate-200 bg-white p-8">
-      <p><strong>ai-productivity</strong> 是一个专注 AI 生产力的深度内容站，关注 Prompt、Skill、Agent、Tool 与 Workflow 在真实工作中的使用方式。</p>
+      <p><strong>ai-productivity</strong> 是一个专注 AI 生产力的实践型内容站，关注 Prompt、Skill、Agent、Tool 与 Workflow 在真实工作中的使用方式。</p>
       <p>本站的目标不是追逐 AI 新闻，也不是简单堆砌提示词，而是把文档写作、PPT 制作、设计协作、代码开发、研究分析和办公自动化中的重复性工作，沉淀为可复用的方法、模板和流程。</p>
+
+      <h2>谁在维护本站</h2>
+      <p>本站由长期使用 AI 工具处理内容站建设、产品文档、自动化流程和开发协作任务的实践者维护。我们关注的不是“AI 能不能替代人”，而是“在真实工作里，哪些环节可以被 AI 稳定辅助，哪些环节必须保留人工判断”。</p>
+      <p>站内很多内容来自实际维护内容站和工作流时遇到的问题：例如如何写一份不夸大成果的周报、如何把功能想法整理成 PRD、如何用 GitHub Actions 阻止错误内容发布、如何避免提示词看起来可复制但实际不可用。</p>
+      <p>我们不会包装不存在的团队资历，也不会把 AI 输出直接当成专家结论。本站更像一本持续更新的实践笔记：每篇内容尽量说明使用场景、输入材料、输出边界和人工复核点。</p>
 
       <h2>我们提供什么内容</h2>
       <ul>
@@ -18,6 +23,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <li><strong>Workflow 案例：</strong>展示从输入到输出的完整 AI 工作流。</li>
         <li><strong>Guide 指南：</strong>解释 AI 生产力系统、Prompt 工程、Agent 设计和工具选型方法。</li>
       </ul>
+
+      <h2>内容如何产生</h2>
+      <p>本站允许使用 AI 辅助整理文章结构、生成草稿片段、检查语句是否清晰，但不会把未经阅读和修改的 AI 输出直接发布。每篇正式内容发布前都会经过人工编辑，重点检查：是否有明确使用场景、是否存在夸大描述、是否有事实或工具步骤风险、是否给出人工复核建议。</p>
+      <p>对于 Prompt 和 Workflow 类文章，我们会尽量补充示例输入、示例输出、调试建议和失败案例。原因很简单：一个只包含提示词代码块的页面看起来方便复制，但读者真正需要的是知道什么时候该用、怎么改、哪里容易出错。</p>
 
       <h2>适合谁阅读</h2>
       <ul>
@@ -30,6 +39,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2>内容原则</h2>
       <p>本站内容以实用、可复用、可检查为核心原则。我们会尽量说明每个模板或工作流适合什么场景、需要什么输入、会产生什么输出，以及使用时需要注意的边界。</p>
       <p>AI 工具输出可能存在错误，所以本站也强调人工复核、事实检查和安全边界。涉及数据、法律、财务、医疗、账号权限、线上发布等高风险场景时，应由专业人员最终确认。</p>
+
+      <h2>更新和纠错</h2>
+      <p>AI 工具、平台政策和搜索引擎审核标准变化很快。我们会根据实际使用、读者反馈和站点数据持续更新内容。你也可以阅读 <a href="/editorial-policy/">编辑原则</a> 了解更详细的写作与纠错机制。</p>
+      <p>如果你发现某篇文章过时、步骤无法复现、Prompt 输出质量不稳定，欢迎通过 <a href="/feedback/">反馈页面</a> 或 <a href="/contact/">联系页面</a> 告诉我们。</p>
+
+      <h2>合规和隐私</h2>
+      <p>本站提供的是学习和工作效率参考，不构成法律、财务、医疗、投资或其他专业建议。关于数据处理、Cookie、广告服务和用户投稿，请阅读 <a href="/privacy-policy/">隐私政策</a> 与 <a href="/terms/">使用条款</a>。</p>
 
       <h2>联系方式</h2>
       <p>如果你发现内容错误、想建议主题，或希望沟通合作，请通过 <a href="/contact/">联系页面</a> 获取邮箱。</p>

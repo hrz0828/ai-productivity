@@ -8,6 +8,12 @@ const keywords = ['内容站', 'SEO', 'AdSense', 'Search Console', '内容日历
 const articles = entries.filter((entry) =>
   keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
 ).slice(0, 12);
+const readingPath = [
+  { title: '用 AI 搭建内容站工作流', href: '/workflows/launch-content-site-with-ai/', desc: '从定位、栏目、技术栈和上线流程建立最小可用内容站。' },
+  { title: '内容日历工作流', href: '/workflows/ai-content-calendar-workflow/', desc: '规划选题、排期、内链和旧文翻新，避免只堆文章数量。' },
+  { title: 'Cloudflare Pages 部署教程', href: '/tools/cloudflare-pages-deploy-guide/', desc: '把 Astro 静态站部署到 Cloudflare Pages，并配置基础构建。' },
+  { title: 'Google Search Console 指南', href: '/tools/google-search-console-guide/', desc: '检查收录、搜索查询和抓取问题，为后续 AdSense 审核积累自然流量。' },
+];
 ---
 
 <BaseLayout title="AI 内容站专题：选题、SEO、部署和 AdSense" description="汇总 AI 内容站建设相关内容，包括选题、内容日历、Astro、Cloudflare Pages、Search Console 和 AdSense。" canonical="/topics/ai-content-site/">
@@ -16,18 +22,33 @@ const articles = entries.filter((entry) =>
     <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 内容站专题</h1>
     <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">内容站不是只写文章，还需要定位、栏目、内容日历、SEO 基础、部署、收录和商业化准备。这个专题汇总从 0 到 1 的关键内容。</p>
 
+    <div class="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <h2 class="text-2xl font-bold text-slate-950">内容站不要只做资源导航</h2>
+      <p class="mt-4 text-base leading-8 text-slate-600">如果一个网站只有工具列表、提示词代码块和外链，很容易被用户和搜索引擎认为价值不足。更稳妥的内容站建设方式，是围绕真实任务写深：解释为什么这样做、如何配置、哪里会失败、上线后如何复盘。</p>
+      <p class="mt-3 text-base leading-8 text-slate-600">本专题建议先完成内容定位和 4 周内容日历，再处理技术部署、收录、AdSense 和数据复盘。不要在内容还很薄时急着堆广告位，也不要把只有 1-2 篇文章的专题大规模放到主导航。</p>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        {readingPath.map((item, index) => (
+          <a href={item.href} class="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-sky-200 hover:bg-sky-50">
+            <div class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-700">Step {index + 1}</div>
+            <h3 class="mt-2 text-lg font-semibold text-slate-950">{item.title}</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+
     <div class="mt-10 grid gap-6 md:grid-cols-3">
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-xl font-semibold text-slate-950">内容规划</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">确定目标用户、栏目结构、关键词和更新节奏。</p>
+        <p class="mt-3 text-sm leading-6 text-slate-600">确定目标用户、栏目结构、关键词、原创补充点和更新节奏。</p>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-xl font-semibold text-slate-950">技术上线</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">使用 Astro、GitHub 和 Cloudflare Pages 快速部署静态内容站。</p>
+        <p class="mt-3 text-sm leading-6 text-slate-600">使用 Astro、GitHub 和 Cloudflare Pages 快速部署静态内容站，并用 CI 阻止低级错误。</p>
       </div>
       <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-xl font-semibold text-slate-950">SEO 与商业化</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">配置 sitemap、Search Console、AdSense 和基础监控。</p>
+        <p class="mt-3 text-sm leading-6 text-slate-600">配置 sitemap、Search Console、AdSense 和基础监控，先积累自然流量再提交审核。</p>
       </div>
     </div>
 
