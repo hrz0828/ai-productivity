@@ -21,24 +21,29 @@ export function articleJsonLd(input: {
   author?: string;
   image?: string;
 }) {
+  const url = absoluteUrl(input.url);
+  const image = absoluteUrl(input.image ?? '/images/og/default.png');
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: input.title,
     description: input.description,
-    url: input.url,
+    url,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
     datePublished: input.pubDate.toISOString(),
     dateModified: (input.updatedDate ?? input.pubDate).toISOString(),
+    inLanguage: SITE.locale,
     author: {
       '@type': 'Organization',
       name: input.author ?? SITE.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE.name,
       url: SITE.url,
     },
-    image: input.image ? absoluteUrl(input.image) : undefined,
+    publisher: organizationJsonLd(),
+    image,
   };
 }
 
@@ -56,12 +61,48 @@ export function breadcrumbJsonLd(items: Array<{ label: string; href: string }>) 
 }
 
 export function organizationJsonLd() {
+  const logo = absoluteUrl('/favicon.svg');
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE.name,
     url: SITE.url,
-    logo: absoluteUrl('/favicon.svg'),
+    logo: {
+      '@type': 'ImageObject',
+      url: logo,
+    },
+    image: logo,
+  };
+}
+
+export function itemListJsonLd(items: Array<{ label: string; href: string; description?: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: absoluteUrl(item.href),
+      name: item.label,
+      description: item.description,
+    })),
+  };
+}
+
+export function collectionPageJsonLd(input: { title: string; description: string; url: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: input.title,
+    description: input.description,
+    url: absoluteUrl(input.url),
+    inLanguage: SITE.locale,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: SITE.name,
+      url: SITE.url,
+    },
   };
 }
 

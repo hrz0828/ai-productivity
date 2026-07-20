@@ -5,10 +5,10 @@ import SectionHeader from '../components/SectionHeader.astro';
 import CategoryPill from '../components/CategoryPill.astro';
 import SearchEntry from '../components/SearchEntry.astro';
 import QuickPromptShowcase from '../components/QuickPromptShowcase.astro';
-import { COLLECTION_LABELS, SITE, TOPIC_ITEMS } from '../config';
+import { COLLECTION_LABELS, TOPIC_ITEMS } from '../config';
 import { hotSearchKeywords } from '../data/taskFinder';
 import { getAllPublishedEntries } from '../utils/content';
-import { organizationJsonLd, websiteJsonLd } from '../utils/seo';
+import { itemListJsonLd, organizationJsonLd, websiteJsonLd } from '../utils/seo';
 
 const entries = await getAllPublishedEntries();
 const getEntryKey = (entry: (typeof entries)[number]) => `${entry.collection}/${entry.id}`;
@@ -34,7 +34,17 @@ const collectionLinks = Object.entries(COLLECTION_LABELS).map(([collection, labe
   count: collectionCounts.get(collection as keyof typeof COLLECTION_LABELS) ?? 0,
 }));
 const heroSearchKeywords = hotSearchKeywords.slice(0, 8);
-const jsonLd = [websiteJsonLd(), organizationJsonLd()];
+const homeTitle = 'AI 生产力实战库：Prompt、Agent、Workflow 与工具教程';
+const homeDescription = '收录可复制的 AI 提示词、自动化工作流、Agent 配置和工具教程，帮助你提升写作、PPT、产品、编程、知识管理和内容创作效率。';
+const jsonLd = [
+  websiteJsonLd(),
+  organizationJsonLd(),
+  itemListJsonLd(featured.slice(0, 8).map((entry) => ({
+    label: entry.data.title,
+    description: entry.data.description,
+    href: getEntryHref(entry),
+  }))),
+];
 const stats = [
   { label: '原创内容', value: `${entries.length}+` },
   { label: '内容类型', value: `${collectionLinks.length}` },
@@ -197,15 +207,15 @@ const coreTopicItems = topicDetails.slice(0, 6);
 const moreTopicItems = topicDetails.slice(6);
 ---
 
-<BaseLayout title={SITE.title} description={SITE.description} canonical="/" jsonLd={jsonLd}>
+<BaseLayout title={homeTitle} description={homeDescription} canonical="/" jsonLd={jsonLd}>
   <section class="relative overflow-hidden bg-white">
     <div class="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-sky-50 to-transparent"></div>
     <div class="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
       <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <p class="text-sm font-semibold uppercase tracking-[0.25em] text-sky-700">AI Productivity Playbook</p>
-          <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">用 Prompt、Agent 和 Workflow 重构日常工作</h1>
-          <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">探索 AI Prompt、Skill、Agent、Tool 与 Workflow，提升文档、PPT、设计、代码和办公自动化效率。</p>
+          <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">AI 生产力实战库：用 Prompt、Agent 和 Workflow 重构日常工作</h1>
+          <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">系统整理可复制的 AI 提示词、自动化工作流、Agent 配置和工具教程，提升写作、PPT、产品、编程、知识管理和内容创作效率。</p>
           <div class="mt-8"><SearchEntry /></div>
           <div class="mt-4 flex flex-wrap items-center gap-2">
             <span class="text-sm font-medium text-slate-500">热门搜索：</span>

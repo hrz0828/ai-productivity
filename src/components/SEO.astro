@@ -10,6 +10,8 @@ interface Props {
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   robots?: string;
+  publishedTime?: Date;
+  modifiedTime?: Date;
 }
 
 const {
@@ -19,7 +21,9 @@ const {
   image = '/images/og/default.png',
   type = 'website',
   jsonLd,
-  robots,
+  robots = 'index,follow',
+  publishedTime,
+  modifiedTime,
 } = Astro.props;
 
 const pageTitle = title.includes(SITE.name) ? title : `${title} - ${SITE.name}`;
@@ -30,7 +34,11 @@ const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
-{robots && <meta name="robots" content={robots} />}
+<meta name="robots" content={robots} />
+<meta name="author" content={SITE.author} />
+<meta name="theme-color" content="#0284c7" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="format-detection" content="telephone=no" />
 <link rel="canonical" href={canonicalUrl} />
 <meta property="og:locale" content={SITE.locale} />
 <meta property="og:type" content={type} />
@@ -39,6 +47,8 @@ const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={imageUrl} />
+{type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />

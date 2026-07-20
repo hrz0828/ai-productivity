@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/ArticleCard.astro';
 import SearchEntry from '../../../components/SearchEntry.astro';
 import { getAllPublishedEntries } from '../../../utils/content';
+import { collectionPageJsonLd, itemListJsonLd } from '../../../utils/seo';
 
 export async function getStaticPaths() {
   const entries = await getAllPublishedEntries();
@@ -29,9 +30,17 @@ const relatedEntries = allEntries
   .slice(0, 3);
 const fallbackEntries = allEntries.filter((entry) => !entries.some((current) => current.id === entry.id && current.collection === entry.collection)).slice(0, 3);
 const recommendations = relatedEntries.length ? relatedEntries : fallbackEntries;
+const jsonLd = [
+  collectionPageJsonLd({ title, description, url: canonical }),
+  itemListJsonLd(entries.map((entry) => ({
+    label: entry.data.title,
+    description: entry.data.description,
+    href: `/${entry.collection}/${entry.id}/`,
+  }))),
+];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical}>
+<BaseLayout title={title} description={description} canonical={canonical} robots={isThinTag ? 'noindex,follow' : 'index,follow'} jsonLd={jsonLd}>
   <section class="border-b border-slate-200 bg-white">
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
       <div class="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">

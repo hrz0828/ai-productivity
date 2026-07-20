@@ -50,7 +50,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} image={entry.data.ogImage} type="article" jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} canonical={canonical} image={entry.data.ogImage} type="article" jsonLd={jsonLd} publishedTime={entry.data.pubDate} modifiedTime={entry.data.updatedDate ?? entry.data.pubDate}>
   <article class="mx-auto grid max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:px-8">
     <div class="min-w-0">
       <Breadcrumb items={breadcrumbs} />
