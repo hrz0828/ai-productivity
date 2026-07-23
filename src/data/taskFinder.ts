@@ -249,4 +249,4 @@ export const taskShortcuts = taskGroups.flatMap((group) =>
   })),
 );
 
-export const hotSearchKeywords = ['周报', '简历', 'PRD', '会议纪要', '竞品分析', '代码审查', 'Cursor', 'Claude Code', '小红书', 'SEO', 'AI 视频', 'Midjourney', 'Voice Agent'];
+export const hotSearchKeywords = ['AI 热点', 'SEO', 'Claude Code', 'Cursor', 'AI 视频', 'Gemini', '内容日历', 'PRD', '会议纪要', '竞品分析', '代码审查', '小红书', 'Voice Agent'];

@@ -43,6 +43,7 @@ export function articleJsonLd(input: {
       url: SITE.url,
     },
     publisher: organizationJsonLd(),
+    isPartOf: websiteJsonLd(),
     image,
   };
 }
@@ -67,6 +68,7 @@ export function organizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE.name,
+    alternateName: SITE.alternateName,
     url: SITE.url,
     logo: {
       '@type': 'ImageObject',
@@ -111,6 +113,7 @@ export function websiteJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE.name,
+    alternateName: SITE.alternateName,
     url: SITE.url,
     description: SITE.description,
     inLanguage: SITE.locale,

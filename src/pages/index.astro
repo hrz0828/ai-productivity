@@ -34,8 +34,8 @@ const collectionLinks = Object.entries(COLLECTION_LABELS).map(([collection, labe
   count: collectionCounts.get(collection as keyof typeof COLLECTION_LABELS) ?? 0,
 }));
 const heroSearchKeywords = hotSearchKeywords.slice(0, 8);
-const homeTitle = 'AI 生产力实战库：Prompt、Agent、Workflow 与工具教程';
-const homeDescription = '收录可复制的 AI 提示词、自动化工作流、Agent 配置和工具教程，帮助你提升写作、PPT、产品、编程、知识管理和内容创作效率。';
+const homeTitle = 'AI 提示词、Agent 与工作流实战库｜按任务提升生产力';
+const homeDescription = 'STS2Hub 按写作、PPT、产品、编程、知识管理和内容创作等真实任务，整理可复制的 AI 提示词、Agent 配置、自动化工作流和 AI 工具教程。';
 const jsonLd = [
   websiteJsonLd(),
   organizationJsonLd(),
@@ -214,8 +214,8 @@ const moreTopicItems = topicDetails.slice(6);
       <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <p class="text-sm font-semibold uppercase tracking-[0.25em] text-sky-700">AI Productivity Playbook</p>
-          <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">AI 生产力实战库：用 Prompt、Agent 和 Workflow 重构日常工作</h1>
-          <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">系统整理可复制的 AI 提示词、自动化工作流、Agent 配置和工具教程，提升写作、PPT、产品、编程、知识管理和内容创作效率。</p>
+          <h1 class="mt-5 text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl">按真实任务查找 AI 提示词、Agent 和自动化工作流</h1>
+          <p class="mt-6 max-w-3xl text-xl leading-9 text-slate-600">STS2Hub 系统整理可复制的 AI 提示词、Agent 配置、自动化工作流和 AI 工具教程，帮助你更快完成写作、PPT、产品、编程、知识管理和内容创作。</p>
           <div class="mt-8"><SearchEntry /></div>
           <div class="mt-4 flex flex-wrap items-center gap-2">
             <span class="text-sm font-medium text-slate-500">热门搜索：</span>
@@ -224,8 +224,8 @@ const moreTopicItems = topicDetails.slice(6);
             ))}
           </div>
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="#quick-prompts" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">复制热门 Prompt</a>
-            <a href="/tasks/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">按任务查找</a>
+            <a href="#quick-prompts" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">复制 AI 提示词模板</a>
+            <a href="/tasks/" class="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700">按任务查找 AI 工作流</a>
           </div>
         </div>
         <div class="rounded-[2rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-2xl">
@@ -436,7 +436,7 @@ const moreTopicItems = topicDetails.slice(6);
           <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">About</p>
           <h2 class="mt-2 text-3xl font-bold text-slate-950">不是泛泛聊 AI，而是沉淀可复用工作方法</h2>
         </div>
-        <p class="text-base leading-8 text-slate-600">ai-productivity 关注真实工作场景：文档、PPT、设计、代码、研究和自动化。每篇内容都尽量给出可复制模板、执行步骤和适用边界，帮助你把 AI 从聊天工具变成生产力系统。</p>
+        <p class="text-base leading-8 text-slate-600">STS2Hub 关注真实工作场景：文档、PPT、设计、代码、研究和自动化。每篇内容都尽量给出可复制 AI 提示词、执行步骤、工具配置和适用边界，帮助你把 AI 从聊天工具变成生产力系统。</p>
       </div>
     </div>
   </section>

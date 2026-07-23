@@ -1,11 +1,12 @@
 export const SITE = {
-  name: 'ai-productivity',
+  name: 'STS2Hub',
   url: 'https://sts2hub.com',
-  title: 'ai-productivity：AI Prompt、Agent 与 Workflow 实战库',
+  title: 'STS2Hub：AI 提示词、Agent 与工作流实战库',
   description:
-    '探索 AI Prompt、Skill、Agent、Tool 与 Workflow，提升文档、PPT、设计、代码和办公自动化效率。',
-  author: 'ai-productivity',
+    '按真实任务查找可复制的 AI 提示词、Agent 配置、自动化工作流和 AI 工具教程，提升写作、PPT、产品、编程与知识管理效率。',
+  author: 'STS2Hub',
   locale: 'zh-CN',
+  alternateName: 'ai-productivity',
 };
 
 export const NAV_ITEMS = [

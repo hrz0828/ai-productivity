@@ -87,7 +87,7 @@ const jsonLd = [
           <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">{collection}</p>
           <h1 class="mt-3 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{title}</h1>
           <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{description}</p>
-          <p class="mt-3 max-w-3xl text-base leading-7 text-slate-500">{guide.subtitle}</p>
+          <p class="mt-3 max-w-3xl text-base leading-7 text-slate-500">{guide.subtitle} 本页按主题分类、推荐入口和全部内容组织，方便从搜索结果进入后继续阅读相关 AI 工作方法。</p>
           <div class="mt-6 flex flex-wrap gap-2">
             {categories.map((category) => <CategoryPill label={category} count={entries.filter((entry) => entry.data.category === category).length} />)}
           </div>
@@ -101,7 +101,7 @@ const jsonLd = [
     <div class="rounded-3xl border border-sky-100 bg-sky-50/60 p-6">
       <div class="mb-5">
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Start here</p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-950">新手推荐入口</h2>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">新手推荐入口：先读这些 AI 教程和模板</h2>
       </div>
       <div class="grid gap-4 md:grid-cols-3">
         {guide.startHere.map((item) => (
@@ -130,7 +130,7 @@ const jsonLd = [
     <div class="mb-6 flex items-end justify-between">
       <div>
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">All articles</p>
-        <h2 class="mt-2 text-2xl font-bold text-slate-950">全部内容</h2>
+        <h2 class="mt-2 text-2xl font-bold text-slate-950">全部 AI 生产力内容</h2>
       </div>
       <div class="text-sm text-slate-500">共 {entries.length} 篇</div>
     </div>
