@@ -29,6 +29,14 @@ interface Props {
 
 const { entry, collection, headings, body, related = [], previous, next } = Astro.props;
 const title = entry.data.seoTitle ?? entry.data.title;
+const authorProfiles: Record<string, { name: string; role: string; bio: string }> = {
+  'ai-productivity': {
+    name: 'ai-productivity 编辑组',
+    role: 'AI 工作流与内容站实践编辑',
+    bio: '长期维护 AI 生产力内容站，关注 Prompt、Agent、自动化、SEO 和内容质量复核。文章会结合 AI 辅助整理与人工编辑，重点检查事实、边界、示例和可执行性。',
+  },
+};
+const authorProfile = authorProfiles[entry.data.author] ?? { name: entry.data.author, role: '内容作者', bio: '负责本文内容整理、更新和人工复核。' };
 const description = entry.data.seoDescription ?? entry.data.description;
 const canonical = `/${collection}/${entry.id}/`;
 const breadcrumbs = [
@@ -63,6 +71,11 @@ const jsonLd = [
         </div>
         <h1 class="mt-5 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">{entry.data.title}</h1>
         <p class="mt-5 text-lg leading-8 text-slate-600">{entry.data.description}</p>
+        <div class="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <div class="text-sm font-semibold text-slate-950">作者与复核</div>
+          <p class="mt-1 text-sm leading-6 text-slate-600"><strong>{authorProfile.name}</strong> · {authorProfile.role}</p>
+          <p class="mt-1 text-sm leading-6 text-slate-500">{authorProfile.bio}</p>
+        </div>
         <div class="mt-6"><TagList tags={entry.data.tags} /></div>
       </header>
 

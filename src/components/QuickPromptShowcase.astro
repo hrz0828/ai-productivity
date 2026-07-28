@@ -6,6 +6,8 @@ const quickPrompts = [
     scene: '把零散工作记录整理成结构化周报',
     audience: '职场人 / 项目成员 / 团队负责人',
     description: '适合每周五快速整理成果、问题、数据和下周计划。',
+    expected: '输出包括核心成果、重点进展、数据说明、风险和下周计划。',
+    pitfall: '不要在首页直接复制后发送，需替换为真实工作记录并核对数据。',
     href: '/prompts/ai-weekly-report-prompt/',
     prompt: `你是一名专业的职场写作助理。请根据我提供的本周工作信息，帮我生成一份结构清晰、表达专业、重点突出的工作周报。
 
@@ -32,6 +34,8 @@ const quickPrompts = [
     scene: '根据目标岗位 JD 优化简历表达',
     audience: '求职者 / 转岗人群 / 职场新人',
     description: '帮助提炼项目成果、匹配关键词，并标记需要补充的数据。',
+    expected: '输出包括匹配度分析、改写版本、缺失数据和面试追问风险。',
+    pitfall: '不能编造经历、数据或项目结果，所有成果都要回到真实经历核对。',
     href: '/prompts/ai-resume-optimization-prompt/',
     prompt: `你是一名专业简历顾问。请根据我的简历内容和目标岗位 JD，帮我优化简历表达。
 
@@ -54,6 +58,8 @@ const quickPrompts = [
     scene: '把需求想法整理成产品需求文档',
     audience: '产品经理 / 创业者 / 项目负责人',
     description: '从背景、目标、用户故事、功能规则到验收标准生成 PRD 框架。',
+    expected: '输出包括需求背景、功能边界、验收标准、风险依赖和待确认问题。',
+    pitfall: 'AI 生成的是评审初稿，不能替代用户研究、技术评估和排期判断。',
     href: '/prompts/ai-prd-prompt/',
     prompt: `你是一名经验丰富的产品经理。请根据我提供的需求背景，生成一份结构清晰、可继续评审的 PRD 初稿。
 
@@ -82,6 +88,8 @@ const quickPrompts = [
     scene: '从会议记录中提炼结论与行动项',
     audience: '项目经理 / 运营 / 团队协作成员',
     description: '快速整理议题、决策、责任人、截止时间和待跟进风险。',
+    expected: '输出包括会议结论、行动项表格、负责人、截止时间和待确认问题。',
+    pitfall: '负责人或截止时间不明确时必须标记待确认，不能让 AI 凭空指定。',
     href: '/prompts/ai-meeting-minutes-prompt/',
     prompt: `你是一名专业会议纪要助理。请根据我提供的会议记录，整理一份结构清晰、方便会后跟进的会议纪要。
 
@@ -109,9 +117,9 @@ const quickPrompts = [
   <div class="rounded-[2rem] border border-sky-100 bg-gradient-to-br from-white via-sky-50/50 to-white p-6 shadow-sm sm:p-8">
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Quick copy</p>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">热门 Prompt，首页直接复制使用</h2>
-        <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600">不用先跳转到详情页。选择一个高频场景，预览后复制到 ChatGPT、Claude 或 Gemini 即可开始。</p>
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Prompt playbook</p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">热门 Prompt 场景：先看适用边界，再去详情页复制完整模板</h2>
+        <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600">首页只保留场景、预期产出和踩坑提醒，避免把长模板堆成重复内容。完整 Prompt、Before/After 和真实输入输出示例放在详情页。</p>
       </div>
       <a href="/prompts/" class="inline-flex rounded-full border border-sky-200 bg-white px-5 py-2.5 text-sm font-semibold text-sky-700 transition hover:border-sky-300 hover:bg-sky-50">查看全部 Prompt →</a>
     </div>
@@ -126,9 +134,19 @@ const quickPrompts = [
           <h3 class="mt-4 text-xl font-semibold text-slate-950">{item.title}</h3>
           <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
           <p class="mt-3 text-xs leading-5 text-slate-500">适合：{item.audience}</p>
+          <div class="mt-4 grid gap-3 text-sm">
+            <div class="rounded-2xl border border-sky-100 bg-sky-50/70 p-4">
+              <div class="font-semibold text-slate-950">预期产出</div>
+              <p class="mt-1 leading-6 text-slate-600">{item.expected}</p>
+            </div>
+            <div class="rounded-2xl border border-amber-100 bg-amber-50/70 p-4">
+              <div class="font-semibold text-slate-950">使用边界</div>
+              <p class="mt-1 leading-6 text-slate-600">{item.pitfall}</p>
+            </div>
+          </div>
           <details class="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4" data-quick-details={item.id}>
-            <summary class="cursor-pointer text-sm font-semibold text-slate-800 marker:text-sky-600">展开预览片段</summary>
-            <pre class="mt-3 max-h-52 overflow-auto whitespace-pre-wrap text-xs leading-6 text-slate-700">{item.prompt}</pre>
+            <summary class="cursor-pointer text-sm font-semibold text-slate-800 marker:text-sky-600">查看短预览（完整案例在详情页）</summary>
+            <pre class="mt-3 max-h-32 overflow-auto whitespace-pre-wrap text-xs leading-6 text-slate-700">{item.prompt.split('\n').slice(0, 8).join('\n')}\n...</pre>
           </details>
           <p class="mt-3 hidden text-sm font-medium text-sky-700" data-quick-status={item.id} aria-live="polite"></p>
           <div class="mt-5 flex flex-wrap gap-3">

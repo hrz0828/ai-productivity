@@ -1,0 +1,57 @@
+{
+  "name": "AI Feedback Summary Workflow",
+  "description": "Starter n8n workflow for summarizing user feedback with an AI node, adding a human review step, and logging the result.",
+  "nodes": [
+    {
+      "name": "Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [0, 0],
+      "parameters": {
+        "path": "feedback-summary",
+        "formTitle": "Feedback Summary Intake"
+      }
+    },
+    {
+      "name": "Prepare Fields",
+      "type": "n8n-nodes-base.set",
+      "position": [260, 0],
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            { "name": "feedback", "value": "={{$json.feedback || $json.text || ''}}" },
+            { "name": "source", "value": "={{$json.source || 'form'}}" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "AI Summary Draft",
+      "type": "n8n-nodes-base.noOp",
+      "position": [520, 0],
+      "notes": "Replace this no-op with your preferred AI node. Prompt: summarize feedback, classify urgency, mark privacy data, and output fixed JSON fields."
+    },
+    {
+      "name": "Human Review Required",
+      "type": "n8n-nodes-base.noOp",
+      "position": [780, 0],
+      "notes": "Send the AI summary to Slack/Email/Notion for human review before contacting users or publishing anything."
+    },
+    {
+      "name": "Log Result",
+      "type": "n8n-nodes-base.noOp",
+      "position": [1040, 0],
+      "notes": "Write input source, AI output, review status, execution time, and errors to your logging destination."
+    }
+  ],
+  "connections": {
+    "Form Trigger": { "main": [[{ "node": "Prepare Fields", "type": "main", "index": 0 }]] },
+    "Prepare Fields": { "main": [[{ "node": "AI Summary Draft", "type": "main", "index": 0 }]] },
+    "AI Summary Draft": { "main": [[{ "node": "Human Review Required", "type": "main", "index": 0 }]] },
+    "Human Review Required": { "main": [[{ "node": "Log Result", "type": "main", "index": 0 }]] }
+  },
+  "meta": {
+    "templateVersion": "2026-07-22",
+    "safetyNote": "This starter template intentionally uses no-op placeholders for AI, notification, and logging nodes. Configure credentials and keep human review before external sending."
+  }
+}

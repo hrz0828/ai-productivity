@@ -4,7 +4,7 @@ description: "一个用于快速生成工作日报的 AI Prompt，适合把当�
 category: "文档写作"
 tags: ["AI Prompt", "日报", "办公效率", "职场写作"]
 pubDate: 2026-07-07
-updatedDate: 2026-07-07
+updatedDate: 2026-07-22
 author: "ai-productivity"
 draft: false
 featured: false
@@ -42,6 +42,8 @@ ogImage: "/images/og/default.png"
 ## 输入建议
 
 尽量包含任务名称、完成状态、相关数据、协作对象和未完成原因。即使只有简单要点，也可以先让 AI 整理成版本一。
+
+如果你需要同时处理日报、周报和项目同步，建议先阅读 [职场日常汇报 Prompt 与工作流指南](/guides/workplace-daily-weekly-report-ai-guide/)。这篇综合指南会说明日报和周报的区别、Before/After 示例、边界条件和发送前检查清单，避免日报和周报内容重复稀释。
 
 ## 输出检查
 

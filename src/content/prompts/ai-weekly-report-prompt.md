@@ -46,6 +46,8 @@ ogImage: "/images/og/default.png"
 
 如果你是管理者，也可以把这个 Prompt 改成“团队周报汇总 Prompt”，让 AI 先按成员、项目、风险和待协调事项归类，再由你确认重点。
 
+如果你同时需要日报、周报和项目同步模板，可以先看 [职场日常汇报 Prompt 与工作流指南](/guides/workplace-daily-weekly-report-ai-guide/)，里面把两类相近需求合并说明，包含 Before/After、通用 Prompt、边界条件和发送前检查清单。
+
 ## 使用前先准备什么
 
 不要一上来只输入“帮我写周报”。我建议先整理 4 类材料：
