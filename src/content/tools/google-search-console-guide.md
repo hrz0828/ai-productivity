@@ -4,7 +4,7 @@ description: "介绍 AI 内容站如何使用 Google Search Console 验证站点
 category: "SEO 工具"
 tags: ["Google Search Console", "SEO", "Sitemap", "内容站"]
 pubDate: 2026-06-24
-updatedDate: 2026-07-13
+updatedDate: 2026-07-22
 author: "ai-productivity"
 draft: false
 featured: false
@@ -156,6 +156,65 @@ sitemap-index.xml
 | 首页 | 是 | 可抓取 | 待观察 | 无 | 等待抓取 |
 | 周报 Prompt | 是 | 可抓取 | 已索引 | AI 写周报 Prompt | 补充 FAQ |
 | 某短内容页 | 是 | Crawled not indexed | 未索引 | 无 | 增加案例和内链 |
+
+## 用 Search Console 排查低价值内容
+
+如果 AdSense 反馈低价值内容，可以把 Search Console 当成整改仪表盘。它不能直接显示 AdSense 审核结论，但能帮助你找到 Google 已经发现却暂时不愿意收录、或曝光后用户不愿点击的页面。
+
+建议按下面顺序排查：
+
+### 1. 先看 Pages 报告
+
+重点关注这些状态：
+
+| 状态 | 可能含义 | 处理方式 |
+| --- | --- | --- |
+| Crawled - currently not indexed | Google 抓取过，但暂时认为不值得收录或还没重新评估 | 检查正文深度、重复度、内链和页面价值 |
+| Discovered - currently not indexed | Google 发现了 URL，但还没抓取 | 加强站内链接，只对核心页面请求索引 |
+| Alternate page with proper canonical tag | canonical 指向其他页面 | 确认是否是预期，避免重复页面抢索引 |
+| Excluded by noindex tag | 页面被 noindex | 确认标签页、薄聚合页是否有意 noindex |
+
+不要看到未索引就全部请求索引。优先判断页面是否值得被索引：如果它只是标签列表、薄分类页或只有一个 Prompt 代码块，先扩写或 noindex。
+
+### 2. 导出未索引 URL 做分组
+
+把未索引 URL 按类型分组：
+
+- 核心指南页
+- 工具教程页
+- 工作流页
+- Prompt / Skill / Agent 页面
+- 分类页
+- 标签页
+- 搜索页或临时页面
+
+处理优先级建议：
+
+1. 核心指南、工具教程、工作流：优先扩写并请求重新抓取。
+2. Prompt / Skill / Agent：补充示例输入、输出、失败案例和复核清单。
+3. 分类页：内容少于 3 篇时先 noindex，内容足够后再考虑 index。
+4. 标签页：通常保持 noindex,follow，只作为站内发现入口。
+
+### 3. 看 Search Results 的曝光和点击
+
+有曝光但没有点击，不一定是坏事；关键是查询词是否和页面匹配。
+
+| 表现 | 判断 | 修改建议 |
+| --- | --- | --- |
+| 曝光词相关但 CTR 低 | 标题或描述不够明确 | 重写 title / description，开头直接回答问题 |
+| 曝光词不相关 | 页面主题不聚焦 | 调整 H2，删掉跑题段落，不追无关词 |
+| 有点击但无后续表现 | 内容可能不满足需求 | 增加步骤、表格、FAQ 和内链 |
+| 核心页面长期无曝光 | 内链和主题权重不足 | 从首页、专题页和相关文章增加入口 |
+
+### 4. 建立整改记录
+
+建议用一张表记录每次修改，避免反复提交 AdSense 时说不清改了什么。
+
+| URL | 问题 | 修改动作 | 是否 noindex | 是否请求索引 | 复查日期 |
+| --- | --- | --- | --- | --- | --- |
+| /tags/xxx/ | 标签聚合页 | 保持站内入口，排除 sitemap | 是 | 否 | 7 天后 |
+| /tools/google-adsense-setup-guide/ | 缺少低价值内容整改说明 | 增加排查表格和处理顺序 | 否 | 是 | 7 天后 |
+| /workflows/seo-article-with-ai/ | 缺少反低价值内容标准 | 增加质量清单和示例 | 否 | 是 | 14 天后 |
 
 ## 常见问题
 

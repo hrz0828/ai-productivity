@@ -4,7 +4,7 @@ description: "一个面向内容站的 AI SEO 编辑 Agent，用于关键词拆�
 category: "SEO 编辑 Agent"
 tags: ["AI Agent", "SEO", "内容运营", "编辑"]
 pubDate: 2026-05-19
-updatedDate: 2026-07-13
+updatedDate: 2026-07-22
 author: "ai-productivity"
 draft: false
 featured: false
@@ -177,6 +177,33 @@ FAQ 应服务当前搜索意图，例如：
 - 没有具体数据时怎么写周报？
 - AI 生成的周报可以直接发吗？
 - 如何让周报更像自己的表达？
+
+## 变体 Prompt：内容价值和密度审查
+
+```text
+请作为 AI SEO 编辑 Agent，检查下面页面是否存在 Google 低价值内容风险，并给出提高内容价值和密度的修改方案。
+
+请按以下维度评分，每项 0-2 分：
+1. 用户任务是否具体
+2. 操作步骤是否可执行
+3. 是否有输入/输出/失败示例
+4. 是否有原创判断、边界和人工复核点
+5. 是否有来源核对和更新时间意识
+6. 是否有清晰内链路径
+
+请输出：
+- 总分和风险等级
+- 哪些段落信息密度低
+- 应新增的表格、案例、FAQ 或检查清单
+- 哪些内容应合并、删除或 noindex
+- 修改后的标题和 SEO 描述建议
+- 发布后 Search Console 复盘指标
+
+页面内容：
+[粘贴]
+```
+
+这个 Prompt 适合用于 Prompt、Skill、Agent、Tool、Workflow 和专题页。它的重点不是“多写一点”，而是判断每一屏是否有具体信息。
 
 ## 变体 Prompt：旧文翻新审查
 
