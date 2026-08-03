@@ -11,6 +11,7 @@ const commonSchema = z.object({
   updatedDate: z.coerce.date().optional(),
   author: z.string().default('ai-productivity'),
   draft: z.boolean().default(false),
+  noindex: z.boolean().default(false),
   featured: z.boolean().default(false),
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),

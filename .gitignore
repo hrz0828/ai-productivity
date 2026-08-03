@@ -2,6 +2,10 @@
 node_modules/
 .pnpm-store/
 
+# claude
+.claude/
+.claude/worktrees/
+
 # build output
 dist/
 .astro/

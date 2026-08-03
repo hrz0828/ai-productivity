@@ -7,6 +7,7 @@ pubDate: 2026-06-28
 updatedDate: 2026-06-28
 author: "ai-productivity"
 draft: false
+noindex: true
 featured: false
 seoTitle: "AI 单元测试 Prompt：为函数和组件生成测试用例"
 seoDescription: "使用这个 AI 单元测试 Prompt，根据函数、组件、输入输出和业务规则生成测试场景、边界条件、异常用例和测试代码。"

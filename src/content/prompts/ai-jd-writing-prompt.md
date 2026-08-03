@@ -7,6 +7,7 @@ pubDate: 2026-06-01
 updatedDate: 2026-06-01
 author: "ai-productivity"
 draft: false
+noindex: true
 featured: false
 seoTitle: "AI 写岗位 JD Prompt：快速生成招聘职位描述"
 seoDescription: "使用这个 AI JD Prompt 快速生成岗位职责、任职要求、加分项、团队介绍和招聘亮点，适合 HR 和业务主管撰写职位描述。"

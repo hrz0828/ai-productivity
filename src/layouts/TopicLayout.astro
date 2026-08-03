@@ -1,0 +1,130 @@
+---
+import type { TopicConfig } from '../data/topics';
+import { topicsBySlug } from '../data/topics';
+import { getAllPublishedEntries } from '../utils/content';
+import BaseLayout from './BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+
+interface Props {
+  topic: TopicConfig;
+}
+
+const { topic } = Astro.props;
+const entries = await getAllPublishedEntries();
+const entryHref = (entry: (typeof entries)[number]) => `/${entry.collection}/${entry.id}/`;
+const coreHrefSet = new Set<string>(topic.coreHrefs);
+const coreArticles = topic.coreHrefs
+  .map((href) => entries.find((entry) => entryHref(entry) === href))
+  .filter((entry): entry is (typeof entries)[number] => Boolean(entry));
+const relatedArticles = entries
+  .filter((entry) => !coreHrefSet.has(entryHref(entry)))
+  .filter((entry) => topic.keywords.some((keyword) =>
+    entry.data.title.includes(keyword) ||
+    entry.data.category.includes(keyword) ||
+    entry.data.tags.some((tag) => tag.includes(keyword)),
+  ))
+  .slice(0, 9);
+const relatedTopics = topic.relatedTopics.map((slug) => topicsBySlug[slug as keyof typeof topicsBySlug]).filter(Boolean);
+---
+
+<BaseLayout title={topic.seoTitle} description={topic.description} canonical={`/topics/${topic.slug}/`}>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <header>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
+        <a href="/topics/" class="text-sm font-semibold text-sky-700 hover:text-sky-900">浏览全部专题 →</a>
+      </div>
+      <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{topic.title}</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{topic.intro}</p>
+    </header>
+
+    <section class="mt-10 grid gap-6 lg:grid-cols-2" aria-labelledby="audience-tasks-title">
+      <h2 id="audience-tasks-title" class="sr-only">适合人群与核心任务</h2>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <p class="text-sm font-semibold uppercase tracking-[0.16em] text-sky-700">Audience</p>
+        <h3 class="mt-2 text-2xl font-bold text-slate-950">适合谁</h3>
+        <ul class="mt-5 space-y-3">
+          {topic.audience.map((item) => <li class="flex gap-3 text-sm leading-6 text-slate-600"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500"></span><span>{item}</span></li>)}
+        </ul>
+      </div>
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <p class="text-sm font-semibold uppercase tracking-[0.16em] text-sky-700">Tasks</p>
+        <h3 class="mt-2 text-2xl font-bold text-slate-950">可以解决什么任务</h3>
+        <ul class="mt-5 space-y-3">
+          {topic.tasks.map((item) => <li class="flex gap-3 text-sm leading-6 text-slate-600"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500"></span><span>{item}</span></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="mt-10 rounded-[2rem] border border-sky-100 bg-sky-50/60 p-6 md:p-8" aria-labelledby="reading-path-title">
+      <h2 id="reading-path-title" class="text-2xl font-bold text-slate-950">推荐阅读路径</h2>
+      <p class="mt-3 text-sm leading-6 text-slate-600">按顺序从入门方法走到完整实践，也可以直接选择与你当前任务最接近的一步。</p>
+      <ol class="mt-6 grid gap-4 md:grid-cols-2">
+        {topic.readingPath.map((item, index) => (
+          <li class="rounded-2xl border border-sky-100 bg-white p-5 shadow-sm">
+            <div class="text-sm font-semibold text-sky-700">Step {index + 1}</div>
+            <a href={item.href} class="mt-2 block font-semibold text-slate-950 hover:text-sky-700">{item.title}</a>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    {topic.focus && (
+      <section class="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="topic-focus-title">
+        <h2 id="topic-focus-title" class="text-2xl font-bold text-slate-950">{topic.focus.title}</h2>
+        {topic.focus.description && <p class="mt-3 max-w-4xl text-base leading-8 text-slate-600">{topic.focus.description}</p>}
+        <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {topic.focus.items.map((item) => (
+            item.href ? (
+              <a href={item.href} class="rounded-2xl bg-slate-50 p-5 transition hover:bg-sky-50">
+                <h3 class="font-semibold text-slate-950">{item.title}</h3>
+                <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+              </a>
+            ) : (
+              <div class="rounded-2xl bg-slate-50 p-5">
+                <h3 class="font-semibold text-slate-950">{item.title}</h3>
+                <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+              </div>
+            )
+          ))}
+        </div>
+      </section>
+    )}
+
+    <slot name="unique" />
+
+    {coreArticles.length > 0 && (
+      <section class="mt-14" aria-labelledby="core-articles-title">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Start here</p>
+        <h2 id="core-articles-title" class="mt-2 text-3xl font-bold text-slate-950">核心文章</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {coreArticles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+        </div>
+      </section>
+    )}
+
+    {relatedArticles.length > 0 && (
+      <section class="mt-14" aria-labelledby="related-articles-title">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">More</p>
+        <h2 id="related-articles-title" class="mt-2 text-3xl font-bold text-slate-950">相关文章</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {relatedArticles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
+        </div>
+      </section>
+    )}
+
+    <section class="mt-14 border-t border-slate-200 pt-10" aria-labelledby="related-topics-title">
+      <h2 id="related-topics-title" class="text-2xl font-bold text-slate-950">相关专题</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        {relatedTopics.map((related) => (
+          <a href={`/topics/${related.slug}/`} class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md">
+            <h3 class="font-semibold text-slate-950">{related.title}</h3>
+            <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{related.intro}</p>
+            <span class="mt-4 block text-sm font-semibold text-sky-700">进入专题 →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </section>
+</BaseLayout>

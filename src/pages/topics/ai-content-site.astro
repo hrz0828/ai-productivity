@@ -1,88 +1,32 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ArticleCard from '../../components/ArticleCard.astro';
-import { getAllPublishedEntries } from '../../utils/content';
+import TopicLayout from '../../layouts/TopicLayout.astro';
+import { getTopic } from '../../data/topics';
 
-const entries = await getAllPublishedEntries();
-const keywords = ['内容站', 'SEO', 'AdSense', 'Search Console', '内容日历', 'Cloudflare', 'Astro', 'AI 热点', '内容策略', 'AI 新闻'];
-const priorityHrefs = new Set(['guides/ai-hot-topics-content-strategy-2026-07-22']);
-const articles = entries.filter((entry) =>
-  priorityHrefs.has(`${entry.collection}/${entry.id}`) || keywords.some((keyword) => entry.data.title.includes(keyword) || entry.data.category.includes(keyword) || entry.data.tags.some((tag) => tag.includes(keyword))),
-).slice(0, 12);
-const readingPath = [
-  { title: 'AI 热点内容策略', href: '/guides/ai-hot-topics-content-strategy-2026-07-22/', desc: '把今日 AI 新闻、模型发布和工具更新转化为可长期收录的 SEO 攻略。' },
-  { title: '用 AI 搭建内容站工作流', href: '/workflows/launch-content-site-with-ai/', desc: '从定位、栏目、技术栈和上线流程建立最小可用内容站。' },
-  { title: '内容日历工作流', href: '/workflows/ai-content-calendar-workflow/', desc: '规划选题、排期、内链和旧文翻新，避免只堆文章数量。' },
-  { title: 'Google Search Console 指南', href: '/tools/google-search-console-guide/', desc: '检查收录、搜索查询和抓取问题，为后续 AdSense 审核积累自然流量。' },
-];
+const topic = getTopic('ai-content-site');
 ---
 
-<BaseLayout title="AI 内容站专题：AI 热点、选题、SEO、部署和 AdSense 实战" description="围绕 AI 内容站建设整理 AI 热点选题、内容日历、SEO、Astro 部署、Cloudflare Pages、Search Console 和 AdSense 审核准备，帮助从 0 到 1 搭建可收录的网站。" canonical="/topics/ai-content-site/">
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">Topic</p>
-    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">AI 内容站专题</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">内容站不是只写文章，还需要定位、AI 热点选题、内容日历、SEO 基础、部署、收录和商业化准备。这个专题汇总从 0 到 1 的关键内容。</p>
-
-    <div class="mt-10 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      <h2 class="text-2xl font-bold text-slate-950">内容站不要只做资源导航</h2>
-      <p class="mt-4 text-base leading-8 text-slate-600">如果一个网站只有工具列表、提示词代码块和外链，很容易被用户和搜索引擎认为价值不足。更稳妥的内容站建设方式，是围绕真实任务写深：解释为什么这样做、如何配置、哪里会失败、上线后如何复盘。</p>
-      <p class="mt-3 text-base leading-8 text-slate-600">AI 热点适合带来选题灵感，但不要只复述新闻。建议把模型发布、工具更新和行业讨论转化为教程、对比、工作流和检查清单，再通过专题页建立内链。</p>
-      <p class="mt-3 text-base leading-8 text-slate-600">本专题建议先完成内容定位和 4 周内容日历，再处理技术部署、收录、AdSense 和数据复盘。不要在内容还很薄时急着堆广告位，也不要把只有 1-2 篇文章的专题大规模放到主导航。</p>
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        {readingPath.map((item, index) => (
-          <a href={item.href} class="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-sky-200 hover:bg-sky-50">
-            <div class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-700">Step {index + 1}</div>
-            <h3 class="mt-2 text-lg font-semibold text-slate-950">{item.title}</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-600">{item.desc}</p>
-          </a>
-        ))}
+<TopicLayout {topic}>
+  <section slot="unique" class="mt-14 rounded-[2rem] border border-amber-100 bg-amber-50/70 p-6 sm:p-8">
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">AdSense remediation</p>
+    <h2 class="mt-2 text-2xl font-bold text-slate-950">收到“低价值内容”反馈后，先修这些地方</h2>
+    <p class="mt-4 text-base leading-8 text-slate-700">Google 审核更看重网站是否能帮助真实用户解决问题，而不是文章数量。AI 内容站尤其要避免大量短 Prompt、工具卡片、标签聚合页和相似模板页同时进入索引。</p>
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <div class="rounded-2xl bg-white p-5 shadow-sm">
+        <h3 class="font-semibold text-slate-950">优先扩写核心攻略</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">先重写内容站 SEO、AdSense、Search Console、Claude Code、AI 工具选型等高意图页面，补充场景、步骤、表格、FAQ 和人工复核清单。</p>
+      </div>
+      <div class="rounded-2xl bg-white p-5 shadow-sm">
+        <h3 class="font-semibold text-slate-950">控制薄聚合页索引</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">标签页统一 noindex,follow；内容较少的分类页也先 noindex,follow，让 sitemap 和搜索入口优先暴露完整正文页与核心专题页。</p>
+      </div>
+      <div class="rounded-2xl bg-white p-5 shadow-sm">
+        <h3 class="font-semibold text-slate-950">补充真实判断</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">每篇内容都回答：适合谁、不适合谁、输入材料是什么、哪里容易失败、哪些结论需要人工核对。</p>
+      </div>
+      <div class="rounded-2xl bg-white p-5 shadow-sm">
+        <h3 class="font-semibold text-slate-950">复盘 Search Console</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">重点查看“已抓取 - 尚未编入索引”、曝光高点击低和重复标题页面，决定扩写、合并、noindex 或更新内链。</p>
       </div>
     </div>
-
-    <div class="mt-10 grid gap-6 md:grid-cols-3">
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold text-slate-950">内容规划</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">确定目标用户、栏目结构、关键词、原创补充点和更新节奏。</p>
-      </div>
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold text-slate-950">技术上线</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">使用 Astro、GitHub 和 Cloudflare Pages 快速部署静态内容站，并用 CI 阻止低级错误。</p>
-      </div>
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 class="text-xl font-semibold text-slate-950">SEO 与商业化</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">配置 sitemap、Search Console、AdSense 和基础监控，先积累自然流量再提交审核。</p>
-      </div>
-    </div>
-
-    <section class="mt-14 rounded-[2rem] border border-amber-100 bg-amber-50/70 p-6 sm:p-8">
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">AdSense remediation</p>
-      <h2 class="mt-2 text-2xl font-bold text-slate-950">收到“低价值内容”反馈后，先修这些地方</h2>
-      <p class="mt-4 text-base leading-8 text-slate-700">Google 审核更看重网站是否能帮助真实用户解决问题，而不是文章数量。AI 内容站尤其要避免大量短 Prompt、工具卡片、标签聚合页和相似模板页同时进入索引。</p>
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h3 class="font-semibold text-slate-950">优先扩写核心攻略</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">先重写内容站 SEO、AdSense、Search Console、Claude Code、AI 工具选型等高意图页面，补充场景、步骤、表格、FAQ 和人工复核清单。</p>
-        </div>
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h3 class="font-semibold text-slate-950">控制薄聚合页索引</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">标签页统一 noindex,follow；内容较少的分类页也先 noindex,follow，让 sitemap 和搜索入口优先暴露完整正文页与核心专题页。</p>
-        </div>
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h3 class="font-semibold text-slate-950">补充真实判断</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">每篇内容都回答：适合谁、不适合谁、输入材料是什么、哪里容易失败、哪些结论需要人工核对。</p>
-        </div>
-        <div class="rounded-2xl bg-white p-5 shadow-sm">
-          <h3 class="font-semibold text-slate-950">复盘 Search Console</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600">重点查看“已抓取 - 尚未编入索引”、曝光高点击低和重复标题页面，决定扩写、合并、noindex 或更新内链。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-14">
-      <h2 class="text-3xl font-bold text-slate-950">推荐内容</h2>
-      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {articles.map((entry) => <ArticleCard entry={entry} collection={entry.collection} />)}
-      </div>
-    </section>
   </section>
-</BaseLayout>
+</TopicLayout>

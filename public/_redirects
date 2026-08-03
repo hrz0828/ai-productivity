@@ -1,0 +1,10 @@
+/prompts/ai-competitor-analysis-prompt /workflows/competitive-analysis-with-ai/ 301
+/prompts/ai-competitor-analysis-prompt/ /workflows/competitive-analysis-with-ai/ 301
+/prompts/ai-meeting-minutes-prompt /workflows/meeting-to-action-items/ 301
+/prompts/ai-meeting-minutes-prompt/ /workflows/meeting-to-action-items/ 301
+/skills/meeting-minutes-skill /workflows/meeting-to-action-items/ 301
+/skills/meeting-minutes-skill/ /workflows/meeting-to-action-items/ 301
+/prompts/ai-sop-writing-prompt /skills/sop-generation-skill/ 301
+/prompts/ai-sop-writing-prompt/ /skills/sop-generation-skill/ 301
+/prompts/ai-daily-report-prompt /guides/workplace-daily-weekly-report-ai-guide/ 301
+/prompts/ai-daily-report-prompt/ /guides/workplace-daily-weekly-report-ai-guide/ 301

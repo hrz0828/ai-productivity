@@ -3,8 +3,15 @@ import { COLLECTION_LABELS } from '../config';
 
 const now = new Date();
 
-function isPublished(data: Pick<AnyContentEntry['data'], 'draft' | 'pubDate'>) {
+type PublicationData = Pick<AnyContentEntry['data'], 'draft' | 'pubDate'>;
+type IndexabilityData = PublicationData & Pick<AnyContentEntry['data'], 'noindex'>;
+
+export function isPublished(data: PublicationData) {
   return !data.draft && data.pubDate.valueOf() <= now.valueOf();
+}
+
+export function isIndexable(data: IndexabilityData) {
+  return isPublished(data) && !data.noindex;
 }
 
 export type CollectionName = keyof typeof COLLECTION_LABELS;

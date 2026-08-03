@@ -7,6 +7,7 @@ pubDate: 2026-06-26
 updatedDate: 2026-06-26
 author: "ai-productivity"
 draft: false
+noindex: true
 featured: false
 seoTitle: "AI PPT 演讲稿 Prompt：为每页幻灯片生成讲稿和过渡语"
 seoDescription: "使用这个 AI PPT 演讲稿 Prompt，根据 PPT 大纲或页面内容生成逐页讲稿、过渡语、重点提醒和时间控制建议。"

@@ -10,15 +10,11 @@ export const SITE = {
 };
 
 export const NAV_ITEMS = [
-  { label: 'Prompts', href: '/prompts/' },
-  { label: 'Skills', href: '/skills/' },
-  { label: 'Agents', href: '/agents/' },
+  { label: '任务', href: '/tasks/' },
+  { label: 'Prompt', href: '/prompts/' },
+  { label: 'Workflow', href: '/workflows/' },
   { label: 'Tools', href: '/tools/' },
-  { label: 'Workflows', href: '/workflows/' },
-  { label: 'Tasks', href: '/tasks/' },
-  { label: 'Submit', href: '/submit-prompt/' },
-  { label: 'Guides', href: '/guides/' },
-  { label: 'Topics', href: '/topics/ai-writing/' },
+  { label: 'Topics', href: '/topics/' },
 ];
 
 export const TOPIC_ITEMS = [

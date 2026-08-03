@@ -7,6 +7,7 @@ pubDate: 2026-05-08
 updatedDate: 2026-05-08
 author: "ai-productivity"
 draft: false
+noindex: true
 featured: false
 seoTitle: "AI 生成 PPT 大纲 Prompt：从主题到页面级演示结构"
 seoDescription: "根据主题、受众、演示目标和已有资料生成 PPT 页面大纲、每页核心观点、要点和图示建议。"

@@ -11,6 +11,7 @@ import FeedbackWidget from '../components/FeedbackWidget.astro';
 import ArticleSummaryCard from '../components/ArticleSummaryCard.astro';
 import WorkflowStepNav from '../components/WorkflowStepNav.astro';
 import { COLLECTION_LABELS } from '../config';
+import { getAuthorProfile } from '../data/authors';
 import { articleJsonLd, breadcrumbJsonLd, formatDate } from '../utils/seo';
 import { getReadingTime } from '../utils/readingTime';
 import type { CollectionName, AnyContentEntry } from '../utils/content';
@@ -29,14 +30,7 @@ interface Props {
 
 const { entry, collection, headings, body, related = [], previous, next } = Astro.props;
 const title = entry.data.seoTitle ?? entry.data.title;
-const authorProfiles: Record<string, { name: string; role: string; bio: string }> = {
-  'ai-productivity': {
-    name: 'ai-productivity 编辑组',
-    role: 'AI 工作流与内容站实践编辑',
-    bio: '长期维护 AI 生产力内容站，关注 Prompt、Agent、自动化、SEO 和内容质量复核。文章会结合 AI 辅助整理与人工编辑，重点检查事实、边界、示例和可执行性。',
-  },
-};
-const authorProfile = authorProfiles[entry.data.author] ?? { name: entry.data.author, role: '内容作者', bio: '负责本文内容整理、更新和人工复核。' };
+const authorProfile = getAuthorProfile(entry.data.author);
 const description = entry.data.seoDescription ?? entry.data.description;
 const canonical = `/${collection}/${entry.id}/`;
 const breadcrumbs = [
@@ -58,45 +52,38 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} image={entry.data.ogImage} type="article" jsonLd={jsonLd} publishedTime={entry.data.pubDate} modifiedTime={entry.data.updatedDate ?? entry.data.pubDate}>
+<BaseLayout title={title} description={description} canonical={canonical} image={entry.data.ogImage} type="article" robots={entry.data.noindex ? 'noindex,follow' : 'index,follow'} jsonLd={jsonLd} publishedTime={entry.data.pubDate} modifiedTime={entry.data.updatedDate ?? entry.data.pubDate}>
   <article class="mx-auto grid max-w-6xl gap-8 px-4 py-6 sm:px-6 sm:py-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:px-8">
     <div class="min-w-0">
       <Breadcrumb items={breadcrumbs} />
-      <header class="mt-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:mt-8 sm:p-8">
-        <div class="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+      <header class="mt-5 border-b border-slate-200 pb-6 sm:mt-6">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-slate-500">
           <span class="rounded-full bg-sky-50 px-3 py-1 font-medium text-sky-700">{entry.data.category}</span>
-          <time datetime={entry.data.pubDate.toISOString()}>发布：{formatDate(entry.data.pubDate)}</time>
-          {entry.data.updatedDate && <time datetime={entry.data.updatedDate.toISOString()}>更新：{formatDate(entry.data.updatedDate)}</time>}
+          <time datetime={entry.data.pubDate.toISOString()}>{formatDate(entry.data.pubDate)}</time>
+          {entry.data.updatedDate && <time datetime={entry.data.updatedDate.toISOString()}>更新于 {formatDate(entry.data.updatedDate)}</time>}
           <span>{getReadingTime(body)}</span>
         </div>
-        <h1 class="mt-5 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">{entry.data.title}</h1>
-        <p class="mt-5 text-lg leading-8 text-slate-600">{entry.data.description}</p>
-        <div class="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-4">
-          <div class="text-sm font-semibold text-slate-950">作者与复核</div>
-          <p class="mt-1 text-sm leading-6 text-slate-600"><strong>{authorProfile.name}</strong> · {authorProfile.role}</p>
-          <p class="mt-1 text-sm leading-6 text-slate-500">{authorProfile.bio}</p>
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">{entry.data.title}</h1>
+        <p class="mt-4 text-lg leading-8 text-slate-600">{entry.data.description}</p>
+        <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm leading-6 text-slate-500">
+          <span>作者与复核</span>
+          <a class="font-semibold text-sky-700 hover:text-sky-900" href={authorProfile.url}>{authorProfile.name}</a>
+          <span aria-hidden="true">·</span>
+          <span>{authorProfile.role}</span>
         </div>
-        <div class="mt-6"><TagList tags={entry.data.tags} /></div>
+        <div class="mt-4"><TagList tags={entry.data.tags} /></div>
       </header>
 
       <ArticleSummaryCard entry={entry} collection={collection} body={body} />
+      <div class="mt-5 lg:hidden"><TableOfContents headings={headings} /></div>
 
       {(collection === 'workflows' || collection === 'guides') && <WorkflowStepNav headings={headings} />}
 
-      <AdsenseBlock />
-
-      <div data-pagefind-body class="prose prose-slate mt-8 max-w-none rounded-3xl border border-slate-200 bg-white p-6 prose-a:text-sky-700 prose-pre:bg-slate-950 sm:p-8">
+      <div data-pagefind-body class="prose prose-slate mt-6 max-w-none rounded-3xl border border-slate-200 bg-white p-6 prose-a:text-sky-700 prose-pre:bg-slate-950 sm:p-8">
         <slot />
-        <hr />
-        <h2>延伸阅读</h2>
-        <ul>
-          <li><a href="/guides/prompt-skill-agent-workflow/">Prompt、Skill、Agent、Workflow 有什么区别？</a></li>
-          <li><a href="/guides/ai-productivity-guide/">AI 工作流入门指南</a></li>
-          <li><a href={`/${collection}/`}>返回 {COLLECTION_LABELS[collection]} 栏目</a></li>
-        </ul>
       </div>
 
-      <FeedbackWidget title={entry.data.title} collection={collection} slug={entry.id} />
+      <RelatedArticles entries={related} collection={collection} />
 
       <nav class="mt-8 grid gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-sm shadow-sm sm:grid-cols-2" aria-label="Article navigation">
         <div>
@@ -121,7 +108,7 @@ const jsonLd = [
         </div>
       </nav>
 
-      <RelatedArticles entries={related} collection={collection} />
+      <FeedbackWidget title={entry.data.title} collection={collection} slug={entry.id} />
       <CopyCode />
     </div>
 

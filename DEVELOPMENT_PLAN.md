@@ -1292,11 +1292,11 @@ MVP 上线可以先有 20 篇，但申请 AdSense 前建议至少 30 篇，最�
 
 | 场景 | 推荐链接方向 |
 | --- | --- |
-| 写周报 / 日报 | `/prompts/ai-weekly-report-prompt/`、`/prompts/ai-daily-report-prompt/` |
+| 写周报 / 日报 | `/prompts/ai-weekly-report-prompt/`、`/guides/workplace-daily-weekly-report-ai-guide/` |
 | 写 PRD / 需求文档 | `/prompts/ai-prd-prompt/`、`/workflows/write-prd-with-ai/` |
 | 快速生成 PPT 大纲 | `/prompts/ai-ppt-outline-prompt/`、`/workflows/create-ppt-with-ai/` |
-| 整理会议纪要 | `/prompts/ai-meeting-minutes-prompt/`、`/workflows/meeting-to-action-items/` |
-| 做竞品分析 | `/prompts/ai-competitor-analysis-prompt/`、`/workflows/competitive-analysis-with-ai/` |
+| 整理会议纪要 | `/workflows/meeting-to-action-items/` |
+| 做竞品分析 | `/workflows/competitive-analysis-with-ai/` |
 | 做代码审查 | `/prompts/ai-code-review-prompt/`、`/workflows/code-review-with-ai/` |
 | 搭建知识库 | `/tools/obsidian-ai-guide/`、`/workflows/personal-knowledge-base-with-ai/` |
 | 优化简历 | `/prompts/ai-resume-optimization-prompt/` |

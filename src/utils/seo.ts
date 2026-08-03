@@ -1,4 +1,5 @@
 import { SITE } from '../config';
+import { getAuthorProfile } from '../data/authors';
 
 export function absoluteUrl(path = '/') {
   return new URL(path, SITE.url).toString();
@@ -23,6 +24,7 @@ export function articleJsonLd(input: {
 }) {
   const url = absoluteUrl(input.url);
   const image = absoluteUrl(input.image ?? '/images/og/default.png');
+  const author = getAuthorProfile(input.author ?? SITE.author);
 
   return {
     '@context': 'https://schema.org',
@@ -38,9 +40,9 @@ export function articleJsonLd(input: {
     dateModified: (input.updatedDate ?? input.pubDate).toISOString(),
     inLanguage: SITE.locale,
     author: {
-      '@type': 'Organization',
-      name: input.author ?? SITE.author,
-      url: SITE.url,
+      '@type': author.type,
+      name: author.name,
+      url: absoluteUrl(author.url),
     },
     publisher: organizationJsonLd(),
     isPartOf: websiteJsonLd(),

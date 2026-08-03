@@ -11,7 +11,7 @@ export const taskGroups = [
         difficulty: '入门',
         links: [
           { label: 'AI 写周报 Prompt', href: '/prompts/ai-weekly-report-prompt/', type: 'Prompt' },
-          { label: 'AI 写日报 Prompt', href: '/prompts/ai-daily-report-prompt/', type: 'Prompt' },
+          { label: '职场日报与周报指南', href: '/guides/workplace-daily-weekly-report-ai-guide/', type: 'Guide' },
           { label: '项目复盘工作流', href: '/workflows/project-retrospective-with-ai/', type: 'Workflow' },
         ],
       },
@@ -21,9 +21,7 @@ export const taskGroups = [
         audience: '项目经理 / 协作团队',
         difficulty: '入门',
         links: [
-          { label: '会议纪要 Prompt', href: '/prompts/ai-meeting-minutes-prompt/', type: 'Prompt' },
           { label: '会议到行动项工作流', href: '/workflows/meeting-to-action-items/', type: 'Workflow' },
-          { label: '会议纪要整理 Skill', href: '/skills/meeting-minutes-skill/', type: 'Skill' },
         ],
       },
       {
@@ -61,7 +59,6 @@ export const taskGroups = [
         audience: '产品 / 运营 / 市场',
         difficulty: '进阶',
         links: [
-          { label: '竞品分析 Prompt', href: '/prompts/ai-competitor-analysis-prompt/', type: 'Prompt' },
           { label: '竞品分析工作流', href: '/workflows/competitive-analysis-with-ai/', type: 'Workflow' },
           { label: 'AI 研究报告 Prompt', href: '/prompts/ai-research-report-prompt/', type: 'Prompt' },
         ],

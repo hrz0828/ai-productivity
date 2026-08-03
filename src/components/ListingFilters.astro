@@ -7,36 +7,51 @@ interface Props {
 
 const { entries } = Astro.props;
 const categories = [...new Set(entries.map((entry) => entry.data.category))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
-const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))]
-  .sort((a, b) => a.localeCompare(b, 'zh-CN'))
+const tagFrequency = entries.flatMap((entry) => entry.data.tags).reduce<Record<string, number>>((counts, tag) => {
+  counts[tag] = (counts[tag] ?? 0) + 1;
+  return counts;
+}, {});
+const tags = Object.entries(tagFrequency)
+  .sort(([tagA, countA], [tagB, countB]) => countB - countA || tagA.localeCompare(tagB, 'zh-CN'))
   .slice(0, 24);
 ---
 
 <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm" data-listing-filters>
-  <div class="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
-    <label class="block">
-      <span class="text-sm font-medium text-slate-700">按关键词筛选</span>
-      <input data-filter-query class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="search" placeholder="输入标题、摘要或标签..." />
-    </label>
-    <label class="block">
-      <span class="text-sm font-medium text-slate-700">按分类</span>
-      <select data-filter-category class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
-        <option value="">全部分类</option>
-        {categories.map((category) => <option value={category}>{category}</option>)}
-      </select>
-    </label>
-    <label class="block">
-      <span class="text-sm font-medium text-slate-700">按标签</span>
-      <select data-filter-tag class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
-        <option value="">全部标签</option>
-        {tags.map((tag) => <option value={tag}>{tag}</option>)}
-      </select>
-    </label>
+  <button type="button" class="flex w-full items-center justify-between gap-4 font-semibold text-slate-950 lg:hidden" aria-expanded="false" aria-controls="listing-filter-fields" data-filter-toggle>
+    筛选内容
+    <span aria-hidden="true" data-filter-toggle-icon>＋</span>
+  </button>
+  <div id="listing-filter-fields" class="mt-5 hidden lg:mt-0 lg:block" data-filter-fields>
+    <div class="grid gap-4 lg:grid-cols-[1fr_220px_220px]">
+      <label class="block">
+        <span class="text-sm font-medium text-slate-700">按关键词筛选</span>
+        <input data-filter-query class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:ring-4 focus:ring-sky-100" type="search" placeholder="输入标题、摘要或标签..." />
+      </label>
+      <label class="block">
+        <span class="text-sm font-medium text-slate-700">按分类</span>
+        <select data-filter-category class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+          <option value="">全部分类</option>
+          {categories.map((category) => <option value={category}>{category}</option>)}
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-sm font-medium text-slate-700">按标签</span>
+        <select data-filter-tag class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-950 outline-none transition focus:border-sky-400 focus:ring-4 focus:ring-sky-100">
+          <option value="">全部标签</option>
+          {tags.map(([tag, count]) => <option value={tag}>{tag}（{count}）</option>)}
+        </select>
+      </label>
+    </div>
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
+      <p class="text-slate-500" aria-live="polite" aria-atomic="true" data-filter-status>显示全部 {entries.length} 篇内容。</p>
+      <button type="button" class="rounded-full border border-slate-200 px-4 py-2 font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700" data-filter-reset>重置筛选</button>
+    </div>
   </div>
-  <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
-    <p class="text-slate-500" data-filter-status>显示全部内容。</p>
-    <button type="button" class="rounded-full border border-slate-200 px-4 py-2 font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700" data-filter-reset>重置筛选</button>
-  </div>
+</div>
+<div class="mt-8 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center" data-listing-empty role="status">
+  <h3 class="text-lg font-semibold text-slate-950">没有找到匹配内容</h3>
+  <p class="mt-2 text-sm leading-6 text-slate-600">请减少筛选条件、尝试其他关键词，或重置后浏览全部内容。</p>
+  <button type="button" class="mt-4 rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-800" data-filter-empty-reset>查看全部内容</button>
 </div>
 
 <script is:inline>
@@ -45,13 +60,24 @@ const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))]
     const grid = document.querySelector('[data-listing-grid]');
     if (!filters || !grid) return;
 
+    const fields = filters.querySelector('[data-filter-fields]');
+    const toggle = filters.querySelector('[data-filter-toggle]');
+    const toggleIcon = filters.querySelector('[data-filter-toggle-icon]');
     const queryInput = filters.querySelector('[data-filter-query]');
     const categorySelect = filters.querySelector('[data-filter-category]');
     const tagSelect = filters.querySelector('[data-filter-tag]');
-    const resetButton = filters.querySelector('[data-filter-reset]');
+    const resetButtons = [filters.querySelector('[data-filter-reset]'), document.querySelector('[data-filter-empty-reset]')];
     const status = filters.querySelector('[data-filter-status]');
+    const emptyState = document.querySelector('[data-listing-empty]');
     const cards = [...grid.querySelectorAll('[data-listing-card]')];
     let timer;
+
+    toggle?.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      fields?.classList.toggle('hidden', expanded);
+      if (toggleIcon) toggleIcon.textContent = expanded ? '＋' : '−';
+    });
 
     function normalize(value) {
       return (value || '').toString().trim().toLowerCase();
@@ -65,19 +91,15 @@ const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))]
 
       cards.forEach((card) => {
         const haystack = normalize(card.dataset.searchText);
-        const cardCategory = card.dataset.category || '';
         const cardTags = (card.dataset.tags || '').split('|').filter(Boolean);
-        const matchesQuery = !query || haystack.includes(query);
-        const matchesCategory = !category || cardCategory === category;
-        const matchesTag = !tag || cardTags.includes(tag);
-        const visible = matchesQuery && matchesCategory && matchesTag;
+        const visible = (!query || haystack.includes(query)) && (!category || card.dataset.category === category) && (!tag || cardTags.includes(tag));
         card.classList.toggle('hidden', !visible);
         if (visible) visibleCount += 1;
       });
 
-      if (status) {
-        status.textContent = visibleCount === cards.length ? '显示全部内容。' : `筛选出 ${visibleCount} 篇内容。`;
-      }
+      grid.classList.toggle('hidden', visibleCount === 0);
+      emptyState?.classList.toggle('hidden', visibleCount !== 0);
+      if (status) status.textContent = visibleCount === cards.length ? `显示全部 ${cards.length} 篇内容。` : `筛选出 ${visibleCount} 篇内容。`;
 
       window.trackInteraction?.('listing_filter_change', {
         query: query || undefined,
@@ -94,11 +116,12 @@ const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))]
     });
     categorySelect?.addEventListener('change', applyFilters);
     tagSelect?.addEventListener('change', applyFilters);
-    resetButton?.addEventListener('click', () => {
+    resetButtons.forEach((button) => button?.addEventListener('click', () => {
       if (queryInput) queryInput.value = '';
       if (categorySelect) categorySelect.value = '';
       if (tagSelect) tagSelect.value = '';
       applyFilters();
-    });
+      queryInput?.focus();
+    }));
   });
 </script>

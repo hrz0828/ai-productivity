@@ -140,6 +140,4 @@ AI 会议纪要 Agent 不能替代：
 
 ## 延伸阅读
 
-- [用 AI 把会议记录整理成行动项的工作流](/workflows/meeting-to-action-items/)
-- [AI 会议纪要 Prompt：快速整理会议记录和行动项](/prompts/ai-meeting-minutes-prompt/)
-- [会议纪要整理 Skill：把会议记录变成可执行行动项](/skills/meeting-minutes-skill/)
+- [用 AI 把会议记录整理成行动项的工作流（含 Prompt 与团队复用方法）](/workflows/meeting-to-action-items/)

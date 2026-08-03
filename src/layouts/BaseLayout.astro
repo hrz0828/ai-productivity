@@ -17,7 +17,10 @@ interface Props {
   publishedTime?: Date;
   modifiedTime?: Date;
   imageAlt?: string;
+  pageType?: string;
 }
+
+const { pageType } = Astro.props;
 ---
 
 <!doctype html>
@@ -32,8 +35,9 @@ interface Props {
     <AdsenseScript />
   </head>
   <body class="min-h-screen antialiased">
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
     <Header />
-    <main>
+    <main id="main-content" tabindex="-1" data-page-type={pageType}>
       <slot />
     </main>
     <Footer />

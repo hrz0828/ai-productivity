@@ -173,6 +173,5 @@ AI 不能替你凭空完成可靠调研。使用前最好准备：
 
 ## 延伸阅读
 
-- [AI 竞品分析 Prompt：快速生成竞品对比表和分析结论](/prompts/ai-competitor-analysis-prompt/)
-- [用 AI 做竞品分析的完整工作流](/workflows/competitive-analysis-with-ai/)
+- [用 AI 做竞品分析的完整工作流（含单品分析 Prompt）](/workflows/competitive-analysis-with-ai/)
 - [研究总结 Skill：把资料整理成可执行结论](/skills/research-summary-skill/)
