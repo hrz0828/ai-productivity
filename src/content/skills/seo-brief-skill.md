@@ -61,6 +61,14 @@ SEO 文章质量不稳定，往往是因为写作前没有清晰简报。SEO Bri
 
 FAQ 适合覆盖长尾问题，内链适合把读者引导到更具体的模板和工作流。
 
+## 可下载 SEO Brief 模板
+
+如果你想把 Brief 固定成文档模板，可以下载本站提供的 Markdown 版本：
+
+- [下载 AI SEO Brief Markdown 模板](/resources/templates/ai-seo-brief-template.md)
+
+这个模板包含搜索意图、读者问题、文章结构、原创证据、低价值风险检查、内链路径和发布清单，适合用于旧文翻新和新文章写作前的编辑简报。
+
 ## 推荐 Prompt 模板
 
 ```text

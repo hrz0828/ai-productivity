@@ -1,0 +1,4 @@
+Title,URL,Content Type,Quality Score,Low Value Risk,Original Evidence Needed,Internal Links Needed,Review Status,Next Action
+AdSense setup guide,/tools/google-adsense-setup-guide/,Tool,10,Medium,"Search Console examples, before/after edits","AI content site topic, Search Console guide",In review,Add FAQ and request indexing
+Daily weekly report guide,/guides/workplace-daily-weekly-report-ai-guide/,Guide,11,Low,"Real input/output samples","Daily report prompt, Weekly report prompt",Ready,Monitor queries
+Prompt page sample,/prompts/ai-weekly-report-prompt/,Prompt,9,Medium,"Role-specific examples, failure cases","Reporting guide, AI writing automation guide",Needs update,Add before/after

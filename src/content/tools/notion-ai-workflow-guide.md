@@ -4,7 +4,7 @@ description: "介绍如何使用 Notion AI 辅助整理资料、生成任务清�
 category: "Notion"
 tags: ["Notion AI", "知识管理", "任务管理", "AI 工具"]
 pubDate: 2026-05-23
-updatedDate: 2026-07-13
+updatedDate: 2026-07-22
 author: "ai-productivity"
 draft: false
 featured: false
@@ -57,6 +57,14 @@ Notion AI 适合在已有笔记、项目文档和知识库中进行总结、改�
 3. 用 AI 生成摘要、标签和行动项。
 4. 人工复核后再沉淀到知识库。
 5. 定期复盘哪些资料被真正复用。
+
+## 可下载 Notion 内容质量模板
+
+为了方便把 AI 内容站整改过程沉淀到 Notion，本站提供一个 CSV 模板，可以导入 Notion 数据库：
+
+- [下载 AI 内容质量复盘 Notion CSV 模板](/resources/notion/ai-content-quality-review-template.csv)
+
+这个模板包含页面标题、URL、内容类型、质量分、低价值风险、需要补充的原创证据、内链需求、复核状态和下一步动作。适合用来跟踪 AdSense 低价值内容整改、旧文翻新和 Search Console 复盘。
 
 ## 数据库字段建议
 
