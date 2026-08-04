@@ -4,7 +4,7 @@ description: "一个用于生成工作邮件的 AI Prompt，适合写沟通邮�
 category: "文档写作"
 tags: ["AI Prompt", "邮件", "职场写作", "办公效率"]
 pubDate: 2026-06-12
-updatedDate: 2026-07-09
+updatedDate: 2026-08-03
 author: "ai-productivity"
 draft: false
 featured: false
@@ -208,6 +208,20 @@ AI 可能会写：
 - 不做超出授权的承诺
 - 信息结构清晰
 ```
+
+## 什么时候用 Prompt，什么时候用 Skill
+
+- **单次写信**：收件人、目标和语气每次差异很大时，直接使用本文 Prompt，修改成本最低。
+- **长期复用**：团队需要固定标题格式、禁用词、客户承诺边界和跟进节奏时，适合使用[邮件写作 Skill](/skills/email-writing-skill/)保存规则。
+- **高风险沟通**：合同、价格、人事、法律责任或正式升级邮件，不应仅依赖 Prompt 或 Skill，必须由有授权的人复核。
+
+## 后续使用路径
+
+一封邮件通常只是工作链路中的一个环节：
+
+- 会议结束后，可先用[会议到行动项工作流](/workflows/meeting-to-action-items/)确认结论、负责人和截止时间，再生成跟进邮件。
+- 需要把进展同步给团队或主管时，可参考[用 AI 写职场日报和周报指南](/guides/workplace-daily-weekly-report-ai-guide/)，避免邮件与汇报中的状态不一致。
+- 如果要反复发送同类催办、风险同步和客户沟通邮件，可把本文字段沉淀到[邮件写作 Skill](/skills/email-writing-skill/)中。
 
 ## 调试建议
 
